@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{2CD8A7B1-467B-45C4-979A-DA9FF3D03EAF}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>Framework</RootNamespace>
+        <AssemblyName>Framework</AssemblyName>
+        <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="ephtmltopdf, Version=12.2.0.0, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018">
+            <HintPath>..\packages\ExpertPdfHtmlToPdf.12.2.0\lib\net40\ephtmltopdf.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+        <Reference Include="Faker.NET4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\packages\Faker.Net.1.0.3\lib\net40\Faker.NET4.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+        <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a">
+            <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+        <Reference Include="Microsoft.CSharp"/>
+        <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+            <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+            <Private>True</Private>
+        </Reference>
+        <Reference Include="System"/>
+        <Reference Include="System.ComponentModel.DataAnnotations"/>
+        <Reference Include="System.Configuration"/>
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Data"/>
+        <Reference Include="System.Drawing"/>
+        <Reference Include="System.Runtime.Serialization"/>
+        <Reference Include="System.Security"/>
+        <Reference Include="System.Web"/>
+        <Reference Include="System.Web.Extensions"/>
+        <Reference Include="System.Web.Mvc"/>
+        <Reference Include="System.Xml"/>
+        <Reference Include="System.Xml.Linq"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Commons\CommonObj\DtoDataSet.cs"/>
+        <Compile Include="Commons\CommonObj\FileValidationResult.cs"/>
+        <Compile Include="Commons\CommonObj\ReturnObj.cs"/>
+        <Compile Include="Commons\Data\GetData.cs"/>
+        <Compile Include="Commons\Logging\Logging.cs"/>
+        <Compile Include="Commons\MVC\Attributes.cs"/>
+        <Compile Include="Commons\MVC\PartialViewUtil.cs"/>
+        <Compile Include="Commons\Utilities\CacheHelper.cs"/>
+        <Compile Include="Commons\Utilities\ExtensionMethods.cs"/>
+        <Compile Include="Commons\Utilities\FileUtil.cs"/>
+        <Compile Include="Commons\Utilities\JsonUtil.cs"/>
+        <Compile Include="Commons\Utilities\PdfUtil.cs"/>
+        <Compile Include="Commons\Utilities\TokenGenerator.cs"/>
+        <Compile Include="Commons\Utilities\WebConfig.cs"/>
+        <Compile Include="DataAccess\DataAccess.cs"/>
+        <Compile Include="DataAccess\ObjectMapping\BaseMapper.cs"/>
+        <Compile Include="DataAccess\ObjectMapping\BaseMapperHelper.cs"/>
+        <Compile Include="DataAccess\ObjectMapping\DataBinding.cs"/>
+        <Compile Include="DataAccess\ObjectMapping\DataTableWrapper.cs"/>
+        <Compile Include="DataAccess\ObjectMapping\IDataWrapper.cs"/>
+        <Compile Include="DataAccess\ObjectMapping\MappingService.cs"/>
+        <Compile Include="DataAccess\ObjectMapping\PropertyInfoPlus.cs"/>
+        <Compile Include="DataAccess\SqlDataClasses\SqlDataAccessContainer.cs"/>
+        <Compile Include="DataAccess\SqlDataClasses\SqlDataAccessParameter.cs"/>
+        <Compile Include="DataAccess\SqlDataClasses\SqlDataConnect.cs"/>
+        <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Security\HtmlValidator.cs"/>
+        <Compile Include="Security\Impersonator.cs"/>
+        <Compile Include="Testing\RandomValueGenerator.cs"/>
+        <Compile Include="UI\BusinessObj\DataTableGridView.cs"/>
+        <Compile Include="UI\BusinessObj\SearchResults.cs"/>
+        <Compile Include="UI\Web\MvcHtmlHelpers\ExtensionMethods.cs"/>
+        <Compile Include="UI\Web\MvcHtmlHelpers\GridViews.cs"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="packages.config"/>
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+           Other similar extension points exist, see Microsoft.Common.targets.
+      <Target Name="BeforeBuild">
+      </Target>
+      <Target Name="AfterBuild">
+      </Target>
+      -->
+</Project>
