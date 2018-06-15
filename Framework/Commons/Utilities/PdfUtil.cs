@@ -34,7 +34,10 @@ namespace Framework.Commons.Utilities
             // set the header HTML area 
             try
             {
-                if (!File.Exists(path)) DownloadPdfHeader(headerUrl, path);
+                if (!File.Exists(path))
+                {
+                    DownloadPdfHeader(headerUrl, path);
+                }
             }
             catch (ArgumentNullException e)
             {
@@ -72,7 +75,10 @@ namespace Framework.Commons.Utilities
             pdfConverter.PdfFooterOptions.DrawFooterLine = false;
             try
             {
-                if (!File.Exists(path)) DownloadPdfFooter(footerUrl, path);
+                if (!File.Exists(path))
+                {
+                    DownloadPdfFooter(footerUrl, path);
+                }
             }
             catch (ArgumentNullException e)
             {

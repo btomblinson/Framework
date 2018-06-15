@@ -14,7 +14,10 @@ namespace Framework.DataAccess.ObjectMapping
             _dt = dt;
             _columnMap = new Dictionary<string, int>();
             int i = 0;
-            foreach (DataColumn column in dt.Columns) _columnMap.Add(column.ColumnName.ToUpper(), i++);
+            foreach (DataColumn column in dt.Columns)
+            {
+                _columnMap.Add(column.ColumnName.ToUpper(), i++);
+            }
         }
 
         public Dictionary<string, int> GetColumnMap()

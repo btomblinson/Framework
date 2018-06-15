@@ -39,7 +39,10 @@ namespace Framework.UI.BusinessObj
         {
             get
             {
-                if (HttpContext.Current.Session["DisableJqueryScript"] == null) return false;
+                if (HttpContext.Current.Session["DisableJqueryScript"] == null)
+                {
+                    return false;
+                }
 
                 bool s = (bool) HttpContext.Current.Session["DisableJqueryScript"];
                 return s;
@@ -80,7 +83,10 @@ namespace Framework.UI.BusinessObj
         {
             get
             {
-                if (HttpContext.Current.Session["DisableDataTablesScript"] == null) return false;
+                if (HttpContext.Current.Session["DisableDataTablesScript"] == null)
+                {
+                    return false;
+                }
 
                 bool s = (bool) HttpContext.Current.Session["DisableDataTablesScript"];
                 return s;
@@ -103,7 +109,10 @@ namespace Framework.UI.BusinessObj
         {
             get
             {
-                if (HttpContext.Current.Session["DisableDataTablesStyles"] == null) return false;
+                if (HttpContext.Current.Session["DisableDataTablesStyles"] == null)
+                {
+                    return false;
+                }
 
                 bool s = (bool) HttpContext.Current.Session["DisableDataTablesStyles"];
                 return s;
@@ -187,7 +196,10 @@ namespace Framework.UI.BusinessObj
         {
             get
             {
-                if (HttpContext.Current.Session["ProperCase"] == null) return false;
+                if (HttpContext.Current.Session["ProperCase"] == null)
+                {
+                    return false;
+                }
 
                 bool s = (bool) HttpContext.Current.Session["ProperCase"];
                 return s;

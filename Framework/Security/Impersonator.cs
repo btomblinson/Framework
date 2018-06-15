@@ -152,9 +152,15 @@ namespace Framework.Security
             }
             finally
             {
-                if (token != IntPtr.Zero) CloseHandle(token);
+                if (token != IntPtr.Zero)
+                {
+                    CloseHandle(token);
+                }
 
-                if (tokenDuplicate != IntPtr.Zero) CloseHandle(tokenDuplicate);
+                if (tokenDuplicate != IntPtr.Zero)
+                {
+                    CloseHandle(tokenDuplicate);
+                }
             }
         }
 

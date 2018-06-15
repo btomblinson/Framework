@@ -15,11 +15,13 @@ namespace Framework.DataAccess.ObjectMapping
                 var customAttrs =
                     (DataBinding[]) pi.GetCustomAttributes(typeof(DataBinding), true);
                 if (customAttrs.Length > 0)
+                {
                     propMap.Add(customAttrs[0].FieldName.ToUpper(), new PropertyInfoPlus
                     {
                         propertyInfo = pi,
                         dataBinding = customAttrs[0]
                     });
+                }
             }
 
             return propMap;

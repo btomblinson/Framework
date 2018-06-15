@@ -27,7 +27,10 @@ namespace Framework.DataAccess.ObjectMapping
 
             IDataWrapper dtw = new DataTableWrapper(dt);
 
-            if (dt != null && dt.Rows != null && dt.Rows.Count > 0) mapper.MapRow(dtw, 0, result);
+            if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+            {
+                mapper.MapRow(dtw, 0, result);
+            }
 
             return result;
         }

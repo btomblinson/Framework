@@ -37,6 +37,7 @@ namespace Framework.DataAccess.ObjectMapping
         {
             var columnMap = fromRow.GetColumnMap();
             foreach (string databaseFieldName in columnMap.Keys)
+            {
                 if (_namePropMap.ContainsKey(databaseFieldName))
                 {
                     int indexOfField = columnMap[databaseFieldName];
@@ -68,9 +69,13 @@ namespace Framework.DataAccess.ObjectMapping
                         else if (pi.PropertyType.IsEnum)
                         {
                             if (objToConvert.GetType() == typeof(string))
+                            {
                                 newObject = Enum.Parse(pi.PropertyType, objToConvert.ToString());
+                            }
                             else
+                            {
                                 newObject = Enum.ToObject(pi.PropertyType, Convert.ToInt32(objToConvert));
+                            }
                         }
                         else
                         {
@@ -105,6 +110,7 @@ namespace Framework.DataAccess.ObjectMapping
                         toObject,
                         new[] {newObject});
                 }
+            }
         }
 
         private static bool ValidateJson(string s)
@@ -112,6 +118,7 @@ namespace Framework.DataAccess.ObjectMapping
             s = s.Trim();
             if (s.StartsWith("{") && s.EndsWith("}") || //For object
                 s.StartsWith("[") && s.EndsWith("]")) //For array
+            {
                 try
                 {
                     JToken.Parse(s);
@@ -125,6 +132,7 @@ namespace Framework.DataAccess.ObjectMapping
                 {
                     return false;
                 }
+            }
 
             return false;
         }

@@ -61,7 +61,10 @@ namespace Framework.UI.Web.MvcHtmlHelpers
         public static MvcHtmlString TextAreaFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, string prefix,
             Expression<Func<TModel, TProperty>> expression, object htmlAttributes)
         {
-            if (expression == null) throw new ArgumentNullException(nameof(expression));
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
 
             ModelMetadata modelMetadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
             string value = modelMetadata.Model?.ToString() ?? string.Empty;
@@ -108,8 +111,12 @@ namespace Framework.UI.Web.MvcHtmlHelpers
 
             IEnumerable<SelectListItem> selectListItems = selectList.ToList();
             foreach (SelectListItem item in selectListItems)
+            {
                 if (item.Value.EqualsIgnoreCase(value))
+                {
                     item.Selected = true;
+                }
+            }
 
             return helper.DropDownList($"{prefix}{ExpressionHelper.GetExpressionText(expression)}", selectListItems,
                 htmlAttributes);

@@ -89,10 +89,19 @@ namespace Framework.DataAccess
             SqlDataAccessContainer dac = new SqlDataAccessContainer();
 
             if (parameters != null)
+            {
                 foreach (SqlDataAccessParameter parameter in parameters)
+                {
                     if (parameter != null && parameter.Value != null && parameter.Value.Length > 0)
+                    {
                         dac.Add(parameter);
-                    else if (parameter != null && parameter.ObjectValue != null) dac.Add(parameter);
+                    }
+                    else if (parameter != null && parameter.ObjectValue != null)
+                    {
+                        dac.Add(parameter);
+                    }
+                }
+            }
 
             infoDataSet.DS = null;
             infoDataSet.Error = "";
@@ -130,13 +139,23 @@ namespace Framework.DataAccess
             SqlDataAccessContainer dac = new SqlDataAccessContainer();
 
             if (parameters != null)
+            {
                 foreach (SqlDataAccessParameter parameter in parameters)
+                {
                     if (parameter != null && parameter.Value != null && parameter.Value.Length > 0)
+                    {
                         dac.Add(parameter);
+                    }
                     else if (parameter != null && parameter.ObjectValue != null)
+                    {
                         dac.Add(parameter);
+                    }
                     else
+                    {
                         dac.Add(new SqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
+                    }
+                }
+            }
 
             infoDataSet.DS = null;
             infoDataSet.Error = "";
@@ -177,7 +196,10 @@ namespace Framework.DataAccess
             SqlDataAccessContainer dac = new SqlDataAccessContainer();
             if (TokenGenerator.CompareTokens(encryptedToken, unencryptedToken))
             {
-                foreach (SqlDataAccessParameter parameter in parameters) dac.Add(parameter);
+                foreach (SqlDataAccessParameter parameter in parameters)
+                {
+                    dac.Add(parameter);
+                }
 
                 infoDataSet.DS = null;
                 infoDataSet.Error = "";
@@ -224,13 +246,23 @@ namespace Framework.DataAccess
             if (TokenGenerator.CompareTokens(encryptedToken, unencryptedToken))
             {
                 if (parameters != null)
+                {
                     foreach (SqlDataAccessParameter parameter in parameters)
+                    {
                         if (parameter != null && parameter.Value != null && parameter.Value.Length > 0)
+                        {
                             dac.Add(parameter);
+                        }
                         else if (parameter != null && parameter.ObjectValue != null)
+                        {
                             dac.Add(parameter);
+                        }
                         else
+                        {
                             dac.Add(new SqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
+                        }
+                    }
+                }
 
 
                 infoDataSet.DS = null;
@@ -274,7 +306,10 @@ namespace Framework.DataAccess
             DtoDataSet infoDataSet = new DtoDataSet();
             SqlDataAccessContainer dac = new SqlDataAccessContainer();
 
-            foreach (SqlDataAccessParameter parameter in parameters) dac.Add(parameter);
+            foreach (SqlDataAccessParameter parameter in parameters)
+            {
+                dac.Add(parameter);
+            }
 
             string Error = string.Empty;
             ReturnObj objReturn = new ReturnObj();
@@ -282,7 +317,10 @@ namespace Framework.DataAccess
             {
                 long ReturnValue;
                 ReturnValue = _sqlDataConnect.updateData(procedureName, ref Error, dac);
-                if (ReturnValue <= 0) objReturn.Error = Error;
+                if (ReturnValue <= 0)
+                {
+                    objReturn.Error = Error;
+                }
 
                 objReturn.Result = ReturnValue;
             }
@@ -309,12 +347,20 @@ namespace Framework.DataAccess
             SqlDataAccessContainer dac = new SqlDataAccessContainer();
 
             foreach (SqlDataAccessParameter parameter in parameters)
+            {
                 if (parameter != null && parameter.Value != null && parameter.Value.Length > 0)
+                {
                     dac.Add(parameter);
+                }
                 else if (parameter != null && parameter.ObjectValue != null)
+                {
                     dac.Add(parameter);
+                }
                 else
+                {
                     dac.Add(new SqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
+                }
+            }
 
             string Error = string.Empty;
             ReturnObj objReturn = new ReturnObj();
@@ -322,7 +368,10 @@ namespace Framework.DataAccess
             {
                 long ReturnValue;
                 ReturnValue = _sqlDataConnect.updateData(procedureName, ref Error, dac);
-                if (ReturnValue <= 0) objReturn.Error = Error;
+                if (ReturnValue <= 0)
+                {
+                    objReturn.Error = Error;
+                }
 
                 objReturn.Result = ReturnValue;
             }
@@ -354,7 +403,10 @@ namespace Framework.DataAccess
             {
                 SqlDataAccessContainer dac = new SqlDataAccessContainer();
 
-                foreach (SqlDataAccessParameter parameter in parameters) dac.Add(parameter);
+                foreach (SqlDataAccessParameter parameter in parameters)
+                {
+                    dac.Add(parameter);
+                }
 
                 try
                 {
@@ -406,12 +458,20 @@ namespace Framework.DataAccess
                 SqlDataAccessContainer dac = new SqlDataAccessContainer();
 
                 foreach (SqlDataAccessParameter parameter in parameters)
+                {
                     if (parameter != null && parameter.Value != null && parameter.Value.Length > 0)
+                    {
                         dac.Add(parameter);
+                    }
                     else if (parameter != null && parameter.ObjectValue != null)
+                    {
                         dac.Add(parameter);
+                    }
                     else
+                    {
                         dac.Add(new SqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
+                    }
+                }
 
                 try
                 {

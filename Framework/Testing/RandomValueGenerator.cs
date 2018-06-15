@@ -39,7 +39,10 @@ namespace Framework.Testing
             int length = RandomNumber(minLength, maxLength);
 
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < length; i++) sb.Append(allowedChars[RandomNumber(0, allowedChars.Length - 1)]);
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append(allowedChars[RandomNumber(0, allowedChars.Length - 1)]);
+            }
 
             return sb.ToString();
         }
@@ -76,7 +79,10 @@ namespace Framework.Testing
             {
                 string value = dropdown.Select(m => m.Value).ToList()[RandomNumber(0, dropdown.Count - 1)];
                 int numericValue = int.TryParse(value, out int output) ? output : 0;
-                if (!values.Contains(numericValue)) values.Add(numericValue);
+                if (!values.Contains(numericValue))
+                {
+                    values.Add(numericValue);
+                }
             }
 
             return values;
@@ -92,7 +98,10 @@ namespace Framework.Testing
             {
                 string value = dropdown.Select(m => m.Value).ToList()[RandomNumber(1, dropdown.Count - 1)];
                 int numericValue = int.TryParse(value, out int output) ? output : 0;
-                if (!values.Contains(numericValue)) values.Add(numericValue);
+                if (!values.Contains(numericValue))
+                {
+                    values.Add(numericValue);
+                }
             }
 
             return values;
@@ -107,7 +116,10 @@ namespace Framework.Testing
             while (values.Count < count)
             {
                 string value = dropdown.Select(m => m.Value).ToList()[RandomNumber(0, dropdown.Count - 1)];
-                if (!values.Contains(value)) values.Add(value);
+                if (!values.Contains(value))
+                {
+                    values.Add(value);
+                }
             }
 
             return values;
@@ -122,7 +134,10 @@ namespace Framework.Testing
             while (values.Count < count)
             {
                 string value = dropdown.Select(m => m.Value).ToList()[RandomNumber(1, dropdown.Count - 1)];
-                if (!values.Contains(value)) values.Add(value);
+                if (!values.Contains(value))
+                {
+                    values.Add(value);
+                }
             }
 
             return values;
@@ -251,7 +266,10 @@ namespace Framework.Testing
             int length = RandomNumber(10, 10);
 
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < length; i++) sb.Append(allowedChars[RandomNumber(0, allowedChars.Length - 1)]);
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append(allowedChars[RandomNumber(0, allowedChars.Length - 1)]);
+            }
 
             return sb.ToString();
         }

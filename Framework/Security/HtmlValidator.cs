@@ -57,7 +57,10 @@ namespace Framework.Security
         /// <returns>true if valid and false if not valid</returns>
         public static bool CheckRequired(string text)
         {
-            if (string.IsNullOrWhiteSpace(text)) return false;
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return false;
+            }
 
             return true;
         }
@@ -70,7 +73,10 @@ namespace Framework.Security
         /// <returns>true if valid and false if not valid</returns>
         public static bool CheckAgainstRegularExpression(string text, string regExpression)
         {
-            if (!new Regex(regExpression).IsMatch(text)) return false;
+            if (!new Regex(regExpression).IsMatch(text))
+            {
+                return false;
+            }
 
             return true;
         }
@@ -83,8 +89,12 @@ namespace Framework.Security
         public static bool CheckOneValueNotBlank(params string[] values)
         {
             foreach (string value in values)
+            {
                 if (!string.IsNullOrWhiteSpace(value) && value != "-1")
+                {
                     return true;
+                }
+            }
 
             return false;
         }
@@ -99,11 +109,18 @@ namespace Framework.Security
         {
             int countNotBlank = 0;
             foreach (string value in values)
+            {
                 if (!string.IsNullOrWhiteSpace(value) && value != "-1")
+                {
                     countNotBlank++;
+                }
+            }
 
             if (countNotBlank >= numNotBlank)
+            {
                 return true;
+            }
+
             return false;
         }
 
@@ -117,7 +134,9 @@ namespace Framework.Security
         {
             // Blank text will cause regular expression to fail automatically.
             if (!string.IsNullOrWhiteSpace(text))
+            {
                 return CheckAgainstRegularExpression(text, @"^[a-zA-Z0-9 &\-,.'\/\s\$\?]*$");
+            }
 
             return true;
         }
@@ -130,7 +149,9 @@ namespace Framework.Security
         public static bool CheckValidUrl(string url)
         {
             if (!string.IsNullOrWhiteSpace(url))
+            {
                 return CheckAgainstRegularExpression(url, @"^http(s)?://([\w-]+.)+[\w-]+(/[\w- ./?%&=])?$");
+            }
 
             return true;
         }
@@ -143,7 +164,10 @@ namespace Framework.Security
         public static bool CheckValidYear(string text)
         {
             // Blank text will cause regular expression to fail automatically.
-            if (!string.IsNullOrWhiteSpace(text)) return CheckAgainstRegularExpression(text, @"^\d{4}");
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                return CheckAgainstRegularExpression(text, @"^\d{4}");
+            }
 
             return true;
         }
@@ -156,7 +180,10 @@ namespace Framework.Security
         /// <returns>true if valid and false if not valid</returns>
         public static bool CheckValidNumber(string text)
         {
-            if (!new Regex("^[0-9]*$").IsMatch(text)) return false;
+            if (!new Regex("^[0-9]*$").IsMatch(text))
+            {
+                return false;
+            }
 
             return true;
         }
@@ -168,7 +195,10 @@ namespace Framework.Security
         /// <returns>true if valid and false if not valid</returns>
         public static bool CheckValidNumberMoney(string text)
         {
-            if (!new Regex(@"^(?:\$)?(?:\d+|\d{1,3}(?:,\d{3})*)(?:\.\d{1,2})?$").IsMatch(text)) return false;
+            if (!new Regex(@"^(?:\$)?(?:\d+|\d{1,3}(?:,\d{3})*)(?:\.\d{1,2})?$").IsMatch(text))
+            {
+                return false;
+            }
 
             return true;
         }
@@ -180,7 +210,10 @@ namespace Framework.Security
         /// <returns>true if valid and false if not valid</returns>
         public static bool CheckValidNumberMoneyAllowNegatives(string text)
         {
-            if (!new Regex(@"^(?:\$)?(?:-)?(?:\d+|\d{1,3}(?:,\d{3})*)(?:\.\d{1,2})?$").IsMatch(text)) return false;
+            if (!new Regex(@"^(?:\$)?(?:-)?(?:\d+|\d{1,3}(?:,\d{3})*)(?:\.\d{1,2})?$").IsMatch(text))
+            {
+                return false;
+            }
 
             return true;
         }
@@ -198,6 +231,7 @@ namespace Framework.Security
         {
             bool isValidated = true;
             foreach (ValidateCheck validateCheck in validateChecks)
+            {
                 switch (validateCheck)
                 {
                     case ValidateCheck.Required:
@@ -257,6 +291,7 @@ namespace Framework.Security
 
                         break;
                 }
+            }
 
             return isValidated;
         }
@@ -294,7 +329,10 @@ namespace Framework.Security
                         break;
                 }
 
-                if (!isValidated) return false;
+                if (!isValidated)
+                {
+                    return false;
+                }
             }
 
             return isValidated;
@@ -310,8 +348,12 @@ namespace Framework.Security
         {
             string Extension = Path.GetExtension(Filename);
             foreach (string value in ValidFileTypes)
+            {
                 if (Extension.ToLower() == value)
+                {
                     return true;
+                }
+            }
 
             return false;
         }

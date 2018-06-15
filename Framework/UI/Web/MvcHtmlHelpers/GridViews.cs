@@ -48,40 +48,56 @@ namespace Framework.UI.Web.MvcHtmlHelpers
                     MaxDisplayRow = Model.RecordsPerPage - 1;
                 }
 
-                if (MaxDisplayRow >= Model.RecordCount) MaxDisplayRow = Model.RecordCount - 1;
+                if (MaxDisplayRow >= Model.RecordCount)
+                {
+                    MaxDisplayRow = Model.RecordCount - 1;
+                }
 
                 //Set Up label to show what records the user is currently viewing
                 if (Model.RecordCount == 1)
+                {
                     lblCount = "Showing 1 Record";
+                }
                 else if (Model.RecordCount > Model.RecordsPerPage)
+                {
                     lblCount = "Showing records <span class='MinDisplayNum'>" + (MinDisplayRow + 1) +
                                "</span> thru <span class='MaxDisplayNum'>"
                                + (MaxDisplayRow + 1) + "</span> of <span class='TotalDisplayNum'>" + Model.RecordCount +
                                "</span> ";
+                }
                 else
+                {
                     lblCount = "Showing records <span class='MinDisplayNum'>1</span> thru <span class='MaxDisplayNum'>"
                                + Model.RecordCount + "</span> of <span class='TotalDisplayNum'> " + Model.RecordCount +
                                "</span> ";
+                }
 
                 Result += "<div id='" + Model.TableId + "_Wrappper'class='SmartGrid_Wrapper'> ";
 
                 if (Model.RecordCount == Model.RecordLimit)
+                {
                     Result += "<span class='error'> Your request retrieved many results. Only " + Model.RecordLimit +
                               " results were returned. Please narrow your search criteria to retrieve better results.</span>";
+                }
 
                 Result += "<div id='" + Model.TableId + "_GridProperties' class='SmartGridProperties' >";
                 Result += "<div id='" + Model.TableId + "_RecordMessage' class='RecordMessage'><span>" + lblCount +
                           "</span></div> ";
 
                 if (!string.IsNullOrWhiteSpace(Model.TableCaption))
+                {
                     Result += "<span class='TableCaption'>" + Model.TableCaption + "</span> ";
+                }
 
                 //Display Paging Algorithm 
                 PageRow = "<span class='GridPager'><table><tbody><tr><td><span class='PagerCaption'>Page</span></td> ";
                 MaxPageRange = (int) (Math.Ceiling((decimal) Model.CurrentPage / 10) * 10);
 
                 //When Page One
-                if (MaxPageRange <= 10 && Model.TotalPages <= 10) MaxPageRange = Model.TotalPages;
+                if (MaxPageRange <= 10 && Model.TotalPages <= 10)
+                {
+                    MaxPageRange = Model.TotalPages;
+                }
 
                 if (MaxPageRange >= Model.TotalPages && MaxPageRange > 11)
                 {
@@ -118,11 +134,15 @@ namespace Framework.UI.Web.MvcHtmlHelpers
                     {
                         //Bold CurrentPage
                         if (MinPageRange == Model.CurrentPage)
+                        {
                             PageRow += "<td class='PagerCurrentPage'>" + MinPageRange + "</td> ";
+                        }
                         else
+                        {
                             PageRow += "<td class='PagerPageNum'>" + helper.ActionLink(MinPageRange.ToString(),
                                            PageAcion, PageControllerName,
                                            new {PageNumber = MinPageRange.ToString()}, null) + "</td> ";
+                        }
                     }
 
                     MinPageRange++;
@@ -130,7 +150,9 @@ namespace Framework.UI.Web.MvcHtmlHelpers
                 }
 
                 if (Model.pagerPosition == PagerPosition.Top || Model.pagerPosition == PagerPosition.Both)
+                {
                     Result += PageRow + "</tr></tbody></table></span></div> ";
+                }
 
                 Result += "<table id='" + Model.TableId +
                           "' class='SmartGrid' role='grid'><tbody><tr data-sortable='true'> ";
@@ -140,9 +162,13 @@ namespace Framework.UI.Web.MvcHtmlHelpers
                     string SpecialColumnValue = "";
                     if (Model.SpecialColumnAliases != null &&
                         Model.SpecialColumnAliases.TryGetValue(col.Caption, out SpecialColumnValue))
+                    {
                         Result += "<th class='" + col.Caption + "'>" + SpecialColumnValue + "</th> ";
+                    }
                     else
+                    {
                         Result += "<th class='" + col.Caption + "'>" + col.Caption.ToProperCase() + "</th> ";
+                    }
                 }
 
                 Result += "</tr> ";
@@ -167,7 +193,9 @@ namespace Framework.UI.Web.MvcHtmlHelpers
                 Result += "</tbody></table>";
 
                 if (Model.pagerPosition == PagerPosition.Bottom || Model.pagerPosition == PagerPosition.Both)
+                {
                     Result += PageRow + "</tr></tbody></table></span>";
+                }
 
                 Result += "</div>";
                 return helper.Raw(Result);
@@ -188,15 +216,22 @@ namespace Framework.UI.Web.MvcHtmlHelpers
             //first off check and see if we have to create the jQuery and DataTable script and link tags
 
             //jQuery
-            if (!Model.DisableJqueryScript) sb.Append("<script src='" + Model.JqueryScriptUrl + "'></script>");
+            if (!Model.DisableJqueryScript)
+            {
+                sb.Append("<script src='" + Model.JqueryScriptUrl + "'></script>");
+            }
 
             //jQuery DataTables JS
             if (!Model.DisableDataTablesScript)
+            {
                 sb.Append("<script src='" + Model.JqueryDataTableScriptUrl + "'></script>");
+            }
 
             //jQuery DataTables CSS
             if (!Model.DisableDataTablesStyles)
+            {
                 sb.Append("<link rel='styleheet' type='text/css' href='" + Model.JqueryDataTableCssUrl + "' />");
+            }
 
             //now build up the JQuery script that will turn the table into a DataTable
             sb.Append("<script>");
@@ -220,11 +255,17 @@ namespace Framework.UI.Web.MvcHtmlHelpers
                 string SpecialColumnValue = "";
                 if (Model.SpecialColumnAliases != null &&
                     Model.SpecialColumnAliases.TryGetValue(col.Caption, out SpecialColumnValue))
+                {
                     sb.Append("<th class='" + col.Caption + "'>" + SpecialColumnValue + "</th> ");
+                }
                 else if (!Model.ProperCase)
+                {
                     sb.Append("<th class='" + col.Caption + "'>" + col.Caption + "</th> ");
+                }
                 else
+                {
                     sb.Append("<th class='" + col.Caption + "'>" + col.Caption.ToProperCase() + "</th> ");
+                }
             }
 
             sb.Append("</tr>");

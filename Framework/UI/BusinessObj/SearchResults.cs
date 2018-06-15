@@ -38,14 +38,20 @@ namespace Framework.UI.BusinessObj
             SpecialColumnAliases = _SpecialColumnAliases;
             //If user doesn't specify an Id field stick with the random generated Id if its provided.  Else generate another unique id
             if (!string.IsNullOrWhiteSpace(_TableId))
+            {
                 TableId = _TableId;
+            }
 
 
             //If its null want to set it to new object to display error messages
             if (_Results == null)
+            {
                 Results = new DtoDataSet();
+            }
             else
+            {
                 Results = _Results;
+            }
 
 
             if (string.IsNullOrWhiteSpace(Results.Error) && Results.DS.Tables != null
@@ -53,15 +59,19 @@ namespace Framework.UI.BusinessObj
                                                          Results.DS.Tables[TableIndex].Rows.Count != 0)
             {
                 if (Results.DS.Tables[TableIndex].Rows.Count > RecordLimit)
+                {
                     Results.DS = ReplaceTable(Results.DS, TableIndex,
                         GetNRows(Results.DS.Tables[TableIndex], RecordLimit));
+                }
 
                 RecordCount = Results.DS.Tables[TableIndex].Rows.Count;
                 TotalPages = CountPages(RecordCount, RecordsPerPage);
             }
 
             if (CurrentPage != _CurrentPage && _CurrentPage > 0 && _CurrentPage <= TotalPages)
+            {
                 CurrentPage = _CurrentPage;
+            }
         }
 
         public DtoDataSet Results { get; set; }
@@ -89,13 +99,18 @@ namespace Framework.UI.BusinessObj
         private DataTable GetNRows(DataTable CurrentTable, int Limit)
         {
             DataTable temp = new DataTable();
-            foreach (DataColumn collumn in CurrentTable.Columns) temp.Columns.Add(collumn.ColumnName, collumn.DataType);
+            foreach (DataColumn collumn in CurrentTable.Columns)
+            {
+                temp.Columns.Add(collumn.ColumnName, collumn.DataType);
+            }
 
             for (int i = 0; i < Limit; i++)
             {
                 DataRow row = temp.Rows.Add();
                 foreach (DataColumn collumn in CurrentTable.Columns)
+                {
                     row[collumn.ColumnName] = CurrentTable.Rows[i][collumn.ColumnName];
+                }
             }
 
             return temp;
@@ -106,10 +121,16 @@ namespace Framework.UI.BusinessObj
             DataSet temp = new DataSet();
 
             for (int i = 0; i < CurrentDataset.Tables.Count; i++)
+            {
                 if (i != Index)
+                {
                     temp.Tables.Add(CurrentDataset.Tables[i]);
+                }
                 else
+                {
                     temp.Tables.Add(AdditionalTable);
+                }
+            }
 
             return temp;
         }
@@ -117,7 +138,9 @@ namespace Framework.UI.BusinessObj
         private int CountPages(int totalRecords, int recordsPerPage)
         {
             if (totalRecords == 0 || totalRecords <= recordsPerPage)
+            {
                 return 1;
+            }
 
             return totalRecords % recordsPerPage == 0
                 ? totalRecords / recordsPerPage

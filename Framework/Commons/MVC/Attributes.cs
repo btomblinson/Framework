@@ -53,7 +53,9 @@ namespace Framework.Commons.MVC
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value != null && !states.ContainsKey(value.ToString().ToUpper()))
+            {
                 return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
+            }
 
             return null;
         }

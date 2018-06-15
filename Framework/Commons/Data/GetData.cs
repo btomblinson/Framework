@@ -18,7 +18,10 @@ namespace Framework.Commons.Data
         /// <returns>String value of cell. If datarow is null or value in cell is null, String.Empty is returned.</returns>
         public static string GetString(DataRow row, string columnName)
         {
-            if (row == null) return string.Empty;
+            if (row == null)
+            {
+                return string.Empty;
+            }
 
             try
             {
@@ -38,7 +41,10 @@ namespace Framework.Commons.Data
         /// <returns>String value of cell. If datarow is null or value in cell is null, String.Empty is returned.</returns>
         public static string GetString(DataRow row, int columnNumber)
         {
-            if (row == null) return string.Empty;
+            if (row == null)
+            {
+                return string.Empty;
+            }
 
             try
             {
@@ -58,7 +64,10 @@ namespace Framework.Commons.Data
         /// <returns>Integer value of cell. If datarow is null or value in cell is null, 0 is returned.</returns>
         public static int GetInt(DataRow row, string columnName)
         {
-            if (row == null) return 0;
+            if (row == null)
+            {
+                return 0;
+            }
 
             try
             {
@@ -78,7 +87,10 @@ namespace Framework.Commons.Data
         /// <returns>Boolean value of cell. If datarow is null or value in cell is null, false is returned.</returns>
         public static int GetInt(DataRow row, int columnNumber)
         {
-            if (row == null) return 0;
+            if (row == null)
+            {
+                return 0;
+            }
 
             try
             {
@@ -99,7 +111,10 @@ namespace Framework.Commons.Data
         /// <returns>Boolean value of cell. If datarow is null or value in cell is null, false is returned.</returns>
         public static bool GetBoolean(DataRow row, string columnName)
         {
-            if (row == null) return false;
+            if (row == null)
+            {
+                return false;
+            }
 
             try
             {
@@ -113,7 +128,10 @@ namespace Framework.Commons.Data
 
         public static bool GetBoolean(DataRow row, int columnNumber)
         {
-            if (row == null) return false;
+            if (row == null)
+            {
+                return false;
+            }
 
             try
             {
@@ -133,7 +151,10 @@ namespace Framework.Commons.Data
         public static Dictionary<string, int> GetRowMapper(DataRow row)
         {
             var rowMapper = new Dictionary<string, int>();
-            for (int i = 0; i < row.ItemArray.Count(); i++) rowMapper.Add(GetString(row, i), i);
+            for (int i = 0; i < row.ItemArray.Count(); i++)
+            {
+                rowMapper.Add(GetString(row, i), i);
+            }
 
             return rowMapper;
         }

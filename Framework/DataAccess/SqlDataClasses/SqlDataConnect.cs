@@ -62,6 +62,7 @@ namespace Framework.DataAccess.SqlDataClasses
         private void AddParameterValues(List<SqlDataAccessParameter> colAllParameters)
         {
             foreach (SqlDataAccessParameter dtoParam in colAllParameters)
+            {
                 if (dtoParam.ObjectValue == DBNull.Value)
                 {
                     cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
@@ -76,11 +77,17 @@ namespace Framework.DataAccess.SqlDataClasses
                             cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
+                            }
                             else if (dtoParam.ObjectValue != null)
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                            }
                             else
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = "";
+                            }
 
                             cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
@@ -89,11 +96,17 @@ namespace Framework.DataAccess.SqlDataClasses
                             cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToDecimal(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = Convert.ToDecimal(dtoParam.Value);
+                            }
                             else if (dtoParam.ObjectValue != null)
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                            }
                             else
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                            }
 
                             cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
@@ -102,11 +115,17 @@ namespace Framework.DataAccess.SqlDataClasses
                             cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
+                            }
                             else if (dtoParam.ObjectValue != null)
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                            }
                             else
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                            }
 
                             cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
@@ -115,11 +134,17 @@ namespace Framework.DataAccess.SqlDataClasses
                             cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt16(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt16(dtoParam.Value);
+                            }
                             else if (dtoParam.ObjectValue != null)
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                            }
                             else
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                            }
 
                             cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
@@ -128,11 +153,17 @@ namespace Framework.DataAccess.SqlDataClasses
                             cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt32(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt32(dtoParam.Value);
+                            }
                             else if (dtoParam.ObjectValue != null)
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                            }
                             else
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                            }
 
                             cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
@@ -141,11 +172,17 @@ namespace Framework.DataAccess.SqlDataClasses
                             cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToDateTime(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = Convert.ToDateTime(dtoParam.Value);
+                            }
                             else if (dtoParam.ObjectValue != null)
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                            }
                             else
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                            }
 
                             cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
@@ -154,11 +191,17 @@ namespace Framework.DataAccess.SqlDataClasses
                             cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
+                            }
                             else if (dtoParam.ObjectValue != null)
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                            }
                             else
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                            }
 
                             cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
@@ -167,22 +210,34 @@ namespace Framework.DataAccess.SqlDataClasses
                             cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
+                            }
                             else if (dtoParam.ObjectValue != null)
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = (byte[]) dtoParam.ObjectValue;
+                            }
                             else
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                            }
 
                             cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
                         case "Structured":
                             cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
+                            }
                             else if (dtoParam.ObjectValue != null)
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                            }
                             else
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                            }
 
                             // Set TypeName, this is used for table parameters
                             cmdSql.Parameters[dtoParam.Name].TypeName = dtoParam.TypeName;
@@ -193,16 +248,23 @@ namespace Framework.DataAccess.SqlDataClasses
                             cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             //cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
+                            }
                             else if (dtoParam.ObjectValue != null)
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                            }
                             else
+                            {
                                 cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                            }
 
                             cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
                     }
                 }
+            }
         }
 
         #region "Update/Add data"
@@ -220,7 +282,9 @@ namespace Framework.DataAccess.SqlDataClasses
             {
                 //add the parameters if they exist
                 if (dtoContainer != null)
+                {
                     AddParameterValues(dtoContainer.AllParameters());
+                }
 
                 //add the return value parameter
                 cmdSql.Parameters.Add("@RETURN_VALUE", SqlDbType.Int);
@@ -242,7 +306,9 @@ namespace Framework.DataAccess.SqlDataClasses
 
                 //check for transactions
                 if (bolTran)
+                {
                     cmdSql.Transaction = oTran;
+                }
 
                 cmdSql.ExecuteNonQuery();
                 long nReturn = long.Parse(cmdSql.Parameters["@RETURN_VALUE"].Value.ToString());
@@ -255,7 +321,10 @@ namespace Framework.DataAccess.SqlDataClasses
 
             catch (Exception e)
             {
-                if (bolTran) rollBackTransaction();
+                if (bolTran)
+                {
+                    rollBackTransaction();
+                }
 
                 sError = e.Message;
                 cmdSql.Parameters.Clear();
@@ -264,7 +333,10 @@ namespace Framework.DataAccess.SqlDataClasses
             finally
             {
                 closeConnection();
-                if (cmdSql != null && bolTran == false) cmdSql.Dispose();
+                if (cmdSql != null && bolTran == false)
+                {
+                    cmdSql.Dispose();
+                }
             }
         }
 
@@ -298,21 +370,34 @@ namespace Framework.DataAccess.SqlDataClasses
 
                 //check for transactions
                 if (bolTran)
+                {
                     cmdSql.Transaction = oTran;
+                }
 
                 object nReturn = cmdSql.ExecuteScalar();
 
                 cmdSql.Connection = null;
                 cmdSql.Parameters.Clear();
 
-                if (nReturn == null) return 0;
-                if (nReturn.ToString() == string.Empty) return 0;
+                if (nReturn == null)
+                {
+                    return 0;
+                }
+
+                if (nReturn.ToString() == string.Empty)
+                {
+                    return 0;
+                }
+
                 return int.Parse(nReturn.ToString());
             }
 
             catch (Exception e)
             {
-                if (bolTran) rollBackTransaction();
+                if (bolTran)
+                {
+                    rollBackTransaction();
+                }
 
                 sError = e.Message;
                 cmdSql.Parameters.Clear();
@@ -321,7 +406,10 @@ namespace Framework.DataAccess.SqlDataClasses
             finally
             {
                 closeConnection();
-                if (cmdSql != null && bolTran == false) cmdSql.Dispose();
+                if (cmdSql != null && bolTran == false)
+                {
+                    cmdSql.Dispose();
+                }
             }
         }
 
@@ -351,7 +439,9 @@ namespace Framework.DataAccess.SqlDataClasses
 
                 //check for transactions
                 if (bolTran)
+                {
                     cmdSql.Transaction = oTran;
+                }
 
                 int nReturn = cmdSql.ExecuteNonQuery();
 
@@ -360,7 +450,10 @@ namespace Framework.DataAccess.SqlDataClasses
 
             catch (Exception e)
             {
-                if (bolTran) rollBackTransaction();
+                if (bolTran)
+                {
+                    rollBackTransaction();
+                }
 
                 sError = e.Message;
                 return -1;
@@ -368,7 +461,10 @@ namespace Framework.DataAccess.SqlDataClasses
             finally
             {
                 closeConnection();
-                if (cmdSql != null && bolTran == false) cmdSql.Dispose();
+                if (cmdSql != null && bolTran == false)
+                {
+                    cmdSql.Dispose();
+                }
             }
         }
 
@@ -384,7 +480,9 @@ namespace Framework.DataAccess.SqlDataClasses
             try
             {
                 if (numberRecordsUpdated < 1)
+                {
                     throw new Exception("The number of records modified needs to be greater than 0.");
+                }
 
                 //check for connection strings here
                 if (OpenConnection())
@@ -404,14 +502,19 @@ namespace Framework.DataAccess.SqlDataClasses
 
                 //check for transactions
                 if (bolTran)
+                {
                     cmdSql.Transaction = oTran;
+                }
 
                 //append the scope_identity her
                 int nReturn = cmdSql.ExecuteNonQuery();
                 if (nReturn != numberRecordsUpdated)
+                {
                     throw new Exception("The number of records to be updated is: " + nReturn +
                                         ", but the desired number of records to modify was: " + numberRecordsUpdated +
                                         ".  Transaction is rolled back.");
+                }
+
                 endTransaction();
 
                 return nReturn;
@@ -419,7 +522,10 @@ namespace Framework.DataAccess.SqlDataClasses
 
             catch (Exception e)
             {
-                if (bolTran) rollBackTransaction();
+                if (bolTran)
+                {
+                    rollBackTransaction();
+                }
 
                 sError = e.Message;
                 return -1;
@@ -427,7 +533,10 @@ namespace Framework.DataAccess.SqlDataClasses
             finally
             {
                 closeConnection();
-                if (cmdSql != null && bolTran == false) cmdSql.Dispose();
+                if (cmdSql != null && bolTran == false)
+                {
+                    cmdSql.Dispose();
+                }
             }
         }
 
@@ -460,7 +569,10 @@ namespace Framework.DataAccess.SqlDataClasses
         {
             try
             {
-                if (conDB != null) conDB = null;
+                if (conDB != null)
+                {
+                    conDB = null;
+                }
 
                 conDB = new SqlConnection(_conn);
                 return true;
@@ -479,6 +591,7 @@ namespace Framework.DataAccess.SqlDataClasses
         public bool OpenConnection()
         {
             if (conDB != null)
+            {
                 try
                 {
                     if (conDB.State != ConnectionState.Open)
@@ -487,13 +600,17 @@ namespace Framework.DataAccess.SqlDataClasses
                         return true;
                     }
 
-                    if (conDB.State == ConnectionState.Open) return true;
+                    if (conDB.State == ConnectionState.Open)
+                    {
+                        return true;
+                    }
                 }
                 catch (Exception e)
                 {
                     logMsg = e.Message;
                     return false;
                 }
+            }
 
             return false;
         }
@@ -505,6 +622,7 @@ namespace Framework.DataAccess.SqlDataClasses
         public bool closeConnection()
         {
             if (conDB != null && bolTran == false)
+            {
                 try
                 {
                     if (conDB.State != ConnectionState.Closed)
@@ -523,6 +641,7 @@ namespace Framework.DataAccess.SqlDataClasses
                     logMsg = e.Message;
                     return false;
                 }
+            }
 
             return false;
         }
@@ -533,11 +652,13 @@ namespace Framework.DataAccess.SqlDataClasses
         public void startTransaction()
         {
             if (OpenConnection())
+            {
                 if (oTran == null)
                 {
                     oTran = conDB.BeginTransaction();
                     bolTran = true;
                 }
+            }
         }
 
         /// <summary>
@@ -587,7 +708,9 @@ namespace Framework.DataAccess.SqlDataClasses
             {
                 //add the parameters if they exist
                 if (dtoContainer != null)
+                {
                     AddParameterValues(dtoContainer.AllParameters());
+                }
 
                 if (OpenConnection())
                 {
@@ -613,14 +736,19 @@ namespace Framework.DataAccess.SqlDataClasses
             {
                 sError = ex.Message;
                 if (cmdSql != null)
+                {
                     cmdSql.Parameters.Clear();
+                }
 
                 return false;
             }
             finally
             {
                 closeConnection();
-                if (cmdSql != null && bolTran == false) cmdSql.Dispose();
+                if (cmdSql != null && bolTran == false)
+                {
+                    cmdSql.Dispose();
+                }
             }
         }
 
@@ -659,14 +787,19 @@ namespace Framework.DataAccess.SqlDataClasses
             {
                 sError = ex.Message;
                 if (cmdSql != null)
+                {
                     cmdSql.Parameters.Clear();
+                }
 
                 return false;
             }
             finally
             {
                 closeConnection();
-                if (cmdSql != null && bolTran == false) cmdSql.Dispose();
+                if (cmdSql != null && bolTran == false)
+                {
+                    cmdSql.Dispose();
+                }
             }
         }
 

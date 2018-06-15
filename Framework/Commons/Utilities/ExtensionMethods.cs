@@ -74,12 +74,18 @@ namespace Framework.Commons.Utilities
             {
                 DataRow dr = transposedTable.NewRow();
 
-                for (int k = 0; k < dt.Rows.Count; k++) dr[k] = dt.Rows[k][j];
+                for (int k = 0; k < dt.Rows.Count; k++)
+                {
+                    dr[k] = dt.Rows[k][j];
+                }
 
                 transposedTable.Rows.Add(dr);
             }
 
-            if (removeFirstRow) transposedTable.Rows[0].Delete();
+            if (removeFirstRow)
+            {
+                transposedTable.Rows[0].Delete();
+            }
 
             return transposedTable;
         }
@@ -109,8 +115,13 @@ namespace Framework.Commons.Utilities
             if (!string.IsNullOrEmpty(str2))
             {
                 if (str2.Length > maxLength)
+                {
                     str2 = str2.Substring(0, maxLength - 1);
-                else if (str2.Length < maxLength) str2 += AddRepeatingChar(' ', str2.Length - maxLength);
+                }
+                else if (str2.Length < maxLength)
+                {
+                    str2 += AddRepeatingChar(' ', str2.Length - maxLength);
+                }
 
                 str1 += str2;
             }
@@ -133,8 +144,12 @@ namespace Framework.Commons.Utilities
             string returnString = "";
 
             if (length > 0)
+            {
                 for (int i = 0; i < length; i++)
+                {
                     returnString += character;
+                }
+            }
 
             return returnString;
         }
@@ -148,8 +163,13 @@ namespace Framework.Commons.Utilities
         public static string Left(this string sValue, int iMaxLength)
         {
             if (string.IsNullOrEmpty(sValue))
+            {
                 sValue = string.Empty;
-            else if (sValue.Length > iMaxLength) return sValue.Substring(0, iMaxLength);
+            }
+            else if (sValue.Length > iMaxLength)
+            {
+                return sValue.Substring(0, iMaxLength);
+            }
 
             return sValue;
         }
@@ -164,8 +184,13 @@ namespace Framework.Commons.Utilities
         {
             //Check if the value is valid
             if (string.IsNullOrEmpty(sValue))
+            {
                 sValue = string.Empty;
-            else if (sValue.Length > iMaxLength) sValue = sValue.Substring(sValue.Length - iMaxLength);
+            }
+            else if (sValue.Length > iMaxLength)
+            {
+                sValue = sValue.Substring(sValue.Length - iMaxLength);
+            }
 
             //Return the string
             return sValue;
@@ -180,13 +205,22 @@ namespace Framework.Commons.Utilities
         public static bool IsNullOrEmpty<T>(this T argument)
         {
             // deal with normal scenarios
-            if (argument == null) return true;
+            if (argument == null)
+            {
+                return true;
+            }
 
-            if (Equals(argument, default(T))) return true;
+            if (Equals(argument, default(T)))
+            {
+                return true;
+            }
 
             // deal with non-null nullables
             Type methodType = typeof(T);
-            if (Nullable.GetUnderlyingType(methodType) != null) return false;
+            if (Nullable.GetUnderlyingType(methodType) != null)
+            {
+                return false;
+            }
 
             // deal with boxed value types
             Type argumentType = argument.GetType();
@@ -242,7 +276,10 @@ namespace Framework.Commons.Utilities
         /// <returns>Beginning part of the string with maximum length being the value passed in</returns>
         public static string MaxLength(this string str1, int maxLength)
         {
-            if (!string.IsNullOrWhiteSpace(str1) && str1.Length > maxLength) return str1.Substring(0, maxLength - 1);
+            if (!string.IsNullOrWhiteSpace(str1) && str1.Length > maxLength)
+            {
+                return str1.Substring(0, maxLength - 1);
+            }
 
             return str1;
         }
@@ -299,7 +336,9 @@ namespace Framework.Commons.Utilities
                     DataRow row = t.NewRow();
 
                     foreach (PropertyInfo propInfo in elementType.GetProperties())
+                    {
                         row[propInfo.Name] = propInfo.GetValue(item, null) ?? DBNull.Value;
+                    }
 
                     t.Rows.Add(row);
                 }
@@ -317,8 +356,12 @@ namespace Framework.Commons.Utilities
         public static bool IsInAnyRole(this IPrincipal user, List<string> roles)
         {
             foreach (string role in roles)
+            {
                 if (user.IsInRole(role.Trim()))
+                {
                     return true;
+                }
+            }
 
             return false;
         }
@@ -359,7 +402,9 @@ namespace Framework.Commons.Utilities
             DataRow row = t.NewRow();
 
             foreach (PropertyInfo propInfo in elementType.GetProperties())
+            {
                 row[propInfo.Name] = propInfo.GetValue(obj, null) ?? DBNull.Value;
+            }
 
             t.Rows.Add(row);
 
@@ -390,7 +435,9 @@ namespace Framework.Commons.Utilities
                 DataRow row = t.NewRow();
 
                 foreach (PropertyInfo propInfo in elementType.GetProperties())
+                {
                     row[propInfo.Name] = propInfo.GetValue(item, null) ?? DBNull.Value;
+                }
 
                 t.Rows.Add(row);
             }
@@ -404,7 +451,10 @@ namespace Framework.Commons.Utilities
         /// <param name="value">Value to add</param>
         public static IEnumerable<T> Add<T>(this IEnumerable<T> e, T value)
         {
-            foreach (T cur in e) yield return cur;
+            foreach (T cur in e)
+            {
+                yield return cur;
+            }
 
             yield return value;
         }
@@ -424,7 +474,10 @@ namespace Framework.Commons.Utilities
             newRow.ItemArray = row.ItemArray;
             table.Rows.Add(newRow);
             var list = new MappingService().MapDataTable<T>(table);
-            if (list != null && list.Count > 0) return list[0];
+            if (list != null && list.Count > 0)
+            {
+                return list[0];
+            }
 
             return new T();
         }
@@ -451,7 +504,10 @@ namespace Framework.Commons.Utilities
         /// <returns></returns>
         public static string ToProperCase(this string the_string)
         {
-            if (string.IsNullOrEmpty(the_string)) return "";
+            if (string.IsNullOrEmpty(the_string))
+            {
+                return "";
+            }
 
             const string pattern = @"(?<=\w)(?=[A-Z])";
             string result = Regex.Replace(the_string, pattern,
@@ -479,7 +535,10 @@ namespace Framework.Commons.Utilities
         /// <returns></returns>
         public static bool EarlierThan(this DateTime? date1, DateTime date2)
         {
-            if (date1.IsMissing()) return false;
+            if (date1.IsMissing())
+            {
+                return false;
+            }
 
             DateTime d = date1 ?? DateTime.Now;
             return d.EarlierThan(date2);
@@ -493,7 +552,10 @@ namespace Framework.Commons.Utilities
         /// <returns></returns>
         public static bool EarlierThan(this DateTime? date1, DateTime? date2)
         {
-            if (date1.IsMissing() || date2.IsMissing()) return false;
+            if (date1.IsMissing() || date2.IsMissing())
+            {
+                return false;
+            }
 
             DateTime d = date1 ?? DateTime.Now;
             DateTime d2 = date2 ?? DateTime.Now;
@@ -521,7 +583,10 @@ namespace Framework.Commons.Utilities
         /// <returns></returns>
         public static bool LaterThan(this DateTime? date1, DateTime date2)
         {
-            if (date1.IsMissing()) return false;
+            if (date1.IsMissing())
+            {
+                return false;
+            }
 
             DateTime d = date1 ?? DateTime.Now;
             return d.LaterThan(date2);
@@ -536,7 +601,10 @@ namespace Framework.Commons.Utilities
         /// <returns></returns>
         public static bool LaterThan(this DateTime? date1, DateTime? date2)
         {
-            if (date1.IsMissing() || date2.IsMissing()) return false;
+            if (date1.IsMissing() || date2.IsMissing())
+            {
+                return false;
+            }
 
             DateTime d = date1 ?? DateTime.Now;
             DateTime d2 = date2 ?? DateTime.Now;
@@ -564,7 +632,10 @@ namespace Framework.Commons.Utilities
         /// <returns></returns>
         public static bool SameTimeAs(this DateTime? date1, DateTime date2)
         {
-            if (date1.IsMissing()) return false;
+            if (date1.IsMissing())
+            {
+                return false;
+            }
 
             DateTime d = date1 ?? DateTime.Now;
             return d.SameTimeAs(date2);
@@ -579,7 +650,10 @@ namespace Framework.Commons.Utilities
         /// <returns></returns>
         public static bool SameTimeAs(this DateTime? date1, DateTime? date2)
         {
-            if (date1.IsMissing() || date2.IsMissing()) return false;
+            if (date1.IsMissing() || date2.IsMissing())
+            {
+                return false;
+            }
 
             DateTime d = date1 ?? DateTime.Now;
             DateTime d2 = date2 ?? DateTime.Now;
@@ -649,11 +723,20 @@ namespace Framework.Commons.Utilities
         /// <param name="startIndex">Starting index</param>
         public static string SafeSubstring(this string input, int length, int startIndex = 0)
         {
-            if (string.IsNullOrWhiteSpace(input)) return input;
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return input;
+            }
 
-            if (input.Length >= startIndex + length) return input.Substring(startIndex, length);
+            if (input.Length >= startIndex + length)
+            {
+                return input.Substring(startIndex, length);
+            }
 
-            if (input.Length > startIndex) return input.Substring(startIndex);
+            if (input.Length > startIndex)
+            {
+                return input.Substring(startIndex);
+            }
 
             return string.Empty;
         }
@@ -683,7 +766,10 @@ namespace Framework.Commons.Utilities
         /// <param name="obj">object to convert to byte array</param>
         public static byte[] ToByteArray(this object obj)
         {
-            if (obj == null) return null;
+            if (obj == null)
+            {
+                return null;
+            }
 
             BinaryFormatter bf = new BinaryFormatter();
             using (MemoryStream ms = new MemoryStream())
@@ -706,9 +792,13 @@ namespace Framework.Commons.Utilities
                 array = array.Select(a => a.ToLower()).ToArray();
                 int pos = Array.IndexOf(array, value.ToLower());
                 if (pos > -1)
+                {
                     rtn = true;
+                }
                 else
+                {
                     rtn = false;
+                }
             }
             catch
             {
@@ -748,11 +838,13 @@ namespace Framework.Commons.Utilities
             }
 
             if (!HtmlValidator.CheckFileType(file.FileName, ValidFileTypes))
+            {
                 if (file.ContentLength > maxSize)
                 {
                     result.Message = "Invalid file type";
                     return result;
                 }
+            }
 
             result.Message = "file is valid";
             result.IsValid = true;
@@ -767,13 +859,22 @@ namespace Framework.Commons.Utilities
         /// <returns></returns>
         public static bool Compare(this object obj1, object obj2)
         {
-            if (obj1 == null || obj2 == null) return false;
+            if (obj1 == null || obj2 == null)
+            {
+                return false;
+            }
 
 
-            if (obj1.GetType() != obj2.GetType()) return false;
+            if (obj1.GetType() != obj2.GetType())
+            {
+                return false;
+            }
 
             Type type = obj1.GetType();
-            if (type.IsPrimitive || typeof(string) == type) return obj1.Equals(obj2);
+            if (type.IsPrimitive || typeof(string) == type)
+            {
+                return obj1.Equals(obj2);
+            }
 
             if (type.IsArray)
             {
@@ -783,7 +884,10 @@ namespace Framework.Commons.Utilities
                 int i = 0;
                 while (en.MoveNext())
                 {
-                    if (!Equals(en.Current, second.GetValue(i))) return false;
+                    if (!Equals(en.Current, second.GetValue(i)))
+                    {
+                        return false;
+                    }
 
                     i++;
                 }
@@ -795,7 +899,10 @@ namespace Framework.Commons.Utilities
                 {
                     object val = pi.GetValue(obj1);
                     object tval = pi.GetValue(obj2);
-                    if (!Equals(val, tval)) return false;
+                    if (!Equals(val, tval))
+                    {
+                        return false;
+                    }
                 }
             }
 

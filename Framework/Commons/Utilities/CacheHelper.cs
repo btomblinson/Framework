@@ -69,7 +69,9 @@ namespace Framework.Commons.Utilities
         public static void ClearAllCache()
         {
             foreach (DictionaryEntry entry in HttpContext.Current.Cache)
+            {
                 HttpContext.Current.Cache.Remove((string) entry.Key);
+            }
         }
     }
 }

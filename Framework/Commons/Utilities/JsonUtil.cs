@@ -26,7 +26,10 @@ namespace Framework.Commons.Utilities
                 foreach (DataRow Row in dt.Rows)
                 {
                     var dict = new Dictionary<string, object>();
-                    foreach (DataColumn Col in dt.Columns) dict[Col.ColumnName] = Convert.ToString(Row[Col]);
+                    foreach (DataColumn Col in dt.Columns)
+                    {
+                        dict[Col.ColumnName] = Convert.ToString(Row[Col]);
+                    }
 
                     list.Add(dict);
                 }
@@ -176,10 +179,14 @@ namespace Framework.Commons.Utilities
         public static void SaveJsonToAFile(string FilePath, string JsonContent)
         {
             if (CheckIfFileIsJson(FilePath))
+            {
                 File.WriteAllText(FilePath, JsonContent);
+            }
             else
+            {
                 throw new Exception(
                     "The FilePath provided to save the JSON to a file doesn't contain the correct Extension for a JSON File");
+            }
         }
 
         /// <summary>Saves JSON to the given FilePath with Impersonation</summary>
@@ -192,13 +199,17 @@ namespace Framework.Commons.Utilities
             string Domain)
         {
             if (CheckIfFileIsJson(FilePath))
+            {
                 using (new Impersonator(UserName, Domain, Password))
                 {
                     File.WriteAllText(FilePath, JsonContent);
                 }
+            }
             else
+            {
                 throw new Exception(
                     "The FilePath provided to save the JSON to a file doesn't contain the correct Extension for a JSON File");
+            }
         }
     }
 }

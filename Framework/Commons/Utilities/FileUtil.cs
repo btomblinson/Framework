@@ -24,12 +24,16 @@ namespace Framework.Commons.Utilities
             string password = "", string domain = "sos.mo.gov")
         {
             if (useImpersonation)
+            {
                 using (new Impersonator(username, domain, password))
                 {
                     File.Delete(filepath);
                 }
+            }
             else
+            {
                 File.Delete(filepath);
+            }
         }
 
         /// <summary>
@@ -45,12 +49,16 @@ namespace Framework.Commons.Utilities
             string password = "", string domain = "sos.mo.gov")
         {
             if (useImpersonation)
+            {
                 using (new Impersonator(username, domain, password))
                 {
                     SaveFile(filepath, fileStream);
                 }
+            }
             else
+            {
                 SaveFile(filepath, fileStream);
+            }
         }
 
         /// <summary>
@@ -77,12 +85,16 @@ namespace Framework.Commons.Utilities
             client.UseDefaultCredentials = true;
 
             if (useImpersonation)
+            {
                 using (new Impersonator(username, domain, password))
                 {
                     SaveFile(filePath, new MemoryStream(client.DownloadData(url)));
                 }
+            }
             else
+            {
                 SaveFile(filePath, new MemoryStream(client.DownloadData(url)));
+            }
 
 
             Logger.LogInfo("Done Saving File");
@@ -101,12 +113,16 @@ namespace Framework.Commons.Utilities
         {
             byte[] bytes;
             if (useImpersonation)
+            {
                 using (new Impersonator(username, domain, password))
                 {
                     bytes = File.ReadAllBytes(filepath);
                 }
+            }
             else
+            {
                 bytes = File.ReadAllBytes(filepath);
+            }
 
             return bytes;
         }
@@ -132,10 +148,12 @@ namespace Framework.Commons.Utilities
                                                    | SecurityProtocolType.Tls12
                                                    | SecurityProtocolType.Ssl3;
             if (useImpersonation)
+            {
                 using (new Impersonator(username, domain, password))
                 {
                     return client.DownloadData(url);
                 }
+            }
 
             return client.DownloadData(url);
         }
@@ -156,12 +174,16 @@ namespace Framework.Commons.Utilities
             try
             {
                 if (useImpersonation)
+                {
                     using (new Impersonator(username, domain, password))
                     {
                         files = GetFiles(directoryPath);
                     }
+                }
                 else
+                {
                     files = GetFiles(directoryPath);
+                }
             }
             catch (Exception ex)
             {
@@ -169,7 +191,10 @@ namespace Framework.Commons.Utilities
             }
 
             var filenames = new List<string>();
-            foreach (string f in files) filenames.Add(Path.GetFileName(f));
+            foreach (string f in files)
+            {
+                filenames.Add(Path.GetFileName(f));
+            }
 
             return filenames;
         }
@@ -187,12 +212,16 @@ namespace Framework.Commons.Utilities
             string username = "", string password = "", string domain = "sos.mo.gov")
         {
             if (useImpersonation)
+            {
                 using (new Impersonator(username, domain, password))
                 {
                     File.Move(sourcePath, destinationPath);
                 }
+            }
             else
+            {
                 File.Move(sourcePath, destinationPath);
+            }
         }
 
         /// <summary>
@@ -208,12 +237,16 @@ namespace Framework.Commons.Utilities
             string username = "", string password = "", string domain = "sos.mo.gov")
         {
             if (useImpersonation)
+            {
                 using (new Impersonator(username, domain, password))
                 {
                     CleanupDirectory(directoryPath, hours);
                 }
+            }
             else
+            {
                 CleanupDirectory(directoryPath, hours);
+            }
         }
 
         private static void CleanupDirectory(string directoryPath, int hours)
@@ -229,6 +262,7 @@ namespace Framework.Commons.Utilities
                 {
                     var files = Directory.GetFiles(fullDirectoryPath);
                     foreach (string file in files)
+                    {
                         try
                         {
                             File.Delete(Path.Combine(fullDirectoryPath, file));
@@ -237,6 +271,7 @@ namespace Framework.Commons.Utilities
                         {
                             Logger.LogError(ex);
                         }
+                    }
                 }
 
                 try

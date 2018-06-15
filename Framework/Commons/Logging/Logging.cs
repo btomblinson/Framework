@@ -112,9 +112,13 @@ namespace Framework.Commons.Logging
         {
             InitializeLogging();
             if (string.IsNullOrWhiteSpace(procedureName))
+            {
                 LogError(message, ex);
+            }
             else
+            {
                 log.Error("Error while executing " + procedureName + ": " + message, ex);
+            }
         }
 
         /// <summary>
@@ -133,7 +137,10 @@ namespace Framework.Commons.Logging
                 {
                     sb.Append("Parameter Name: ").Append(dataAccessParameter.Name);
                     sb.Append(": ");
-                    if (dataAccessParameter.Value != null) sb.Append(dataAccessParameter.Value);
+                    if (dataAccessParameter.Value != null)
+                    {
+                        sb.Append(dataAccessParameter.Value);
+                    }
 
                     sb.Append(Environment.NewLine);
                 }
@@ -142,7 +149,10 @@ namespace Framework.Commons.Logging
             {
                 sb.Append("Parameter Name: ").Append(sqlDataAccessParameter.Name);
                 sb.Append(": ");
-                if (sqlDataAccessParameter.Value != null) sb.Append(sqlDataAccessParameter.Value);
+                if (sqlDataAccessParameter.Value != null)
+                {
+                    sb.Append(sqlDataAccessParameter.Value);
+                }
 
                 sb.Append(Environment.NewLine);
             }
@@ -187,8 +197,13 @@ namespace Framework.Commons.Logging
                     sb.Append(dataAccessParameter.Name);
                     sb.Append(": ");
                     if (dataAccessParameter.Value != null)
+                    {
                         sb.Append(dataAccessParameter.Value);
-                    else if (dataAccessParameter.ObjectValue != null) sb.Append(dataAccessParameter.ObjectValue);
+                    }
+                    else if (dataAccessParameter.ObjectValue != null)
+                    {
+                        sb.Append(dataAccessParameter.ObjectValue);
+                    }
 
                     sb.Append(" (").Append(dataAccessParameter.DataType).Append(")");
                     sb.Append(Environment.NewLine);
@@ -199,17 +214,27 @@ namespace Framework.Commons.Logging
                 sb.Append("Parameter: ").Append(Environment.NewLine);
                 sb.Append(sqlDataAccessParameter.Name);
                 sb.Append(": ");
-                if (sqlDataAccessParameter.Value != null) sb.Append(sqlDataAccessParameter.Value);
+                if (sqlDataAccessParameter.Value != null)
+                {
+                    sb.Append(sqlDataAccessParameter.Value);
+                }
 
                 sb.Append(Environment.NewLine);
             }
 
-            if (sb.Length > 0) LogInfo(sb.ToString());
+            if (sb.Length > 0)
+            {
+                LogInfo(sb.ToString());
+            }
         }
 
         private static bool IsList(object o)
         {
-            if (o == null) return false;
+            if (o == null)
+            {
+                return false;
+            }
+
             return o is IList &&
                    o.GetType().IsGenericType &&
                    o.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>));

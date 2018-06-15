@@ -57,7 +57,10 @@ namespace Framework.Commons.Utilities
         {
             bool valueNeedsEncryption = NeedsEncryption();
 
-            if (!valueNeedsEncryption) return value;
+            if (!valueNeedsEncryption)
+            {
+                return value;
+            }
 
             var plainTextBytes = Encoding.UTF8.GetBytes(value);
 
@@ -181,7 +184,10 @@ namespace Framework.Commons.Utilities
         /// <returns>Decrypted representation of passed in parameter</returns>
         public static string Decrypt(string value, bool isEncrypted)
         {
-            if (!isEncrypted) return value;
+            if (!isEncrypted)
+            {
+                return value;
+            }
 
             return DecryptString(value);
         }
@@ -193,8 +199,10 @@ namespace Framework.Commons.Utilities
             try
             {
                 if (WebConfig.Get("encryptionUsed", string.Empty) != string.Empty)
+                {
                     bool.TryParse(WebConfig.Get("encryptionUsed", "false"),
                         out valueNeedsEncryption);
+                }
             }
             catch
             {
