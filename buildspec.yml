@@ -4,7 +4,7 @@ env:
   variables:
     SOLUTION: .\Framework.sln
     PACKAGE_DIRECTORY: .\packages
-    DOTNET_FRAMEWORK: 4.6.2
+    DOTNET_FRAMEWORK: 4.6.1
 
 phases:
   build:
