@@ -23,7 +23,7 @@ namespace Framework.Commons.Utilities
         public static string GenerateTokenValue(string startOfKey)
         {
             return Encrypt(startOfKey + DateTime.Now.DayOfYear + DateTime.Now.Year +
-                           DateTime.Now.AddDays(2).DayOfWeek + "SOS");
+                           DateTime.Now.AddDays(2).DayOfWeek + "Brandon");
         }
 
         /// <summary>

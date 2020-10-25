@@ -11,7 +11,7 @@ namespace Framework.UI.BusinessObj
         ///     Set the url to the jquery.min.js file.
         /// </summary>
         [Bindable(true)]
-        [Category("SOS Custom")]
+        [Category("Brandon Custom")]
         [DefaultValue("//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")]
         [Localizable(true)]
         [Description("The url to the jquery.min.js file.")]
@@ -31,7 +31,7 @@ namespace Framework.UI.BusinessObj
         ///     project solution.
         /// </summary>
         [Bindable(true)]
-        [Category("SOS Custom")]
+        [Category("Brandon Custom")]
         [DefaultValue(false)]
         [Localizable(true)]
         [Description("Default value is false")]
@@ -54,7 +54,7 @@ namespace Framework.UI.BusinessObj
         ///     Set the url to the jquery.dataTables.min.js file.
         /// </summary>
         [Bindable(true)]
-        [Category("SOS Custom")]
+        [Category("Brandon Custom")]
         [DefaultValue("https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js")]
         [Localizable(true)]
         [Description("The url to the jquery.dataTables.min.js file.")]
@@ -75,7 +75,7 @@ namespace Framework.UI.BusinessObj
         ///     project solution.
         /// </summary>
         [Bindable(true)]
-        [Category("SOS Custom")]
+        [Category("Brandon Custom")]
         [DefaultValue(false)]
         [Localizable(true)]
         [Description("Default value is false")]
@@ -101,7 +101,7 @@ namespace Framework.UI.BusinessObj
         ///     project solution.
         /// </summary>
         [Bindable(true)]
-        [Category("SOS Custom")]
+        [Category("Brandon Custom")]
         [DefaultValue(false)]
         [Localizable(true)]
         [Description("Default value is false")]
@@ -125,7 +125,7 @@ namespace Framework.UI.BusinessObj
         ///     Disable the automatic save state option in the Jquery DataTables Plugin.  Default value is false.
         /// </summary>
         [Bindable(true)]
-        [Category("SOS Custom")]
+        [Category("Brandon Custom")]
         [DefaultValue(false)]
         [Localizable(true)]
         [Description(
@@ -150,7 +150,7 @@ namespace Framework.UI.BusinessObj
         ///     Set the url to the jquery.dataTables.min.css file.
         /// </summary>
         [Bindable(true)]
-        [Category("SOS Custom")]
+        [Category("Brandon Custom")]
         [DefaultValue("https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css")]
         [Localizable(true)]
         [Description("The url to the jquery.dataTables.min.css file.")]
@@ -169,7 +169,7 @@ namespace Framework.UI.BusinessObj
         ///     Set jQuery DataTable options.
         /// </summary>
         [Bindable(true)]
-        [Category("SOS Custom")]
+        [Category("Brandon Custom")]
         [DefaultValue("")]
         [Localizable(true)]
         [Description("The options for the Jquery DataTables")]
@@ -188,7 +188,7 @@ namespace Framework.UI.BusinessObj
         ///     Whether to use ProperCase when setting header values, first prioity will go to aliases
         /// </summary>
         [Bindable(true)]
-        [Category("SOS Custom")]
+        [Category("Brandon Custom")]
         [DefaultValue(true)]
         [Localizable(true)]
         [Description("Whether to use ProperCase when setting header values")]

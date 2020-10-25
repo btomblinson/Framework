@@ -10,6 +10,7 @@ namespace Framework.Commons.Utilities
     /// <summary>
     ///     Utility for encapsulating file management logic
     /// </summary>
+    //TODO: Change the domain in here when using it
     public static class FileUtil
     {
         /// <summary>
@@ -19,9 +20,9 @@ namespace Framework.Commons.Utilities
         /// <param name="useImpersonation">Whether or not this requires impersonation for permissions</param>
         /// <param name="username">The impersonated user's username</param>
         /// <param name="password">The impersonated user's password</param>
-        /// <param name="domain">The user's domain, defaults to sos.mo.gov</param>
+        /// <param name="domain">The user's domain, defaults to empty string/param>
         public static void DeleteFile(string filepath, bool useImpersonation, string username = "",
-            string password = "", string domain = "sos.mo.gov")
+            string password = "", string domain = "")
         {
             if (useImpersonation)
             {
@@ -44,9 +45,9 @@ namespace Framework.Commons.Utilities
         /// <param name="useImpersonation">Whether or not this requires impersonation for permissions</param>
         /// <param name="username">The impersonated user's username</param>
         /// <param name="password">The impersonated user's password</param>
-        /// <param name="domain">The user's domain, defaults to sos.mo.gov</param>
+        /// <param name="domain">The user's domain, defaults to </param>
         public static void UploadFile(string filepath, Stream fileStream, bool useImpersonation, string username = "",
-            string password = "", string domain = "sos.mo.gov")
+            string password = "", string domain = "")
         {
             if (useImpersonation)
             {
@@ -69,9 +70,9 @@ namespace Framework.Commons.Utilities
         /// <param name="useImpersonation">Whether or not this requires impersonation for permissions</param>
         /// <param name="username">The impersonated user's username</param>
         /// <param name="password">The impersonated user's password</param>
-        /// <param name="domain">The user's domain, defaults to sos.mo.gov</param>
+        /// <param name="domain">The user's domain, defaults to </param>
         public static void SaveFileWebRequest(string url, string filePath, bool useImpersonation, string username = "",
-            string password = "", string domain = "sos.mo.gov")
+            string password = "", string domain = "")
         {
             Logger.LogInfo("Begin Saving File");
             Logger.LogInfo("URL=" + url);
@@ -96,7 +97,6 @@ namespace Framework.Commons.Utilities
                 SaveFile(filePath, new MemoryStream(client.DownloadData(url)));
             }
 
-
             Logger.LogInfo("Done Saving File");
         }
 
@@ -107,9 +107,9 @@ namespace Framework.Commons.Utilities
         /// <param name="useImpersonation">Whether or not this requires impersonation for permissions</param>
         /// <param name="username">The impersonated user's username</param>
         /// <param name="password">The impersonated user's password</param>
-        /// <param name="domain">The user's domain, defaults to sos.mo.gov</param>
+        /// <param name="domain">The user's domain, defaults to </param>
         public static byte[] DownloadFile(string filepath, bool useImpersonation, string username = "",
-            string password = "", string domain = "sos.mo.gov")
+            string password = "", string domain = "")
         {
             byte[] bytes;
             if (useImpersonation)
@@ -134,9 +134,9 @@ namespace Framework.Commons.Utilities
         /// <param name="useImpersonation">Whether or not this requires impersonation for permissions</param>
         /// <param name="username">The impersonated user's username</param>
         /// <param name="password">The impersonated user's password</param>
-        /// <param name="domain">The user's domain, defaults to sos.mo.gov</param>
+        /// <param name="domain">The user's domain, defaults to </param>
         public static byte[] DownloadFileWebRequest(string url, bool useImpersonation, string username = "",
-            string password = "", string domain = "sos.mo.gov")
+            string password = "", string domain = "")
         {
             Logger.LogInfo("Begin Saving File");
             Logger.LogInfo("URL=" + url);
@@ -165,9 +165,9 @@ namespace Framework.Commons.Utilities
         /// <param name="useImpersonation">Whether or not this requires impersonation for permissions</param>
         /// <param name="username">The impersonated user's username</param>
         /// <param name="password">The impersonated user's password</param>
-        /// <param name="domain">The user's domain, defaults to sos.mo.gov</param>
+        /// <param name="domain">The user's domain, defaults to </param>
         public static List<string> GetFileNames(string directoryPath, bool useImpersonation, string username = "",
-            string password = "", string domain = "sos.mo.gov")
+            string password = "", string domain = "")
         {
             var files = new string[0];
 
@@ -207,9 +207,9 @@ namespace Framework.Commons.Utilities
         /// <param name="useImpersonation">Whether or not this requires impersonation for permissions</param>
         /// <param name="username">The impersonated user's username</param>
         /// <param name="password">The impersonated user's password</param>
-        /// <param name="domain">The user's domain, defaults to sos.mo.gov</param>
+        /// <param name="domain">The user's domain, defaults to </param>
         public static void MoveFile(string sourcePath, string destinationPath, bool useImpersonation,
-            string username = "", string password = "", string domain = "sos.mo.gov")
+            string username = "", string password = "", string domain = "")
         {
             if (useImpersonation)
             {
@@ -232,9 +232,9 @@ namespace Framework.Commons.Utilities
         /// <param name="useImpersonation">Whether or not this requires impersonation for permissions</param>
         /// <param name="username">The impersonated user's username</param>
         /// <param name="password">The impersonated user's password</param>
-        /// <param name="domain">The user's domain, defaults to sos.mo.gov</param>
+        /// <param name="domain">The user's domain, defaults to </param>
         public static void CleanUpTemporaryDirectory(string directoryPath, int hours, bool useImpersonation,
-            string username = "", string password = "", string domain = "sos.mo.gov")
+            string username = "", string password = "", string domain = "")
         {
             if (useImpersonation)
             {
@@ -301,7 +301,6 @@ namespace Framework.Commons.Utilities
 
             return files;
         }
-
 
         private static void SaveFile(string filepath, Stream fileStream)
         {
