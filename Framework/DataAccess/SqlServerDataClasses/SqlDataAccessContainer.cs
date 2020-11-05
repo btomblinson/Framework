@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 
-namespace Framework.DataAccess.SqlDataClasses
+namespace Framework.DataAccess.SqlServerDataClasses
 {
     public class SqlDataAccessContainer
     {

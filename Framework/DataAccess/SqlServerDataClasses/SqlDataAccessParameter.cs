@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Framework.DataAccess.SqlDataClasses
+namespace Framework.DataAccess.SqlServerDataClasses
 {
     /// <summary>
     ///     Class to hold SQL stored producture parameter variable's information needed to run a stored procedure.

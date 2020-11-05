@@ -3,21 +3,22 @@ using System.Data;
 using Framework.Commons.CommonObj;
 using Framework.Commons.Logging;
 using Framework.Commons.Utilities;
-using Framework.DataAccess.SqlDataClasses;
+using Framework.DataAccess.MySqlDataClasses;
+using Framework.DataAccess.SqlServerDataClasses;
 
 namespace Framework.DataAccess
 {
     /// <summary>
     ///     Access data from stored procedure
     /// </summary>
-    public class DataAccess
+    public class MySqlServerDataAccess
     {
         private string _error = "";
 
         /// <summary>
         ///     SqlDataConnect object
         /// </summary>
-        public SqlDataConnect _sqlDataConnect;
+        public MySqlDataConnect _sqlDataConnect;
 
         /// <summary>
         ///     Token String
@@ -29,18 +30,18 @@ namespace Framework.DataAccess
         /// <summary>
         ///     Instantiates SqlDataConnect class
         /// </summary>
-        public DataAccess()
+        public MySqlServerDataAccess()
         {
-            _sqlDataConnect = new SqlDataConnect();
+            _sqlDataConnect = new MySqlDataConnect();
         }
 
         /// <summary>
         ///     Instantiates and sets SqlDataConnect class
         /// </summary>
         /// <param name="sqlDataConnect"></param>
-        public DataAccess(SqlDataConnect sqlDataConnect)
+        public MySqlServerDataAccess(MySqlDataConnect sqlDataConnect)
         {
-            _sqlDataConnect = new SqlDataConnect();
+            _sqlDataConnect = new MySqlDataConnect();
             _sqlDataConnect = sqlDataConnect;
         }
 
@@ -48,13 +49,12 @@ namespace Framework.DataAccess
         ///     Instantiates and sets SqlDataConnect class
         /// </summary>
         /// <param name="sqlDataConnect"></param>
-        public DataAccess(SqlDataConnect sqlDataConnect, string token)
+        public MySqlServerDataAccess(MySqlDataConnect sqlDataConnect, string token)
         {
-            _sqlDataConnect = new SqlDataConnect();
+            _sqlDataConnect = new MySqlDataConnect();
             _sqlDataConnect = sqlDataConnect;
             _token = token;
         }
-
 
         /// <summary>
         ///     Gets data from stored procedure without need of parameters
@@ -63,7 +63,7 @@ namespace Framework.DataAccess
         /// <returns>DtoDataSet filled with data from database</returns>
         public DtoDataSet GetData(string procedureName)
         {
-            return GetData(new SqlDataAccessParameter[] { }, procedureName);
+            return GetData(new MySqlDataAccessParameter[] { }, procedureName);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Framework.DataAccess
         /// <param name="parameter">Single parameter to send to database</param>
         /// <param name="procedureName">Stored procedure to call</param>
         /// <returns>DtoDataSet filled with data from database</returns>
-        public DtoDataSet GetData(SqlDataAccessParameter parameter, string procedureName)
+        public DtoDataSet GetData(MySqlDataAccessParameter parameter, string procedureName)
         {
             return GetData(new[] {parameter}, procedureName);
         }
@@ -83,14 +83,14 @@ namespace Framework.DataAccess
         /// <param name="parameters">Array of parameters to send to database</param>
         /// <param name="procedureName">Stored procedure to call</param>
         /// <returns>DtoDataSet filled with data from database</returns>
-        public DtoDataSet GetData(SqlDataAccessParameter[] parameters, string procedureName)
+        public DtoDataSet GetData(MySqlDataAccessParameter[] parameters, string procedureName)
         {
             DtoDataSet infoDataSet = new DtoDataSet();
-            SqlDataAccessContainer dac = new SqlDataAccessContainer();
+            MySqlDataAccessContainer dac = new MySqlDataAccessContainer();
 
             if (parameters != null)
             {
-                foreach (SqlDataAccessParameter parameter in parameters)
+                foreach (MySqlDataAccessParameter parameter in parameters)
                 {
                     if (parameter != null && parameter.Value != null && parameter.Value.Length > 0)
                     {
@@ -133,14 +133,14 @@ namespace Framework.DataAccess
         /// <param name="parameters">Array of parameters to send to database</param>
         /// <param name="procedureName">Stored procedure to call</param>
         /// <returns>DtoDataSet filled with data from database</returns>
-        public DtoDataSet GetDataKeepNullParameters(SqlDataAccessParameter[] parameters, string procedureName)
+        public DtoDataSet GetDataKeepNullParameters(MySqlDataAccessParameter[] parameters, string procedureName)
         {
             DtoDataSet infoDataSet = new DtoDataSet();
-            SqlDataAccessContainer dac = new SqlDataAccessContainer();
+            MySqlDataAccessContainer dac = new MySqlDataAccessContainer();
 
             if (parameters != null)
             {
-                foreach (SqlDataAccessParameter parameter in parameters)
+                foreach (MySqlDataAccessParameter parameter in parameters)
                 {
                     if (parameter != null && parameter.Value != null && parameter.Value.Length > 0)
                     {
@@ -152,7 +152,7 @@ namespace Framework.DataAccess
                     }
                     else
                     {
-                        dac.Add(new SqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
+                        dac.Add(new MySqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
                     }
                 }
             }
@@ -189,14 +189,14 @@ namespace Framework.DataAccess
         /// <param name="encryptedToken">Encrypted token value coming from client</param>
         /// <param name="unencryptedToken">Unencrypted token value from web.config</param>
         /// <returns></returns>
-        public DtoDataSet ModifyDataReturnTable(SqlDataAccessParameter[] parameters, string procedureName,
+        public DtoDataSet ModifyDataReturnTable(MySqlDataAccessParameter[] parameters, string procedureName,
             string encryptedToken, string unencryptedToken)
         {
             DtoDataSet infoDataSet = new DtoDataSet();
-            SqlDataAccessContainer dac = new SqlDataAccessContainer();
+            MySqlDataAccessContainer dac = new MySqlDataAccessContainer();
             if (TokenGenerator.CompareTokens(encryptedToken, unencryptedToken))
             {
-                foreach (SqlDataAccessParameter parameter in parameters)
+                foreach (MySqlDataAccessParameter parameter in parameters)
                 {
                     dac.Add(parameter);
                 }
@@ -238,16 +238,16 @@ namespace Framework.DataAccess
         /// <param name="encryptedToken">Encrypted token value coming from client</param>
         /// <param name="unencryptedToken">Unencrypted token value from web.config</param>
         /// <returns></returns>
-        public DtoDataSet ModifyDataReturnTableKeepNullParameters(SqlDataAccessParameter[] parameters,
+        public DtoDataSet ModifyDataReturnTableKeepNullParameters(MySqlDataAccessParameter[] parameters,
             string procedureName, string encryptedToken, string unencryptedToken)
         {
             DtoDataSet infoDataSet = new DtoDataSet();
-            SqlDataAccessContainer dac = new SqlDataAccessContainer();
+            MySqlDataAccessContainer dac = new MySqlDataAccessContainer();
             if (TokenGenerator.CompareTokens(encryptedToken, unencryptedToken))
             {
                 if (parameters != null)
                 {
-                    foreach (SqlDataAccessParameter parameter in parameters)
+                    foreach (MySqlDataAccessParameter parameter in parameters)
                     {
                         if (parameter != null && parameter.Value != null && parameter.Value.Length > 0)
                         {
@@ -259,11 +259,10 @@ namespace Framework.DataAccess
                         }
                         else
                         {
-                            dac.Add(new SqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
+                            dac.Add(new MySqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
                         }
                     }
                 }
-
 
                 infoDataSet.DS = null;
                 infoDataSet.Error = "";
@@ -294,19 +293,18 @@ namespace Framework.DataAccess
             return infoDataSet;
         }
 
-
         /// <summary>
         ///     Insert, Update, or Delete data via stored procedure
         /// </summary>
         /// <param name="parameters">Parameters to send to database</param>
         /// <param name="procedureName">Stored procedure to call</param>
         /// <returns>Result object send from database</returns>
-        public ReturnObj ModifyData(SqlDataAccessParameter[] parameters, string procedureName)
+        public ReturnObj ModifyData(MySqlDataAccessParameter[] parameters, string procedureName)
         {
             DtoDataSet infoDataSet = new DtoDataSet();
-            SqlDataAccessContainer dac = new SqlDataAccessContainer();
+            MySqlDataAccessContainer dac = new MySqlDataAccessContainer();
 
-            foreach (SqlDataAccessParameter parameter in parameters)
+            foreach (MySqlDataAccessParameter parameter in parameters)
             {
                 dac.Add(parameter);
             }
@@ -341,12 +339,12 @@ namespace Framework.DataAccess
         /// <param name="parameters">Parameters to send to database</param>
         /// <param name="procedureName">Stored procedure to call</param>
         /// <returns>Result object send from database</returns>
-        public ReturnObj ModifyDataKeepNullParameters(SqlDataAccessParameter[] parameters, string procedureName)
+        public ReturnObj ModifyDataKeepNullParameters(MySqlDataAccessParameter[] parameters, string procedureName)
         {
             DtoDataSet infoDataSet = new DtoDataSet();
-            SqlDataAccessContainer dac = new SqlDataAccessContainer();
+            MySqlDataAccessContainer dac = new MySqlDataAccessContainer();
 
-            foreach (SqlDataAccessParameter parameter in parameters)
+            foreach (MySqlDataAccessParameter parameter in parameters)
             {
                 if (parameter != null && parameter.Value != null && parameter.Value.Length > 0)
                 {
@@ -358,7 +356,7 @@ namespace Framework.DataAccess
                 }
                 else
                 {
-                    dac.Add(new SqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
+                    dac.Add(new MySqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
                 }
             }
 
@@ -394,16 +392,16 @@ namespace Framework.DataAccess
         /// <param name="encryptedToken">Encrypted token value coming from client</param>
         /// <param name="unencryptedToken">Unencrypted token value from web.config</param>
         /// <returns>Result object send from database</returns>
-        public ReturnObj ModifyData(SqlDataAccessParameter[] parameters, string procedureName, string encryptedToken,
+        public ReturnObj ModifyData(MySqlDataAccessParameter[] parameters, string procedureName, string encryptedToken,
             string unencryptedToken)
         {
             ReturnObj objReturn = new ReturnObj();
 
             if (TokenGenerator.CompareTokens(encryptedToken, unencryptedToken))
             {
-                SqlDataAccessContainer dac = new SqlDataAccessContainer();
+                MySqlDataAccessContainer dac = new MySqlDataAccessContainer();
 
-                foreach (SqlDataAccessParameter parameter in parameters)
+                foreach (MySqlDataAccessParameter parameter in parameters)
                 {
                     dac.Add(parameter);
                 }
@@ -448,16 +446,16 @@ namespace Framework.DataAccess
         /// <param name="encryptedToken">Encrypted token value coming from client</param>
         /// <param name="unencryptedToken">Unencrypted token value from web.config</param>
         /// <returns>Result object send from database</returns>
-        public ReturnObj ModifyDataKeepNullParameters(SqlDataAccessParameter[] parameters, string procedureName,
+        public ReturnObj ModifyDataKeepNullParameters(MySqlDataAccessParameter[] parameters, string procedureName,
             string encryptedToken, string unencryptedToken)
         {
             ReturnObj objReturn = new ReturnObj();
 
             if (TokenGenerator.CompareTokens(encryptedToken, unencryptedToken))
             {
-                SqlDataAccessContainer dac = new SqlDataAccessContainer();
+                MySqlDataAccessContainer dac = new MySqlDataAccessContainer();
 
-                foreach (SqlDataAccessParameter parameter in parameters)
+                foreach (MySqlDataAccessParameter parameter in parameters)
                 {
                     if (parameter != null && parameter.Value != null && parameter.Value.Length > 0)
                     {
@@ -469,7 +467,7 @@ namespace Framework.DataAccess
                     }
                     else
                     {
-                        dac.Add(new SqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
+                        dac.Add(new MySqlDataAccessParameter(parameter.Name, parameter.DataType, DBNull.Value));
                     }
                 }
 
@@ -505,14 +503,13 @@ namespace Framework.DataAccess
             return objReturn;
         }
 
-
         /// <summary>
         ///     Insert data via stored procedure
         /// </summary>
         /// <param name="parameters">Parameters to send to database</param>
         /// <param name="procedureName">Stored procedure to call</param>
         /// <returns>Result object send from database</returns>
-        public ReturnObj InsertData(SqlDataAccessParameter[] parameters, string procedureName)
+        public ReturnObj InsertData(MySqlDataAccessParameter[] parameters, string procedureName)
         {
             return ModifyData(parameters, procedureName);
         }
@@ -523,7 +520,7 @@ namespace Framework.DataAccess
         /// <param name="parameters">Parameters to send to database</param>
         /// <param name="procedureName">Stored procedure to call</param>
         /// <returns>Result object send from database</returns>
-        public ReturnObj UpdateData(SqlDataAccessParameter[] parameters, string procedureName)
+        public ReturnObj UpdateData(MySqlDataAccessParameter[] parameters, string procedureName)
         {
             return ModifyData(parameters, procedureName);
         }
@@ -534,7 +531,7 @@ namespace Framework.DataAccess
         /// <param name="parameters">Parameters to send to database</param>
         /// <param name="procedureName">Stored procedure to call</param>
         /// <returns>Result object send from database</returns>
-        public ReturnObj DeleteData(SqlDataAccessParameter[] parameters, string procedureName)
+        public ReturnObj DeleteData(MySqlDataAccessParameter[] parameters, string procedureName)
         {
             return ModifyData(parameters, procedureName);
         }
@@ -547,7 +544,7 @@ namespace Framework.DataAccess
         /// <param name="encryptedToken">Encrypted token value coming from client</param>
         /// <param name="unencryptedToken">Unencrypted token value from web.config</param>
         /// <returns>Result object send from database</returns>
-        public ReturnObj InsertData(SqlDataAccessParameter[] parameters, string procedureName, string encryptedToken,
+        public ReturnObj InsertData(MySqlDataAccessParameter[] parameters, string procedureName, string encryptedToken,
             string unencryptedToken)
         {
             return ModifyData(parameters, procedureName, encryptedToken, unencryptedToken);
@@ -561,7 +558,7 @@ namespace Framework.DataAccess
         /// <param name="encryptedToken">Encrypted token value coming from client</param>
         /// <param name="unencryptedToken">Unencrypted token value from web.config</param>
         /// <returns>Result object send from database</returns>
-        public ReturnObj UpdateData(SqlDataAccessParameter[] parameters, string procedureName, string encryptedToken,
+        public ReturnObj UpdateData(MySqlDataAccessParameter[] parameters, string procedureName, string encryptedToken,
             string unencryptedToken)
         {
             return ModifyData(parameters, procedureName, encryptedToken, unencryptedToken);
@@ -575,7 +572,7 @@ namespace Framework.DataAccess
         /// <param name="encryptedToken">Encrypted token value coming from client</param>
         /// <param name="unencryptedToken">Unencrypted token value from web.config</param>
         /// <returns>Result object send from database</returns>
-        public ReturnObj DeleteData(SqlDataAccessParameter[] parameters, string procedureName, string encryptedToken,
+        public ReturnObj DeleteData(MySqlDataAccessParameter[] parameters, string procedureName, string encryptedToken,
             string unencryptedToken)
         {
             return ModifyData(parameters, procedureName, encryptedToken, unencryptedToken);
