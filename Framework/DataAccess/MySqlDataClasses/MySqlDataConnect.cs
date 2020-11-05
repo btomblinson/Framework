@@ -266,10 +266,6 @@ namespace Framework.DataAccess.MySqlDataClasses
                     AddParameterValues(dtoContainer.AllParameters());
                 }
 
-                //add the return value parameter
-                _CmdSql.Parameters.Add("@RETURN_VALUE", MySqlDbType.Int32);
-                _CmdSql.Parameters["@RETURN_VALUE"].Direction = ParameterDirection.ReturnValue;
-
                 //check for connection strings here
                 if (OpenConnection())
                 {
@@ -291,7 +287,7 @@ namespace Framework.DataAccess.MySqlDataClasses
                 }
 
                 _CmdSql.ExecuteNonQuery();
-                long nReturn = long.Parse(_CmdSql.Parameters["@RETURN_VALUE"].Value.ToString());
+                long nReturn = _CmdSql.LastInsertedId;
 
                 _CmdSql.Connection = null;
                 _CmdSql.Parameters.Clear();
