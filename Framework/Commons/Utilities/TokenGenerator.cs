@@ -11,9 +11,9 @@ namespace Framework.Commons.Utilities
     /// </summary>
     public static class TokenGenerator
     {
-        private static string passwordHash = "AdoCxP2G7l";
-        private static string saltKey = "aJ5qAkpN2w";
-        private static string VectorKey = "0I2E4S6T8PlOI11s!";
+        private static string _PasswordHash = "AdoCxP2G7l";
+        private static string _SaltKey = "aJ5qAkpN2w";
+        private static string _VectorKey = "0I2E4S6T8PlOI11s!";
 
         /// <summary>
         ///     Generates an encrypted value based on passed in passed in value, password hash, salt key, and vector key
@@ -64,9 +64,9 @@ namespace Framework.Commons.Utilities
 
             var plainTextBytes = Encoding.UTF8.GetBytes(value);
 
-            var keyBytes = new Rfc2898DeriveBytes(passwordHash, Encoding.ASCII.GetBytes(saltKey)).GetBytes(256 / 8);
+            var keyBytes = new Rfc2898DeriveBytes(_PasswordHash, Encoding.ASCII.GetBytes(_SaltKey)).GetBytes(256 / 8);
             RijndaelManaged symmetricKey = new RijndaelManaged {Mode = CipherMode.CBC, Padding = PaddingMode.Zeros};
-            ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, Encoding.ASCII.GetBytes(VectorKey));
+            ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, Encoding.ASCII.GetBytes(_VectorKey));
 
             byte[] cipherTextBytes;
 
@@ -102,9 +102,9 @@ namespace Framework.Commons.Utilities
         {
             var plainTextBytes = Encoding.UTF8.GetBytes(value);
 
-            var keyBytes = new Rfc2898DeriveBytes(passwordHash, Encoding.ASCII.GetBytes(saltKey)).GetBytes(256 / 8);
+            var keyBytes = new Rfc2898DeriveBytes(_PasswordHash, Encoding.ASCII.GetBytes(_SaltKey)).GetBytes(256 / 8);
             RijndaelManaged symmetricKey = new RijndaelManaged {Mode = CipherMode.CBC, Padding = PaddingMode.Zeros};
-            ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, Encoding.ASCII.GetBytes(VectorKey));
+            ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, Encoding.ASCII.GetBytes(_VectorKey));
 
             byte[] cipherTextBytes;
 
@@ -151,11 +151,11 @@ namespace Framework.Commons.Utilities
                 int decryptedByteCount = 0;
                 var plainTextBytes = new byte[cipherTextBytes.Length];
                 var keyBytes =
-                    new Rfc2898DeriveBytes(passwordHash, Encoding.ASCII.GetBytes(saltKey)).GetBytes(256 / 8);
+                    new Rfc2898DeriveBytes(_PasswordHash, Encoding.ASCII.GetBytes(_SaltKey)).GetBytes(256 / 8);
                 RijndaelManaged symmetricKey =
                     new RijndaelManaged {Mode = CipherMode.CBC, Padding = PaddingMode.None};
 
-                ICryptoTransform decryptor = symmetricKey.CreateDecryptor(keyBytes, Encoding.ASCII.GetBytes(VectorKey));
+                ICryptoTransform decryptor = symmetricKey.CreateDecryptor(keyBytes, Encoding.ASCII.GetBytes(_VectorKey));
                 using (MemoryStream memoryStream = new MemoryStream(cipherTextBytes))
                 {
                     using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))

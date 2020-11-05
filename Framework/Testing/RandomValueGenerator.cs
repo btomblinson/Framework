@@ -9,7 +9,7 @@ namespace Framework.Testing
 {
     public class RandomValueGenerator
     {
-        private static readonly Random random = new Random();
+        private static readonly Random Random = new Random();
 
         #region RandomDates
 
@@ -21,7 +21,7 @@ namespace Framework.Testing
         {
             DateTime start = new DateTime(1900, 1, 1);
             int range = (DateTime.Today - start).Days;
-            return start.AddDays(random.Next(range));
+            return start.AddDays(Random.Next(range));
         }
 
         #endregion
@@ -151,7 +151,7 @@ namespace Framework.Testing
         /// <returns>A random number between 0 and max int</returns>
         public int RandomNumber()
         {
-            return random.Next();
+            return Random.Next();
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Framework.Testing
         /// <returns>A random number between 0 and maxValue inclusive</returns>
         public int RandomNumber(int maxValue)
         {
-            return random.Next(maxValue + 1);
+            return Random.Next(maxValue + 1);
         }
 
         /// <summary>
@@ -172,12 +172,12 @@ namespace Framework.Testing
         /// <returns>A random number between minValue and maxValue inclusive</returns>
         public int RandomNumber(int minValue, int maxValue)
         {
-            return random.Next(minValue, maxValue + 1);
+            return Random.Next(minValue, maxValue + 1);
         }
 
         public decimal RandomDecimal()
         {
-            return (decimal) (random.NextDouble() * (random.Next() % 1000000));
+            return (decimal) (Random.NextDouble() * (Random.Next() % 1000000));
         }
 
         #endregion

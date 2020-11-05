@@ -309,18 +309,18 @@ namespace Framework.Commons.Utilities
 
             if (!File.Exists(filepath))
             {
-                FileStream OutFile = new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Write);
+                FileStream outFile = new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Write);
                 var buffer = new byte[102400];
-                int BytesRead = 0;
-                while ((BytesRead = fileStream.Read(buffer, 0, 10400)) > 0)
+                int bytesRead = 0;
+                while ((bytesRead = fileStream.Read(buffer, 0, 10400)) > 0)
                 {
-                    OutFile.Write(buffer, 0, BytesRead);
-                    OutFile.Flush();
+                    outFile.Write(buffer, 0, bytesRead);
+                    outFile.Flush();
                 }
 
-                long filesize = OutFile.Length;
+                long filesize = outFile.Length;
 
-                OutFile.Close();
+                outFile.Close();
                 fileStream.Close();
             }
             else

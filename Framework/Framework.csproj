@@ -143,8 +143,8 @@
     <Compile Include="Commons\Utilities\PdfUtil.cs" />
     <Compile Include="Commons\Utilities\TokenGenerator.cs" />
     <Compile Include="Commons\Utilities\WebConfig.cs" />
-    <Compile Include="DataAccess\MySqlServerDataAccess.cs" />
-    <Compile Include="DataAccess\SqlServerDataAccess.cs" />
+    <Compile Include="DataAccess\MySqlDataClasses\MySqlServerDataAccess.cs" />
+    <Compile Include="DataAccess\SqlServerDataClasses\SqlServerDataAccess.cs" />
     <Compile Include="DataAccess\ObjectMapping\BaseMapper.cs" />
     <Compile Include="DataAccess\ObjectMapping\BaseMapperHelper.cs" />
     <Compile Include="DataAccess\ObjectMapping\DataBinding.cs" />
@@ -155,9 +155,9 @@
     <Compile Include="DataAccess\MySqlDataClasses\MySqlDataAccessContainer.cs" />
     <Compile Include="DataAccess\MySqlDataClasses\MySqlDataAccessParameter.cs" />
     <Compile Include="DataAccess\MySqlDataClasses\MySqlDataConnect.cs" />
-    <Compile Include="DataAccess\SqlServerDataClasses\SqlDataAccessContainer.cs" />
-    <Compile Include="DataAccess\SqlServerDataClasses\SqlDataAccessParameter.cs" />
-    <Compile Include="DataAccess\SqlServerDataClasses\SqlDataConnect.cs" />
+    <Compile Include="DataAccess\SqlServerDataClasses\SqlServerDataAccessContainer.cs" />
+    <Compile Include="DataAccess\SqlServerDataClasses\SqlServerDataAccessParameter.cs" />
+    <Compile Include="DataAccess\SqlServerDataClasses\SqlServerDataConnect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\HtmlValidator.cs" />
     <Compile Include="Security\Impersonator.cs" />

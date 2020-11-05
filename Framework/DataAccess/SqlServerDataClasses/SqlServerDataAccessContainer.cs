@@ -3,16 +3,16 @@ using System.Data;
 
 namespace Framework.DataAccess.SqlServerDataClasses
 {
-    public class SqlDataAccessContainer
+    public class SqlServerDataAccessContainer
     {
-        private List<SqlDataAccessParameter> _colParameters;
+        private List<SqlServerDataAccessParameter> _ColParameters;
 
         /// <summary>
         ///     Contructor that initiates the SqlDataAccessParameter List
         /// </summary>
-        public SqlDataAccessContainer()
+        public SqlServerDataAccessContainer()
         {
-            _colParameters = new List<SqlDataAccessParameter>();
+            _ColParameters = new List<SqlServerDataAccessParameter>();
         }
 
         /// <summary>
@@ -20,16 +20,16 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// </summary>
         public void Clear()
         {
-            _colParameters.Clear();
+            _ColParameters.Clear();
         }
 
         /// <summary>
         ///     Adds SqlDataAccessParameter to SqlDataAccessParameter List
         /// </summary>
         /// <param name="dtoParam">SqlDataAccessParameter to add</param>
-        public void Add(SqlDataAccessParameter dtoParam)
+        public void Add(SqlServerDataAccessParameter dtoParam)
         {
-            _colParameters.Add(dtoParam);
+            _ColParameters.Add(dtoParam);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="value">Gets added to Value property</param>
         public void Add(string name, SqlDbType dbType, string value)
         {
-            SqlDataAccessParameter dto = new SqlDataAccessParameter();
+            SqlServerDataAccessParameter dto = new SqlServerDataAccessParameter();
             dto.Name = name;
             dto.DataType = dbType;
             dto.Size = 0;
@@ -60,7 +60,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="oValue">Gets added to Value property</param>
         public void Add(string name, SqlDbType dbType, object oValue)
         {
-            SqlDataAccessParameter dto = new SqlDataAccessParameter();
+            SqlServerDataAccessParameter dto = new SqlServerDataAccessParameter();
             dto.Name = name;
             dto.DataType = dbType;
             dto.Size = 0;
@@ -79,7 +79,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="value">Gets added to Value property</param>
         public void Add(string name, SqlDbType dbType, int size, string value)
         {
-            SqlDataAccessParameter dto = new SqlDataAccessParameter();
+            SqlServerDataAccessParameter dto = new SqlServerDataAccessParameter();
             dto.Name = name;
             dto.DataType = dbType;
             dto.Size = size;
@@ -98,7 +98,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="_value">Gets added to Value property</param>
         public void Add(string name, SqlDbType dbType, int size, object oValue)
         {
-            SqlDataAccessParameter dto = new SqlDataAccessParameter();
+            SqlServerDataAccessParameter dto = new SqlServerDataAccessParameter();
             dto.Name = name;
             dto.DataType = dbType;
             dto.Size = size;
@@ -118,7 +118,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="value">Gets added to Value property</param>
         public void Add(string name, SqlDbType dbType, int size, byte precision, string value)
         {
-            SqlDataAccessParameter dto = new SqlDataAccessParameter();
+            SqlServerDataAccessParameter dto = new SqlServerDataAccessParameter();
             dto.Name = name;
             dto.DataType = dbType;
             dto.Size = size;
@@ -138,7 +138,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="_value">Gets added to Value property</param>
         public void Add(string name, SqlDbType dbType, int size, byte precision, object oValue)
         {
-            SqlDataAccessParameter dto = new SqlDataAccessParameter();
+            SqlServerDataAccessParameter dto = new SqlServerDataAccessParameter();
             dto.Name = name;
             dto.DataType = dbType;
             dto.Size = size;
@@ -152,9 +152,9 @@ namespace Framework.DataAccess.SqlServerDataClasses
         ///     Returns the Parameter List
         /// </summary>
         /// <returns>Parameter List</returns>
-        public List<SqlDataAccessParameter> AllParameters()
+        public List<SqlServerDataAccessParameter> AllParameters()
         {
-            return _colParameters;
+            return _ColParameters;
         }
     }
 }

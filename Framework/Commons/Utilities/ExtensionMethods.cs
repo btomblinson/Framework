@@ -45,8 +45,8 @@ namespace Framework.Commons.Utilities
         {
             if (!string.IsNullOrWhiteSpace(str1))
             {
-                TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
-                return myTI.ToTitleCase(str1.ToLower());
+                TextInfo myTi = new CultureInfo("en-US", false).TextInfo;
+                return myTi.ToTitleCase(str1.ToLower());
             }
 
             return "";
@@ -325,9 +325,9 @@ namespace Framework.Commons.Utilities
                 //add a column to table for each public property on T
                 foreach (PropertyInfo propInfo in elementType.GetProperties())
                 {
-                    Type ColType = Nullable.GetUnderlyingType(propInfo.PropertyType) ?? propInfo.PropertyType;
+                    Type colType = Nullable.GetUnderlyingType(propInfo.PropertyType) ?? propInfo.PropertyType;
 
-                    t.Columns.Add(propInfo.Name, ColType);
+                    t.Columns.Add(propInfo.Name, colType);
                 }
 
                 //go through each property on T and add each value to the table
@@ -392,9 +392,9 @@ namespace Framework.Commons.Utilities
             //add a column to table for each public property on T
             foreach (PropertyInfo propInfo in elementType.GetProperties())
             {
-                Type ColType = Nullable.GetUnderlyingType(propInfo.PropertyType) ?? propInfo.PropertyType;
+                Type colType = Nullable.GetUnderlyingType(propInfo.PropertyType) ?? propInfo.PropertyType;
 
-                t.Columns.Add(propInfo.Name, ColType);
+                t.Columns.Add(propInfo.Name, colType);
             }
 
             //go through each property on T and add each value to the table
@@ -425,8 +425,8 @@ namespace Framework.Commons.Utilities
             //add a column to table for each public property on T
             foreach (PropertyInfo propInfo in elementType.GetProperties())
             {
-                Type ColType = Nullable.GetUnderlyingType(propInfo.PropertyType) ?? propInfo.PropertyType;
-                t.Columns.Add(propInfo.Name, ColType);
+                Type colType = Nullable.GetUnderlyingType(propInfo.PropertyType) ?? propInfo.PropertyType;
+                t.Columns.Add(propInfo.Name, colType);
             }
 
             //go through each property on T and add each value to the table
@@ -500,17 +500,17 @@ namespace Framework.Commons.Utilities
         /// <summary>
         ///     Capitalize the first character and add a space before each capitalized letter (except the first character).
         /// </summary>
-        /// <param name="the_string"></param>
+        /// <param name="theString"></param>
         /// <returns></returns>
-        public static string ToProperCase(this string the_string)
+        public static string ToProperCase(this string theString)
         {
-            if (string.IsNullOrEmpty(the_string))
+            if (string.IsNullOrEmpty(theString))
             {
                 return "";
             }
 
             const string pattern = @"(?<=\w)(?=[A-Z])";
-            string result = Regex.Replace(the_string, pattern,
+            string result = Regex.Replace(theString, pattern,
                 " ", RegexOptions.None);
             return result.Substring(0, 1).ToUpper() + result.Substring(1);
         }
@@ -816,7 +816,7 @@ namespace Framework.Commons.Utilities
         {
             int maxSize = WebConfig.Get("max_upload_size", 4194304); // default is 4MB
             string acceptedFiles = WebConfig.Get("accepted_file_types", ".pdf,.jpg,.png,.doc,.docx");
-            var ValidFileTypes = acceptedFiles.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+            var validFileTypes = acceptedFiles.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
             FileValidationResult result = new FileValidationResult();
             result.IsValid = false;
             if (file.IsMissing())
@@ -837,7 +837,7 @@ namespace Framework.Commons.Utilities
                 return result;
             }
 
-            if (!HtmlValidator.CheckFileType(file.FileName, ValidFileTypes))
+            if (!HtmlValidator.CheckFileType(file.FileName, validFileTypes))
             {
                 if (file.ContentLength > maxSize)
                 {

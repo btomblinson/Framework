@@ -5,12 +5,12 @@ namespace Framework.DataAccess.SqlServerDataClasses
     /// <summary>
     ///     Class to hold SQL stored producture parameter variable's information needed to run a stored procedure.
     /// </summary>
-    public class SqlDataAccessParameter
+    public class SqlServerDataAccessParameter
     {
         /// <summary>
         ///     Constructor that sets Name and Value to emtpy strings and Size and Precision to 0.
         /// </summary>
-        public SqlDataAccessParameter()
+        public SqlServerDataAccessParameter()
         {
             Name = "";
             Size = 0;
@@ -24,7 +24,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="name">Name</param>
         /// <param name="dataType">SqlDbType DataType</param>
         /// <param name="value">Value</param>
-        public SqlDataAccessParameter(string name, SqlDbType dataType, string value)
+        public SqlServerDataAccessParameter(string name, SqlDbType dataType, string value)
         {
             Name = name;
             DataType = dataType;
@@ -39,7 +39,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="name">Name</param>
         /// <param name="dataType">SqlDbType DataType</param>
         /// <param name="value">Value</param>
-        public SqlDataAccessParameter(string name, SqlDbType dataType, object value)
+        public SqlServerDataAccessParameter(string name, SqlDbType dataType, object value)
         {
             Name = name;
             DataType = dataType;
@@ -55,7 +55,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="dataType">SqlDbType DataType</param>
         /// <param name="typeName">string TypeName</param>
         /// <param name="value">Value</param>
-        public SqlDataAccessParameter(string name, SqlDbType dataType, string typeName, object value)
+        public SqlServerDataAccessParameter(string name, SqlDbType dataType, string typeName, object value)
         {
             TypeName = typeName;
             Name = name;
@@ -72,7 +72,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="dataType">SqlDbType DataType</param>
         /// <param name="size">Size</param>
         /// <param name="value">Value</param>
-        public SqlDataAccessParameter(string name, SqlDbType dataType, int size, string value)
+        public SqlServerDataAccessParameter(string name, SqlDbType dataType, int size, string value)
         {
             Name = name;
             DataType = dataType;
@@ -88,7 +88,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="dataType">SqlDbType DataType</param>
         /// <param name="size">Size</param>
         /// <param name="value">Value</param>
-        public SqlDataAccessParameter(string name, SqlDbType dataType, int size, object value)
+        public SqlServerDataAccessParameter(string name, SqlDbType dataType, int size, object value)
         {
             Name = name;
             DataType = dataType;
@@ -105,7 +105,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="size">Size</param>
         /// <param name="precision">Precision</param>
         /// <param name="value">Value</param>
-        public SqlDataAccessParameter(string name, SqlDbType dataType, int size, byte precision, string value)
+        public SqlServerDataAccessParameter(string name, SqlDbType dataType, int size, byte precision, string value)
         {
             Name = name;
             DataType = dataType;
@@ -122,7 +122,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="size">Size</param>
         /// <param name="precision">Precision</param>
         /// <param name="value">Value</param>
-        public SqlDataAccessParameter(string name, SqlDbType dataType, int size, byte precision, object value)
+        public SqlServerDataAccessParameter(string name, SqlDbType dataType, int size, byte precision, object value)
         {
             Name = name;
             DataType = dataType;

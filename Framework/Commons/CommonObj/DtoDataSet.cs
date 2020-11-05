@@ -19,6 +19,6 @@ namespace Framework.Commons.CommonObj
         ///     Results from the database call
         /// </summary>
         [DataMember]
-        public DataSet DS { get; set; }
+        public DataSet Ds { get; set; }
     }
 }

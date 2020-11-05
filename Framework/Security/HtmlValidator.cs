@@ -341,15 +341,15 @@ namespace Framework.Security
         /// <summary>
         ///     Checks to see if value of file path passed in has a valid extension of given value
         /// </summary>
-        /// <param name="Filename">Full path of file to be validated</param>
-        /// <param name="ValidFileTypes">Listing of valid file type(s) that the File Name is checked against</param>
+        /// <param name="filename">Full path of file to be validated</param>
+        /// <param name="validFileTypes">Listing of valid file type(s) that the File Name is checked against</param>
         /// <returns>true if valid file type(s) and false if not valid filetype(s)</returns>
-        public static bool CheckFileType(string Filename, params string[] ValidFileTypes)
+        public static bool CheckFileType(string filename, params string[] validFileTypes)
         {
-            string Extension = Path.GetExtension(Filename);
-            foreach (string value in ValidFileTypes)
+            string extension = Path.GetExtension(filename);
+            foreach (string value in validFileTypes)
             {
-                if (Extension.ToLower() == value)
+                if (extension.ToLower() == value)
                 {
                     return true;
                 }
@@ -373,7 +373,7 @@ namespace Framework.Security
         /// </summary>
         /// <param name="text">Text to check</param>
         /// <returns>true if valid and false if not valid</returns>
-        public static bool CheckURLText(string text)
+        public static bool CheckUrlText(string text)
         {
             return CheckAgainstRegularExpression(text, @"^[a-zA-Z0-9 \-\_");
         }
@@ -382,15 +382,15 @@ namespace Framework.Security
         ///     Checks to see if the datetime passed in is as old as the age_required.
         /// </summary>
         /// <param name="date">Date you are checking against</param>
-        /// <param name="age_Required">The age that is required</param>
+        /// <param name="ageRequired">The age that is required</param>
         /// <returns>true if the date is as old as age_Required, false if not</returns>
-        public static bool CheckValidBirthday(string date, double age_Required)
+        public static bool CheckValidBirthday(string date, double ageRequired)
         {
-            var values = age_Required.ToString().Split('.');
+            var values = ageRequired.ToString().Split('.');
             int year = int.Parse(values[0]);
             int months = int.Parse(values[1]);
-            DateTime required_age_as_date = DateTime.Now.AddYears(-year).AddMonths(-months);
-            return DateTime.Parse(date).Date <= required_age_as_date.Date;
+            DateTime requiredAgeAsDate = DateTime.Now.AddYears(-year).AddMonths(-months);
+            return DateTime.Parse(date).Date <= requiredAgeAsDate.Date;
         }
     }
 }

@@ -16,19 +16,19 @@ namespace Framework.Commons.Utilities
     {
         /// <summary>Converts first table in DataSet to JSON</summary>
         /// <param name="ds">Dataset with a table with data.  Only the first table will converted</param>
-        public static string DataSetToJSON(DataSet ds)
+        public static string DataSetToJson(DataSet ds)
         {
             //Dictionary<string, object> dict = new Dictionary<string, object>();
             var list = new List<Dictionary<string, object>>();
             if (ds != null && ds.Tables.Count > 0)
             {
                 DataTable dt = ds.Tables[0];
-                foreach (DataRow Row in dt.Rows)
+                foreach (DataRow row in dt.Rows)
                 {
                     var dict = new Dictionary<string, object>();
-                    foreach (DataColumn Col in dt.Columns)
+                    foreach (DataColumn col in dt.Columns)
                     {
-                        dict[Col.ColumnName] = Convert.ToString(Row[Col]);
+                        dict[col.ColumnName] = Convert.ToString(row[col]);
                     }
 
                     list.Add(dict);
@@ -78,23 +78,23 @@ namespace Framework.Commons.Utilities
         }
 
         /// <summary>Reads a json file from a filepath on the server </summary>
-        /// <param name="JsonFilePath">FilePath to JSON File</param>
+        /// <param name="jsonFilePath">FilePath to JSON File</param>
         /// <returns>Returns Json String.</returns>
-        public static string LoadJsonFromFile(string JsonFilePath)
+        public static string LoadJsonFromFile(string jsonFilePath)
         {
             string results = "";
 
-            if (!string.IsNullOrWhiteSpace(JsonFilePath))
+            if (!string.IsNullOrWhiteSpace(jsonFilePath))
             {
-                if (CheckIfFileIsJson(JsonFilePath))
+                if (CheckIfFileIsJson(jsonFilePath))
                 {
-                    Logger.LogInfo("Loading Json from FilePath = " + JsonFilePath);
-                    using (StreamReader r = new StreamReader(JsonFilePath))
+                    Logger.LogInfo("Loading Json from FilePath = " + jsonFilePath);
+                    using (StreamReader r = new StreamReader(jsonFilePath))
                     {
                         results = r.ReadToEnd();
                     }
 
-                    Logger.LogInfo("Done Loading Json from FilePath = " + JsonFilePath);
+                    Logger.LogInfo("Done Loading Json from FilePath = " + jsonFilePath);
                 }
                 else
                 {
@@ -113,28 +113,28 @@ namespace Framework.Commons.Utilities
         /// <summary>
         ///     Reads the json from a Uploaded File.  If UploadedFile contains multiple files it will only read the first file in
         ///     the InputStream/summary>
-        ///     <param name="UploadedFile">Uploaded JSON File</param>
+        ///     <param name="uploadedFile">Uploaded JSON File</param>
         ///     <returns>Returns Json String.</returns>
-        public static string LoadJsonFromFile(FileUpload UploadedFile)
+        public static string LoadJsonFromFile(FileUpload uploadedFile)
         {
             string results = "";
 
-            if (UploadedFile != null)
+            if (uploadedFile != null)
             {
-                if (!string.IsNullOrWhiteSpace(UploadedFile.PostedFile.FileName))
+                if (!string.IsNullOrWhiteSpace(uploadedFile.PostedFile.FileName))
                 {
-                    string FileName = UploadedFile.PostedFile.FileName;
+                    string fileName = uploadedFile.PostedFile.FileName;
 
-                    if (CheckIfFileIsJson(FileName))
+                    if (CheckIfFileIsJson(fileName))
                     {
-                        Logger.LogInfo("Loading Json from Uploaded File = " + FileName);
+                        Logger.LogInfo("Loading Json from Uploaded File = " + fileName);
                         using (StreamReader r =
-                            new StreamReader(UploadedFile.PostedFile.InputStream))
+                            new StreamReader(uploadedFile.PostedFile.InputStream))
                         {
                             results = r.ReadToEnd();
                         }
 
-                        Logger.LogInfo("Done Loading Json from Uploaded File = " + FileName);
+                        Logger.LogInfo("Done Loading Json from Uploaded File = " + fileName);
                     }
                     else
                     {
@@ -156,15 +156,15 @@ namespace Framework.Commons.Utilities
         }
 
         /// <summary>Checks if the FilePath passed in contains the JSON Extension</summary>
-        /// <param name="FilePath">Filepath to check to see if extension of filepath is '.json'</param>
+        /// <param name="filePath">Filepath to check to see if extension of filepath is '.json'</param>
         /// <returns>Returns Booelaan on wether the FilePath contains the JSON extension or not</returns>
-        public static bool CheckIfFileIsJson(string FilePath)
+        public static bool CheckIfFileIsJson(string filePath)
         {
             bool test = false;
 
             try
             {
-                test = Path.GetExtension(FilePath).EqualsIgnoreCase(".json");
+                test = Path.GetExtension(filePath).EqualsIgnoreCase(".json");
             }
             catch (Exception)
             {
@@ -174,13 +174,13 @@ namespace Framework.Commons.Utilities
         }
 
         /// <summary>Saves JSON to the given FilePath without Impersonation</summary>
-        /// <param name="FilePath">Filepath to write JSON contents to</param>
-        /// <param name="JsonContent">JSON data that will be saved</param>
-        public static void SaveJsonToAFile(string FilePath, string JsonContent)
+        /// <param name="filePath">Filepath to write JSON contents to</param>
+        /// <param name="jsonContent">JSON data that will be saved</param>
+        public static void SaveJsonToAFile(string filePath, string jsonContent)
         {
-            if (CheckIfFileIsJson(FilePath))
+            if (CheckIfFileIsJson(filePath))
             {
-                File.WriteAllText(FilePath, JsonContent);
+                File.WriteAllText(filePath, jsonContent);
             }
             else
             {
@@ -190,19 +190,19 @@ namespace Framework.Commons.Utilities
         }
 
         /// <summary>Saves JSON to the given FilePath with Impersonation</summary>
-        /// <param name="FilePath">Filepath to write JSON contents to</param>
-        /// <param name="JsonContent">JSON data that will be saved</param>
-        /// <param name="UserName">Username of identity that has access to save in the specified file location</param>
-        /// <param name="Password">Password of identity that has access to save in the specified file location</param>
-        /// <param name="Domain">Domain of identity that has access to save in the specified file location</param>
-        public static void SaveJsonToAFile(string FilePath, string JsonContent, string UserName, string Password,
-            string Domain)
+        /// <param name="filePath">Filepath to write JSON contents to</param>
+        /// <param name="jsonContent">JSON data that will be saved</param>
+        /// <param name="userName">Username of identity that has access to save in the specified file location</param>
+        /// <param name="password">Password of identity that has access to save in the specified file location</param>
+        /// <param name="domain">Domain of identity that has access to save in the specified file location</param>
+        public static void SaveJsonToAFile(string filePath, string jsonContent, string userName, string password,
+            string domain)
         {
-            if (CheckIfFileIsJson(FilePath))
+            if (CheckIfFileIsJson(filePath))
             {
-                using (new Impersonator(UserName, Domain, Password))
+                using (new Impersonator(userName, domain, password))
                 {
-                    File.WriteAllText(FilePath, JsonContent);
+                    File.WriteAllText(filePath, jsonContent);
                 }
             }
             else

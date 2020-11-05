@@ -4,7 +4,7 @@ namespace Framework.DataAccess.ObjectMapping
 {
     public class PropertyInfoPlus
     {
-        public PropertyInfo propertyInfo { get; set; }
-        public DataBinding dataBinding { get; set; }
+        public PropertyInfo PropertyInfo { get; set; }
+        public DataBinding DataBinding { get; set; }
     }
 }

@@ -20,57 +20,57 @@ namespace Framework.UI.BusinessObj
             RecordCount = 0;
             TableCaption = "Search Results";
             TableId = "SmartGrid" + randomNum.Next(0, 1000);
-            pagerPosition = PagerPosition.Top;
+            PagerPosition = PagerPosition.Top;
             SpecialColumnAliases = null;
         }
 
-        public SearchResults(DtoDataSet _Results, string _TableId = "", int _RecordsPerPage = 50,
-            int _RecordLimit = int.MaxValue, int _CurrentPage = 1, int _TableIndex = 0,
-            string _TableCaption = "Search Results", PagerPosition _pagerPosition = PagerPosition.Top,
-            Dictionary<string, string> _SpecialColumnAliases = null) : this()
+        public SearchResults(DtoDataSet results, string tableId = "", int recordsPerPage = 50,
+            int recordLimit = int.MaxValue, int currentPage = 1, int tableIndex = 0,
+            string tableCaption = "Search Results", PagerPosition pagerPosition = PagerPosition.Top,
+            Dictionary<string, string> specialColumnAliases = null) : this()
         {
             //OverWrite Default Values From Default Constructor Value If Need To
-            TableIndex = _TableIndex;
-            RecordsPerPage = _RecordsPerPage;
-            RecordLimit = _RecordLimit;
-            TableCaption = _TableCaption;
-            pagerPosition = _pagerPosition;
-            SpecialColumnAliases = _SpecialColumnAliases;
+            TableIndex = tableIndex;
+            RecordsPerPage = recordsPerPage;
+            RecordLimit = recordLimit;
+            TableCaption = tableCaption;
+            PagerPosition = pagerPosition;
+            SpecialColumnAliases = specialColumnAliases;
             //If user doesn't specify an Id field stick with the random generated Id if its provided.  Else generate another unique id
-            if (!string.IsNullOrWhiteSpace(_TableId))
+            if (!string.IsNullOrWhiteSpace(tableId))
             {
-                TableId = _TableId;
+                TableId = tableId;
             }
 
 
             //If its null want to set it to new object to display error messages
-            if (_Results == null)
+            if (results == null)
             {
                 Results = new DtoDataSet();
             }
             else
             {
-                Results = _Results;
+                Results = results;
             }
 
 
-            if (string.IsNullOrWhiteSpace(Results.Error) && Results.DS.Tables != null
-                                                         && Results.DS.Tables.Count != 0 &&
-                                                         Results.DS.Tables[TableIndex].Rows.Count != 0)
+            if (string.IsNullOrWhiteSpace(Results.Error) && Results.Ds.Tables != null
+                                                         && Results.Ds.Tables.Count != 0 &&
+                                                         Results.Ds.Tables[TableIndex].Rows.Count != 0)
             {
-                if (Results.DS.Tables[TableIndex].Rows.Count > RecordLimit)
+                if (Results.Ds.Tables[TableIndex].Rows.Count > RecordLimit)
                 {
-                    Results.DS = ReplaceTable(Results.DS, TableIndex,
-                        GetNRows(Results.DS.Tables[TableIndex], RecordLimit));
+                    Results.Ds = ReplaceTable(Results.Ds, TableIndex,
+                        GetNRows(Results.Ds.Tables[TableIndex], RecordLimit));
                 }
 
-                RecordCount = Results.DS.Tables[TableIndex].Rows.Count;
+                RecordCount = Results.Ds.Tables[TableIndex].Rows.Count;
                 TotalPages = CountPages(RecordCount, RecordsPerPage);
             }
 
-            if (CurrentPage != _CurrentPage && _CurrentPage > 0 && _CurrentPage <= TotalPages)
+            if (CurrentPage != currentPage && currentPage > 0 && currentPage <= TotalPages)
             {
-                CurrentPage = _CurrentPage;
+                CurrentPage = currentPage;
             }
         }
 
@@ -92,43 +92,43 @@ namespace Framework.UI.BusinessObj
 
         public string TableId { get; set; }
 
-        public PagerPosition pagerPosition { get; set; }
+        public PagerPosition PagerPosition { get; set; }
 
         public Dictionary<string, string> SpecialColumnAliases { get; set; }
 
-        private DataTable GetNRows(DataTable CurrentTable, int Limit)
+        private DataTable GetNRows(DataTable currentTable, int limit)
         {
             DataTable temp = new DataTable();
-            foreach (DataColumn collumn in CurrentTable.Columns)
+            foreach (DataColumn collumn in currentTable.Columns)
             {
                 temp.Columns.Add(collumn.ColumnName, collumn.DataType);
             }
 
-            for (int i = 0; i < Limit; i++)
+            for (int i = 0; i < limit; i++)
             {
                 DataRow row = temp.Rows.Add();
-                foreach (DataColumn collumn in CurrentTable.Columns)
+                foreach (DataColumn collumn in currentTable.Columns)
                 {
-                    row[collumn.ColumnName] = CurrentTable.Rows[i][collumn.ColumnName];
+                    row[collumn.ColumnName] = currentTable.Rows[i][collumn.ColumnName];
                 }
             }
 
             return temp;
         }
 
-        private DataSet ReplaceTable(DataSet CurrentDataset, int Index, DataTable AdditionalTable)
+        private DataSet ReplaceTable(DataSet currentDataset, int index, DataTable additionalTable)
         {
             DataSet temp = new DataSet();
 
-            for (int i = 0; i < CurrentDataset.Tables.Count; i++)
+            for (int i = 0; i < currentDataset.Tables.Count; i++)
             {
-                if (i != Index)
+                if (i != index)
                 {
-                    temp.Tables.Add(CurrentDataset.Tables[i]);
+                    temp.Tables.Add(currentDataset.Tables[i]);
                 }
                 else
                 {
-                    temp.Tables.Add(AdditionalTable);
+                    temp.Tables.Add(additionalTable);
                 }
             }
 

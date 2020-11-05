@@ -14,7 +14,7 @@ namespace Framework.Commons.Utilities
         /// <typeparam name="T">Type of cached item</typeparam>
         /// <param name="o">Item to be cached</param>
         /// <param name="key">Name of item</param>
-        public static void Add<T>(T o, string key, string CacheMinutes)
+        public static void Add<T>(T o, string key, string cacheMinutes)
         {
             // NOTE: Apply expiration paramers as you see fit.
             // In this example, I want an absolute 
@@ -25,7 +25,7 @@ namespace Framework.Commons.Utilities
                 o,
                 null,
                 DateTime.Now.AddMinutes(
-                    int.Parse(CacheMinutes)),
+                    int.Parse(cacheMinutes)),
                 Cache.NoSlidingExpiration);
         }
 

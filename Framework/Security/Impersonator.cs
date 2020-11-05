@@ -67,7 +67,7 @@ namespace Framework.Security
         /// <param name="newCredentials">Set to </param>
         public Impersonator(string userName, string domainName, string password, bool newCredentials)
         {
-            ImpersonateValidUser(userName, domainName, password, LOGON32_LOGON_NEW_CREDENTIALS);
+            ImpersonateValidUser(userName, domainName, password, Logon32LogonNewCredentials);
         }
 
         #endregion
@@ -96,10 +96,10 @@ namespace Framework.Security
         private static extern bool CloseHandle(
             IntPtr handle);
 
-        private const int LOGON32_PROVIDER_DEFAULT = 0;
+        private const int Logon32ProviderDefault = 0;
 
-        private const int LOGON32_LOGON_NEW_CREDENTIALS = 9;
-        private const int LOGON32_LOGON_INTERACTIVE = 2;
+        private const int Logon32LogonNewCredentials = 9;
+        private const int Logon32LogonInteractive = 2;
 
         #endregion
 
@@ -127,13 +127,13 @@ namespace Framework.Security
                             domain,
                             password,
                             provider,
-                            LOGON32_PROVIDER_DEFAULT,
+                            Logon32ProviderDefault,
                             ref token) != 0)
                     {
                         if (DuplicateToken(token, 2, ref tokenDuplicate) != 0)
                         {
                             tempWindowsIdentity = new WindowsIdentity(tokenDuplicate);
-                            impersonationContext = tempWindowsIdentity.Impersonate();
+                            _ImpersonationContext = tempWindowsIdentity.Impersonate();
                         }
                         else
                         {
@@ -172,7 +172,7 @@ namespace Framework.Security
         /// <param name="password">The password of the user to act as.</param>
         private void ImpersonateValidUser(string userName, string domain, string password)
         {
-            ImpersonateValidUser(userName, domain, password, LOGON32_LOGON_INTERACTIVE);
+            ImpersonateValidUser(userName, domain, password, Logon32LogonInteractive);
         }
 
         /// <summary>
@@ -180,10 +180,10 @@ namespace Framework.Security
         /// </summary>
         private void UndoImpersonation()
         {
-            impersonationContext?.Undo();
+            _ImpersonationContext?.Undo();
         }
 
-        private WindowsImpersonationContext impersonationContext;
+        private WindowsImpersonationContext _ImpersonationContext;
 
         #endregion
     }

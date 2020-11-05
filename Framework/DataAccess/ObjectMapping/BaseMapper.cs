@@ -8,11 +8,11 @@ namespace Framework.DataAccess.ObjectMapping
 {
     public class BaseMapper<T>
     {
-        private Dictionary<string, PropertyInfoPlus> _namePropMap;
+        private Dictionary<string, PropertyInfoPlus> _NamePropMap;
 
         public BaseMapper()
         {
-            _namePropMap = BaseMapperHelper.BuildPropertyMap(typeof(T));
+            _NamePropMap = BaseMapperHelper.BuildPropertyMap(typeof(T));
         }
 
         private static string HexStr(byte[] p)
@@ -38,10 +38,10 @@ namespace Framework.DataAccess.ObjectMapping
             var columnMap = fromRow.GetColumnMap();
             foreach (string databaseFieldName in columnMap.Keys)
             {
-                if (_namePropMap.ContainsKey(databaseFieldName))
+                if (_NamePropMap.ContainsKey(databaseFieldName))
                 {
                     int indexOfField = columnMap[databaseFieldName];
-                    PropertyInfo pi = _namePropMap[databaseFieldName].propertyInfo;
+                    PropertyInfo pi = _NamePropMap[databaseFieldName].PropertyInfo;
                     object newObject = null;
                     if (!fromRow.IsFieldNullByIndex(rowNumber, indexOfField))
                     {
@@ -59,7 +59,7 @@ namespace Framework.DataAccess.ObjectMapping
                             try
                             {
                                 newObject = JsonConvert.DeserializeObject(objToConvert.ToString(),
-                                    _namePropMap[databaseFieldName].propertyInfo.PropertyType);
+                                    _NamePropMap[databaseFieldName].PropertyInfo.PropertyType);
                             }
                             catch
                             {

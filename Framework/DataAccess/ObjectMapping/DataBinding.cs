@@ -8,9 +8,9 @@ namespace Framework.DataAccess.ObjectMapping
         {
         }
 
-        public DataBinding(string FieldNameParm)
+        public DataBinding(string fieldNameParm)
         {
-            FieldName = FieldNameParm;
+            FieldName = fieldNameParm;
         }
 
         public string FieldName { get; set; }

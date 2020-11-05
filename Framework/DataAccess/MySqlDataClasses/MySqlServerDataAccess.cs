@@ -3,36 +3,34 @@ using System.Data;
 using Framework.Commons.CommonObj;
 using Framework.Commons.Logging;
 using Framework.Commons.Utilities;
-using Framework.DataAccess.MySqlDataClasses;
-using Framework.DataAccess.SqlServerDataClasses;
 
-namespace Framework.DataAccess
+namespace Framework.DataAccess.MySqlDataClasses
 {
     /// <summary>
     ///     Access data from stored procedure
     /// </summary>
     public class MySqlServerDataAccess
     {
-        private string _error = "";
+        private string _Error = "";
 
         /// <summary>
         ///     SqlDataConnect object
         /// </summary>
-        public MySqlDataConnect _sqlDataConnect;
+        public MySqlDataConnect SqlDataConnect;
 
         /// <summary>
         ///     Token String
         /// </summary>
-        public string _token;
+        public string Token;
 
-        private bool _turnOnLogging = Logger.InitializeLogging();
+        private bool _TurnOnLogging = Logger.InitializeLogging();
 
         /// <summary>
         ///     Instantiates SqlDataConnect class
         /// </summary>
         public MySqlServerDataAccess()
         {
-            _sqlDataConnect = new MySqlDataConnect();
+            SqlDataConnect = new MySqlDataConnect();
         }
 
         /// <summary>
@@ -41,8 +39,8 @@ namespace Framework.DataAccess
         /// <param name="sqlDataConnect"></param>
         public MySqlServerDataAccess(MySqlDataConnect sqlDataConnect)
         {
-            _sqlDataConnect = new MySqlDataConnect();
-            _sqlDataConnect = sqlDataConnect;
+            SqlDataConnect = new MySqlDataConnect();
+            SqlDataConnect = sqlDataConnect;
         }
 
         /// <summary>
@@ -51,9 +49,9 @@ namespace Framework.DataAccess
         /// <param name="sqlDataConnect"></param>
         public MySqlServerDataAccess(MySqlDataConnect sqlDataConnect, string token)
         {
-            _sqlDataConnect = new MySqlDataConnect();
-            _sqlDataConnect = sqlDataConnect;
-            _token = token;
+            SqlDataConnect = new MySqlDataConnect();
+            SqlDataConnect = sqlDataConnect;
+            Token = token;
         }
 
         /// <summary>
@@ -103,20 +101,20 @@ namespace Framework.DataAccess
                 }
             }
 
-            infoDataSet.DS = null;
+            infoDataSet.Ds = null;
             infoDataSet.Error = "";
 
-            DataSet localDS = null;
+            DataSet localDs = null;
 
             try
             {
-                if (_sqlDataConnect.getData(ref localDS, procedureName, ref _error, dac) == false)
+                if (SqlDataConnect.GetData(ref localDs, procedureName, ref _Error, dac) == false)
                 {
-                    infoDataSet.Error = _error;
-                    infoDataSet.DS = null;
+                    infoDataSet.Error = _Error;
+                    infoDataSet.Ds = null;
                 }
 
-                infoDataSet.DS = localDS;
+                infoDataSet.Ds = localDs;
             }
             catch (Exception ex)
             {
@@ -157,20 +155,20 @@ namespace Framework.DataAccess
                 }
             }
 
-            infoDataSet.DS = null;
+            infoDataSet.Ds = null;
             infoDataSet.Error = "";
 
-            DataSet localDS = null;
+            DataSet localDs = null;
 
             try
             {
-                if (_sqlDataConnect.getData(ref localDS, procedureName, ref _error, dac) == false)
+                if (SqlDataConnect.GetData(ref localDs, procedureName, ref _Error, dac) == false)
                 {
-                    infoDataSet.Error = _error;
-                    infoDataSet.DS = null;
+                    infoDataSet.Error = _Error;
+                    infoDataSet.Ds = null;
                 }
 
-                infoDataSet.DS = localDS;
+                infoDataSet.Ds = localDs;
             }
             catch (Exception ex)
             {
@@ -201,20 +199,20 @@ namespace Framework.DataAccess
                     dac.Add(parameter);
                 }
 
-                infoDataSet.DS = null;
+                infoDataSet.Ds = null;
                 infoDataSet.Error = "";
 
-                DataSet localDS = null;
+                DataSet localDs = null;
 
                 try
                 {
-                    if (_sqlDataConnect.getData(ref localDS, procedureName, ref _error, dac) == false)
+                    if (SqlDataConnect.GetData(ref localDs, procedureName, ref _Error, dac) == false)
                     {
-                        infoDataSet.Error = _error;
-                        infoDataSet.DS = null;
+                        infoDataSet.Error = _Error;
+                        infoDataSet.Ds = null;
                     }
 
-                    infoDataSet.DS = localDS;
+                    infoDataSet.Ds = localDs;
                 }
                 catch (Exception ex)
                 {
@@ -264,20 +262,20 @@ namespace Framework.DataAccess
                     }
                 }
 
-                infoDataSet.DS = null;
+                infoDataSet.Ds = null;
                 infoDataSet.Error = "";
 
-                DataSet localDS = null;
+                DataSet localDs = null;
 
                 try
                 {
-                    if (_sqlDataConnect.getData(ref localDS, procedureName, ref _error, dac) == false)
+                    if (SqlDataConnect.GetData(ref localDs, procedureName, ref _Error, dac) == false)
                     {
-                        infoDataSet.Error = _error;
-                        infoDataSet.DS = null;
+                        infoDataSet.Error = _Error;
+                        infoDataSet.Ds = null;
                     }
 
-                    infoDataSet.DS = localDS;
+                    infoDataSet.Ds = localDs;
                 }
                 catch (Exception ex)
                 {
@@ -309,25 +307,25 @@ namespace Framework.DataAccess
                 dac.Add(parameter);
             }
 
-            string Error = string.Empty;
+            string error = string.Empty;
             ReturnObj objReturn = new ReturnObj();
             try
             {
-                long ReturnValue;
-                ReturnValue = _sqlDataConnect.updateData(procedureName, ref Error, dac);
-                if (ReturnValue <= 0)
+                long returnValue;
+                returnValue = SqlDataConnect.UpdateData(procedureName, ref error, dac);
+                if (returnValue <= 0)
                 {
-                    objReturn.Error = Error;
+                    objReturn.Error = error;
                 }
 
-                objReturn.Result = ReturnValue;
+                objReturn.Result = returnValue;
             }
             catch (Exception ex)
             {
                 //log this error 
                 objReturn.Result = 0;
                 objReturn.Error = ex.Message;
-                Logger.log.Error(ex);
+                Logger.Log.Error(ex);
             }
 
             return objReturn;
@@ -360,25 +358,25 @@ namespace Framework.DataAccess
                 }
             }
 
-            string Error = string.Empty;
+            string error = string.Empty;
             ReturnObj objReturn = new ReturnObj();
             try
             {
-                long ReturnValue;
-                ReturnValue = _sqlDataConnect.updateData(procedureName, ref Error, dac);
-                if (ReturnValue <= 0)
+                long returnValue;
+                returnValue = SqlDataConnect.UpdateData(procedureName, ref error, dac);
+                if (returnValue <= 0)
                 {
-                    objReturn.Error = Error;
+                    objReturn.Error = error;
                 }
 
-                objReturn.Result = ReturnValue;
+                objReturn.Result = returnValue;
             }
             catch (Exception ex)
             {
                 //log this error 
                 objReturn.Result = 0;
                 objReturn.Error = ex.Message;
-                Logger.log.Error(ex);
+                Logger.Log.Error(ex);
             }
 
             return objReturn;
@@ -408,15 +406,15 @@ namespace Framework.DataAccess
 
                 try
                 {
-                    long ReturnValue;
-                    ReturnValue = _sqlDataConnect.updateData(procedureName, ref _error, dac);
-                    if (ReturnValue <= 0)
+                    long returnValue;
+                    returnValue = SqlDataConnect.UpdateData(procedureName, ref _Error, dac);
+                    if (returnValue <= 0)
                     {
-                        objReturn.Error = _error;
-                        Logger.LogError(_error, procedureName);
+                        objReturn.Error = _Error;
+                        Logger.LogError(_Error, procedureName);
                     }
 
-                    objReturn.Result = ReturnValue;
+                    objReturn.Result = returnValue;
                 }
                 catch (Exception ex)
                 {
@@ -427,7 +425,7 @@ namespace Framework.DataAccess
                 }
                 finally
                 {
-                    _sqlDataConnect.closeConnection();
+                    SqlDataConnect.CloseConnection();
                 }
             }
             else
@@ -473,15 +471,15 @@ namespace Framework.DataAccess
 
                 try
                 {
-                    long ReturnValue;
-                    ReturnValue = _sqlDataConnect.updateData(procedureName, ref _error, dac);
-                    if (ReturnValue <= 0)
+                    long returnValue;
+                    returnValue = SqlDataConnect.UpdateData(procedureName, ref _Error, dac);
+                    if (returnValue <= 0)
                     {
-                        objReturn.Error = _error;
-                        Logger.LogError(_error, procedureName);
+                        objReturn.Error = _Error;
+                        Logger.LogError(_Error, procedureName);
                     }
 
-                    objReturn.Result = ReturnValue;
+                    objReturn.Result = returnValue;
                 }
                 catch (Exception ex)
                 {
@@ -492,7 +490,7 @@ namespace Framework.DataAccess
                 }
                 finally
                 {
-                    _sqlDataConnect.closeConnection();
+                    SqlDataConnect.CloseConnection();
                 }
             }
             else

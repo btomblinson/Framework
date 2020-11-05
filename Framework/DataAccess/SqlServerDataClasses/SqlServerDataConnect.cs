@@ -7,44 +7,56 @@ using System.Data.SqlClient;
 namespace Framework.DataAccess.SqlServerDataClasses
 {
     //create the public enumerators here
-    public enum eSelect
+    public enum ESelect
     {
         GetColumns,
+
         GetNextCaseId,
+
         GetAzmanRoles,
+
         GetAzmanRoleHeirarchy2,
+
         GetNoOfParentRoles
     }
 
-    public enum eUpdate
+    public enum EUpdate
     {
         RoleHeirarchy,
+
         RoleToMemberDates,
+
         RoleHeirarchy2
     }
 
     /// <summary>
     ///     Class that allows selecting, inserting, updating, deleting records from SQL Server database
     ///     via stored procedures and allow selecting and inserting records from SQL server database via
-    ///     inline SQL.  Database transactions can be initied.
+    ///     inline SQL.  Database transactions can be initiated.
     /// </summary>
-    public class SqlDataConnect
+    public class SqlServerDataConnect
     {
-        private int _commandTimeOut = 30;
-        private SqlDataAdapter Adprdata;
-        private bool bolTran;
-        private SqlCommand cmdSql = new SqlCommand();
-        private SqlConnection conDB;
+        private int _CommandTimeOut = 30;
 
-        private string logMsg = "";
-        private SqlTransaction oTran;
+        private SqlDataAdapter _Adprdata;
 
-        //new function here
-        public SqlDataConnect()
+        private bool _BolTran;
+
+        private SqlCommand _CmdSql = new SqlCommand();
+
+        private SqlConnection _ConDb;
+
+        private string _LogMsg = "";
+
+        private SqlTransaction _OTran;
+
+        /// <summary>
+        /// You must call <see cref="ChangeConnectionString"/> to set the connection
+        /// </summary>
+        public SqlServerDataConnect()
         {
-            //use this one      
-            applySettings();
-            bolTran = false;
+            _ConDb = new SqlConnection();
+            _BolTran = false;
         }
 
         /// <summary>
@@ -52,215 +64,215 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// </summary>
         public int SetCommandTimeOut
         {
-            set => _commandTimeOut = value < 1 ? 30 : value;
+            set => _CommandTimeOut = value < 1 ? 30 : value;
         }
 
         /// <summary>
         ///     Add all of the parameters to command
         /// </summary>
         /// <param name="colAllParameters">List of SqlDataAccessParameter to command</param>
-        private void AddParameterValues(List<SqlDataAccessParameter> colAllParameters)
+        private void AddParameterValues(List<SqlServerDataAccessParameter> colAllParameters)
         {
-            foreach (SqlDataAccessParameter dtoParam in colAllParameters)
+            foreach (SqlServerDataAccessParameter dtoParam in colAllParameters)
             {
                 if (dtoParam.ObjectValue == DBNull.Value)
                 {
-                    cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
-                    cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
-                    cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                    _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                    _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                    _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                 }
                 else
                 {
                     switch (dtoParam.DataType.ToString())
                     {
                         case "VarChar":
-                            cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
                             }
                             else if (dtoParam.ObjectValue != null)
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
                             }
                             else
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = "";
+                                _CmdSql.Parameters[dtoParam.Name].Value = "";
                             }
 
-                            cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                            _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
 
                         case "Decimal":
-                            cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToDecimal(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = Convert.ToDecimal(dtoParam.Value);
+                                _CmdSql.Parameters[dtoParam.Name].Value = Convert.ToDecimal(dtoParam.Value);
                             }
                             else if (dtoParam.ObjectValue != null)
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
                             }
                             else
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
                             }
 
-                            cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                            _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
 
                         case "TinyInt":
-                            cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
+                                _CmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             }
                             else if (dtoParam.ObjectValue != null)
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
                             }
                             else
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
                             }
 
-                            cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                            _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
 
                         case "SmallInt":
-                            cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt16(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt16(dtoParam.Value);
+                                _CmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt16(dtoParam.Value);
                             }
                             else if (dtoParam.ObjectValue != null)
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
                             }
                             else
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
                             }
 
-                            cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                            _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
 
                         case "Int":
-                            cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
+                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt32(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt32(dtoParam.Value);
+                                _CmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt32(dtoParam.Value);
                             }
                             else if (dtoParam.ObjectValue != null)
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
                             }
                             else
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
                             }
 
-                            cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                            _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
 
                         case "DateTime":
-                            cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
+                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToDateTime(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = Convert.ToDateTime(dtoParam.Value);
+                                _CmdSql.Parameters[dtoParam.Name].Value = Convert.ToDateTime(dtoParam.Value);
                             }
                             else if (dtoParam.ObjectValue != null)
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
                             }
                             else
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
                             }
 
-                            cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                            _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
 
                         case "Bit":
-                            cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
+                                _CmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             }
                             else if (dtoParam.ObjectValue != null)
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
                             }
                             else
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
                             }
 
-                            cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                            _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
 
                         case "VarBinary":
-                            cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
                             }
                             else if (dtoParam.ObjectValue != null)
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = (byte[]) dtoParam.ObjectValue;
+                                _CmdSql.Parameters[dtoParam.Name].Value = (byte[]) dtoParam.ObjectValue;
                             }
                             else
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
                             }
 
-                            cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                            _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
                         case "Structured":
-                            cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
+                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
                             }
                             else if (dtoParam.ObjectValue != null)
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
                             }
                             else
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
                             }
 
                             // Set TypeName, this is used for table parameters
-                            cmdSql.Parameters[dtoParam.Name].TypeName = dtoParam.TypeName;
+                            _CmdSql.Parameters[dtoParam.Name].TypeName = dtoParam.TypeName;
 
-                            cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                            _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
                         default:
-                            cmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
+                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             //cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
                             }
                             else if (dtoParam.ObjectValue != null)
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
+                                _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.ObjectValue;
                             }
                             else
                             {
-                                cmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
+                                _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
                             }
 
-                            cmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
+                            _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
                     }
                 }
@@ -276,7 +288,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="sError">String value that contains an error message if error occurs</param>
         /// <param name="dtoContainer">SqlDataAccessContainer with all parameters that will be added to the stored procedure</param>
         /// <returns>A <c>long</c> with the data from <c>@RETURN_VALUE</c> parameter in stored procedure</returns>
-        public long updateData(string sProcedureName, ref string sError, SqlDataAccessContainer dtoContainer)
+        public long UpdateData(string sProcedureName, ref string sError, SqlServerDataAccessContainer dtoContainer)
         {
             try
             {
@@ -287,55 +299,55 @@ namespace Framework.DataAccess.SqlServerDataClasses
                 }
 
                 //add the return value parameter
-                cmdSql.Parameters.Add("@RETURN_VALUE", SqlDbType.Int);
-                cmdSql.Parameters["@RETURN_VALUE"].Direction = ParameterDirection.ReturnValue;
+                _CmdSql.Parameters.Add("@RETURN_VALUE", SqlDbType.Int);
+                _CmdSql.Parameters["@RETURN_VALUE"].Direction = ParameterDirection.ReturnValue;
 
                 //check for connection strings here
                 if (OpenConnection())
                 {
-                    cmdSql.Connection = conDB;
-                    cmdSql.CommandType = CommandType.StoredProcedure;
-                    cmdSql.CommandText = sProcedureName;
-                    cmdSql.CommandTimeout = _commandTimeOut;
+                    _CmdSql.Connection = _ConDb;
+                    _CmdSql.CommandType = CommandType.StoredProcedure;
+                    _CmdSql.CommandText = sProcedureName;
+                    _CmdSql.CommandTimeout = _CommandTimeOut;
                 }
                 else
                 {
-                    sError = "Unable to open the connection in SqlDataConnect. " + logMsg;
+                    sError = "Unable to open the connection in SqlDataConnect. " + _LogMsg;
                     return 0;
                 }
 
                 //check for transactions
-                if (bolTran)
+                if (_BolTran)
                 {
-                    cmdSql.Transaction = oTran;
+                    _CmdSql.Transaction = _OTran;
                 }
 
-                cmdSql.ExecuteNonQuery();
-                long nReturn = long.Parse(cmdSql.Parameters["@RETURN_VALUE"].Value.ToString());
+                _CmdSql.ExecuteNonQuery();
+                long nReturn = long.Parse(_CmdSql.Parameters["@RETURN_VALUE"].Value.ToString());
 
-                cmdSql.Connection = null;
-                cmdSql.Parameters.Clear();
+                _CmdSql.Connection = null;
+                _CmdSql.Parameters.Clear();
 
                 return nReturn;
             }
 
             catch (Exception e)
             {
-                if (bolTran)
+                if (_BolTran)
                 {
-                    rollBackTransaction();
+                    RollBackTransaction();
                 }
 
                 sError = e.Message;
-                cmdSql.Parameters.Clear();
+                _CmdSql.Parameters.Clear();
                 return 0;
             }
             finally
             {
-                closeConnection();
-                if (cmdSql != null && bolTran == false)
+                CloseConnection();
+                if (_CmdSql != null && _BolTran == false)
                 {
-                    cmdSql.Dispose();
+                    _CmdSql.Dispose();
                 }
             }
         }
@@ -348,7 +360,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="sError">String value that contains an error message if error occurs</param>
         /// <param name="ssql">Inline insert statement</param>
         /// <returns>A <c>long</c> with the data returned from <c>scope_identity()</c> in database</returns>
-        public long insertRawSqlData(ref string sError, string ssql)
+        public long InsertRawSqlData(ref string sError, string ssql)
         {
             try
             {
@@ -357,27 +369,27 @@ namespace Framework.DataAccess.SqlServerDataClasses
                 {
                     //append the scope_identity her
                     ssql = ssql + "; select scope_identity()";
-                    cmdSql.Connection = conDB;
-                    cmdSql.CommandText = ssql;
-                    cmdSql.CommandType = CommandType.Text;
-                    cmdSql.CommandTimeout = _commandTimeOut;
+                    _CmdSql.Connection = _ConDb;
+                    _CmdSql.CommandText = ssql;
+                    _CmdSql.CommandType = CommandType.Text;
+                    _CmdSql.CommandTimeout = _CommandTimeOut;
                 }
                 else
                 {
-                    sError = "Unable to open the connection in SqlDataConnect. " + logMsg;
+                    sError = "Unable to open the connection in SqlDataConnect. " + _LogMsg;
                     return 0;
                 }
 
                 //check for transactions
-                if (bolTran)
+                if (_BolTran)
                 {
-                    cmdSql.Transaction = oTran;
+                    _CmdSql.Transaction = _OTran;
                 }
 
-                object nReturn = cmdSql.ExecuteScalar();
+                object nReturn = _CmdSql.ExecuteScalar();
 
-                cmdSql.Connection = null;
-                cmdSql.Parameters.Clear();
+                _CmdSql.Connection = null;
+                _CmdSql.Parameters.Clear();
 
                 if (nReturn == null)
                 {
@@ -394,21 +406,21 @@ namespace Framework.DataAccess.SqlServerDataClasses
 
             catch (Exception e)
             {
-                if (bolTran)
+                if (_BolTran)
                 {
-                    rollBackTransaction();
+                    RollBackTransaction();
                 }
 
                 sError = e.Message;
-                cmdSql.Parameters.Clear();
+                _CmdSql.Parameters.Clear();
                 return -1;
             }
             finally
             {
-                closeConnection();
-                if (cmdSql != null && bolTran == false)
+                CloseConnection();
+                if (_CmdSql != null && _BolTran == false)
                 {
-                    cmdSql.Dispose();
+                    _CmdSql.Dispose();
                 }
             }
         }
@@ -426,33 +438,33 @@ namespace Framework.DataAccess.SqlServerDataClasses
                 //check for connection strings here
                 if (OpenConnection())
                 {
-                    cmdSql.Connection = conDB;
-                    cmdSql.CommandText = ssql;
-                    cmdSql.CommandType = CommandType.Text;
-                    cmdSql.CommandTimeout = _commandTimeOut;
+                    _CmdSql.Connection = _ConDb;
+                    _CmdSql.CommandText = ssql;
+                    _CmdSql.CommandType = CommandType.Text;
+                    _CmdSql.CommandTimeout = _CommandTimeOut;
                 }
                 else
                 {
-                    sError = "Unable to open the connection in SqlDataConnect. " + logMsg;
+                    sError = "Unable to open the connection in SqlDataConnect. " + _LogMsg;
                     return 0;
                 }
 
                 //check for transactions
-                if (bolTran)
+                if (_BolTran)
                 {
-                    cmdSql.Transaction = oTran;
+                    _CmdSql.Transaction = _OTran;
                 }
 
-                int nReturn = cmdSql.ExecuteNonQuery();
+                int nReturn = _CmdSql.ExecuteNonQuery();
 
                 return nReturn;
             }
 
             catch (Exception e)
             {
-                if (bolTran)
+                if (_BolTran)
                 {
-                    rollBackTransaction();
+                    RollBackTransaction();
                 }
 
                 sError = e.Message;
@@ -460,10 +472,10 @@ namespace Framework.DataAccess.SqlServerDataClasses
             }
             finally
             {
-                closeConnection();
-                if (cmdSql != null && bolTran == false)
+                CloseConnection();
+                if (_CmdSql != null && _BolTran == false)
                 {
-                    cmdSql.Dispose();
+                    _CmdSql.Dispose();
                 }
             }
         }
@@ -487,27 +499,27 @@ namespace Framework.DataAccess.SqlServerDataClasses
                 //check for connection strings here
                 if (OpenConnection())
                 {
-                    cmdSql.Connection = conDB;
-                    cmdSql.CommandText = ssql;
-                    cmdSql.CommandType = CommandType.Text;
-                    cmdSql.CommandTimeout = _commandTimeOut;
+                    _CmdSql.Connection = _ConDb;
+                    _CmdSql.CommandText = ssql;
+                    _CmdSql.CommandType = CommandType.Text;
+                    _CmdSql.CommandTimeout = _CommandTimeOut;
                 }
                 else
                 {
-                    sError = "Unable to open the connection in SqlDataConnect. " + logMsg;
+                    sError = "Unable to open the connection in SqlDataConnect. " + _LogMsg;
                     return 0;
                 }
 
-                startTransaction();
+                StartTransaction();
 
                 //check for transactions
-                if (bolTran)
+                if (_BolTran)
                 {
-                    cmdSql.Transaction = oTran;
+                    _CmdSql.Transaction = _OTran;
                 }
 
                 //append the scope_identity her
-                int nReturn = cmdSql.ExecuteNonQuery();
+                int nReturn = _CmdSql.ExecuteNonQuery();
                 if (nReturn != numberRecordsUpdated)
                 {
                     throw new Exception("The number of records to be updated is: " + nReturn +
@@ -515,16 +527,16 @@ namespace Framework.DataAccess.SqlServerDataClasses
                                         ".  Transaction is rolled back.");
                 }
 
-                endTransaction();
+                EndTransaction();
 
                 return nReturn;
             }
 
             catch (Exception e)
             {
-                if (bolTran)
+                if (_BolTran)
                 {
-                    rollBackTransaction();
+                    RollBackTransaction();
                 }
 
                 sError = e.Message;
@@ -532,10 +544,10 @@ namespace Framework.DataAccess.SqlServerDataClasses
             }
             finally
             {
-                closeConnection();
-                if (cmdSql != null && bolTran == false)
+                CloseConnection();
+                if (_CmdSql != null && _BolTran == false)
                 {
-                    cmdSql.Dispose();
+                    _CmdSql.Dispose();
                 }
             }
         }
@@ -543,43 +555,25 @@ namespace Framework.DataAccess.SqlServerDataClasses
         #region "Transaction and open connections"
 
         /// <summary>
-        ///     Sets connection string to default connection string
-        /// </summary>
-        public void applySettings()
-        {
-            try
-            {
-                string sConn = ConfigurationManager.ConnectionStrings["defaultConnectionString"]
-                    .ToString();
-                conDB = new SqlConnection(sConn);
-            }
-
-            catch (Exception e)
-            {
-                logMsg = e.Message;
-            }
-        }
-
-        /// <summary>
         ///     Change the connection string used
         /// </summary>
-        /// <param name="_conn">Connection string value</param>
+        /// <param name="conn">Connection string value</param>
         /// <returns>true if connection is set successfully, false if any errors occurred</returns>
-        public bool ChangeConnectionString(string _conn)
+        public bool ChangeConnectionString(string conn)
         {
             try
             {
-                if (conDB != null)
+                if (_ConDb != null)
                 {
-                    conDB = null;
+                    _ConDb = null;
                 }
 
-                conDB = new SqlConnection(_conn);
+                _ConDb = new SqlConnection(conn);
                 return true;
             }
             catch (Exception ex)
             {
-                logMsg = ex.Message;
+                _LogMsg = ex.Message;
                 return false;
             }
         }
@@ -590,24 +584,24 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <returns>True if connection is open, false if error occurred</returns>
         public bool OpenConnection()
         {
-            if (conDB != null)
+            if (_ConDb != null)
             {
                 try
                 {
-                    if (conDB.State != ConnectionState.Open)
+                    if (_ConDb.State != ConnectionState.Open)
                     {
-                        conDB.Open();
+                        _ConDb.Open();
                         return true;
                     }
 
-                    if (conDB.State == ConnectionState.Open)
+                    if (_ConDb.State == ConnectionState.Open)
                     {
                         return true;
                     }
                 }
                 catch (Exception e)
                 {
-                    logMsg = e.Message;
+                    _LogMsg = e.Message;
                     return false;
                 }
             }
@@ -619,26 +613,26 @@ namespace Framework.DataAccess.SqlServerDataClasses
         ///     Closes the connection
         /// </summary>
         /// <returns>True if connection is closed, false if error occurred</returns>
-        public bool closeConnection()
+        public bool CloseConnection()
         {
-            if (conDB != null && bolTran == false)
+            if (_ConDb != null && _BolTran == false)
             {
                 try
                 {
-                    if (conDB.State != ConnectionState.Closed)
+                    if (_ConDb.State != ConnectionState.Closed)
                     {
-                        conDB.Close();
+                        _ConDb.Close();
                         return true;
                     }
 
-                    if (conDB.State == ConnectionState.Closed)
+                    if (_ConDb.State == ConnectionState.Closed)
                     {
                         return true;
                     }
                 }
                 catch (Exception e)
                 {
-                    logMsg = e.Message;
+                    _LogMsg = e.Message;
                     return false;
                 }
             }
@@ -649,14 +643,14 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <summary>
         ///     Start a database transaction
         /// </summary>
-        public void startTransaction()
+        public void StartTransaction()
         {
             if (OpenConnection())
             {
-                if (oTran == null)
+                if (_OTran == null)
                 {
-                    oTran = conDB.BeginTransaction();
-                    bolTran = true;
+                    _OTran = _ConDb.BeginTransaction();
+                    _BolTran = true;
                 }
             }
         }
@@ -664,28 +658,28 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <summary>
         ///     Commit the transaction.  The closeConnection still needs to be called to close the connection.
         /// </summary>
-        public void endTransaction()
+        public void EndTransaction()
         {
-            if (oTran != null)
+            if (_OTran != null)
             {
-                oTran.Commit();
-                oTran.Dispose();
-                oTran = null;
-                bolTran = false;
+                _OTran.Commit();
+                _OTran.Dispose();
+                _OTran = null;
+                _BolTran = false;
             }
         }
 
         /// <summary>
         ///     Rollback the transaction.  The closeConnection still needs to be called to close the connection.
         /// </summary>
-        public void rollBackTransaction()
+        public void RollBackTransaction()
         {
-            if (oTran != null)
+            if (_OTran != null)
             {
-                oTran.Rollback();
-                oTran.Dispose();
-                oTran = null;
-                bolTran = false;
+                _OTran.Rollback();
+                _OTran.Dispose();
+                _OTran = null;
+                _BolTran = false;
             }
         }
 
@@ -701,8 +695,8 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="sError">String value that contains an error message if error occurs</param>
         /// <param name="dtoContainer">SqlDataAccessContainer with all parameters that will be added to the stored procedure</param>
         /// <returns>true if stored procedure ran successfully, false if any errors occurred</returns>
-        public bool getData(ref DataSet dsData, string sProcedureName, ref string sError,
-            SqlDataAccessContainer dtoContainer)
+        public bool GetData(ref DataSet dsData, string sProcedureName, ref string sError,
+            SqlServerDataAccessContainer dtoContainer)
         {
             try
             {
@@ -714,40 +708,40 @@ namespace Framework.DataAccess.SqlServerDataClasses
 
                 if (OpenConnection())
                 {
-                    cmdSql.Connection = conDB;
-                    cmdSql.CommandType = CommandType.StoredProcedure;
-                    cmdSql.CommandText = sProcedureName;
-                    cmdSql.CommandTimeout = _commandTimeOut;
+                    _CmdSql.Connection = _ConDb;
+                    _CmdSql.CommandType = CommandType.StoredProcedure;
+                    _CmdSql.CommandText = sProcedureName;
+                    _CmdSql.CommandTimeout = _CommandTimeOut;
                 }
                 else
                 {
-                    sError = "Unable to open the connection in SqlDataConnect. " + logMsg;
+                    sError = "Unable to open the connection in SqlDataConnect. " + _LogMsg;
                     return false;
                 }
 
-                Adprdata = new SqlDataAdapter(cmdSql);
+                _Adprdata = new SqlDataAdapter(_CmdSql);
                 dsData = new DataSet();
-                Adprdata.Fill(dsData);
-                Adprdata.Dispose();
-                cmdSql.Parameters.Clear();
+                _Adprdata.Fill(dsData);
+                _Adprdata.Dispose();
+                _CmdSql.Parameters.Clear();
                 return true;
             }
             catch (Exception ex)
             {
                 sError = ex.Message;
-                if (cmdSql != null)
+                if (_CmdSql != null)
                 {
-                    cmdSql.Parameters.Clear();
+                    _CmdSql.Parameters.Clear();
                 }
 
                 return false;
             }
             finally
             {
-                closeConnection();
-                if (cmdSql != null && bolTran == false)
+                CloseConnection();
+                if (_CmdSql != null && _BolTran == false)
                 {
-                    cmdSql.Dispose();
+                    _CmdSql.Dispose();
                 }
             }
         }
@@ -759,46 +753,46 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="sSqlString">Inline SQL to be ran</param>
         /// <param name="sError">String value that contains an error message if error occurs</param>
         /// <returns>true if SQL ran successfully, false if any errors occurred</returns>
-        public bool getData(ref DataSet dsData, string sSqlString, ref string sError)
+        public bool GetData(ref DataSet dsData, string sSqlString, ref string sError)
         {
             try
             {
                 if (OpenConnection())
                 {
-                    cmdSql = new SqlCommand();
-                    cmdSql.Connection = conDB;
-                    cmdSql.CommandType = CommandType.Text;
-                    cmdSql.CommandText = sSqlString;
-                    cmdSql.CommandTimeout = _commandTimeOut;
+                    _CmdSql = new SqlCommand();
+                    _CmdSql.Connection = _ConDb;
+                    _CmdSql.CommandType = CommandType.Text;
+                    _CmdSql.CommandText = sSqlString;
+                    _CmdSql.CommandTimeout = _CommandTimeOut;
                 }
                 else
                 {
-                    sError = "Unable to open the connection in SqlDataConnect. " + logMsg;
+                    sError = "Unable to open the connection in SqlDataConnect. " + _LogMsg;
                     return false;
                 }
 
-                Adprdata = new SqlDataAdapter(cmdSql);
+                _Adprdata = new SqlDataAdapter(_CmdSql);
                 dsData = new DataSet();
-                Adprdata.Fill(dsData);
-                Adprdata.Dispose();
+                _Adprdata.Fill(dsData);
+                _Adprdata.Dispose();
                 return true;
             }
             catch (Exception ex)
             {
                 sError = ex.Message;
-                if (cmdSql != null)
+                if (_CmdSql != null)
                 {
-                    cmdSql.Parameters.Clear();
+                    _CmdSql.Parameters.Clear();
                 }
 
                 return false;
             }
             finally
             {
-                closeConnection();
-                if (cmdSql != null && bolTran == false)
+                CloseConnection();
+                if (_CmdSql != null && _BolTran == false)
                 {
-                    cmdSql.Dispose();
+                    _CmdSql.Dispose();
                 }
             }
         }

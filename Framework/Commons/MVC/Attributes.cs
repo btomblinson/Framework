@@ -48,11 +48,11 @@ namespace Framework.Commons.MVC
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class StateAbbr : ValidationAttribute
     {
-        public static Dictionary<string, string> states = LoadStates();
+        public static Dictionary<string, string> States = LoadStates();
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value != null && !states.ContainsKey(value.ToString().ToUpper()))
+            if (value != null && !States.ContainsKey(value.ToString().ToUpper()))
             {
                 return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
             }

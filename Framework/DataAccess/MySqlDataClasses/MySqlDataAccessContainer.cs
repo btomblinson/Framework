@@ -7,14 +7,14 @@ namespace Framework.DataAccess.MySqlDataClasses
 {
     public class MySqlDataAccessContainer
     {
-        private List<MySqlDataAccessParameter> _colParameters;
+        private List<MySqlDataAccessParameter> _ColParameters;
 
         /// <summary>
         ///     Contructor that initiates the SqlDataAccessParameter List
         /// </summary>
         public MySqlDataAccessContainer()
         {
-            _colParameters = new List<MySqlDataAccessParameter>();
+            _ColParameters = new List<MySqlDataAccessParameter>();
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Framework.DataAccess.MySqlDataClasses
         /// </summary>
         public void Clear()
         {
-            _colParameters.Clear();
+            _ColParameters.Clear();
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Framework.DataAccess.MySqlDataClasses
         /// <param name="dtoParam">SqlDataAccessParameter to add</param>
         public void Add(MySqlDataAccessParameter dtoParam)
         {
-            _colParameters.Add(dtoParam);
+            _ColParameters.Add(dtoParam);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Framework.DataAccess.MySqlDataClasses
         /// <returns>Parameter List</returns>
         public List<MySqlDataAccessParameter> AllParameters()
         {
-            return _colParameters;
+            return _ColParameters;
         }
     }
 }

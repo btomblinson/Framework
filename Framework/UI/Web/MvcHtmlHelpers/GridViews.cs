@@ -18,190 +18,190 @@ namespace Framework.UI.Web.MvcHtmlHelpers
         ///     Helper Control for constructing a serverSide Gridview for MVC Views using the SearcResults model.
         /// </summary>
         public static IHtmlString CreateSmartGrid<TModel>(this HtmlHelper<TModel> helper,
-            SearchResults Model)
+            SearchResults model)
         {
-            if (string.IsNullOrWhiteSpace(Model.Results.Error))
+            if (string.IsNullOrWhiteSpace(model.Results.Error))
             {
-                int ColCounter = 0;
-                int MinDisplayRow = 0;
-                int MaxDisplayRow = 0;
+                int colCounter = 0;
+                int minDisplayRow = 0;
+                int maxDisplayRow = 0;
                 string lblCount = "";
-                int MaxPageRange = 0;
-                int MinPageRange = 1;
-                string PageRow = "";
-                int PageCounter = 1;
-                bool NextOnly = false;
-                bool PreviousOnly = false;
-                bool BothNextAndPrevious = false;
-                string PageControllerName = helper.ViewContext.RouteData.GetRequiredString("controller");
-                string PageAcion = helper.ViewContext.RouteData.GetRequiredString("action");
-                string Result = CreateDefaultStyles();
+                int maxPageRange = 0;
+                int minPageRange = 1;
+                string pageRow = "";
+                int pageCounter = 1;
+                bool nextOnly = false;
+                bool previousOnly = false;
+                bool bothNextAndPrevious = false;
+                string pageControllerName = helper.ViewContext.RouteData.GetRequiredString("controller");
+                string pageAcion = helper.ViewContext.RouteData.GetRequiredString("action");
+                string result = CreateDefaultStyles();
 
                 //Set Up Variables for paging
-                if (Model.TotalPages != 1 && Model.CurrentPage != 1)
+                if (model.TotalPages != 1 && model.CurrentPage != 1)
                 {
-                    MinDisplayRow = Model.RecordsPerPage * Model.CurrentPage - Model.RecordsPerPage;
-                    MaxDisplayRow = MinDisplayRow + Model.RecordsPerPage - 1;
+                    minDisplayRow = model.RecordsPerPage * model.CurrentPage - model.RecordsPerPage;
+                    maxDisplayRow = minDisplayRow + model.RecordsPerPage - 1;
                 }
                 else
                 {
-                    MaxDisplayRow = Model.RecordsPerPage - 1;
+                    maxDisplayRow = model.RecordsPerPage - 1;
                 }
 
-                if (MaxDisplayRow >= Model.RecordCount)
+                if (maxDisplayRow >= model.RecordCount)
                 {
-                    MaxDisplayRow = Model.RecordCount - 1;
+                    maxDisplayRow = model.RecordCount - 1;
                 }
 
                 //Set Up label to show what records the user is currently viewing
-                if (Model.RecordCount == 1)
+                if (model.RecordCount == 1)
                 {
                     lblCount = "Showing 1 Record";
                 }
-                else if (Model.RecordCount > Model.RecordsPerPage)
+                else if (model.RecordCount > model.RecordsPerPage)
                 {
-                    lblCount = "Showing records <span class='MinDisplayNum'>" + (MinDisplayRow + 1) +
+                    lblCount = "Showing records <span class='MinDisplayNum'>" + (minDisplayRow + 1) +
                                "</span> thru <span class='MaxDisplayNum'>"
-                               + (MaxDisplayRow + 1) + "</span> of <span class='TotalDisplayNum'>" + Model.RecordCount +
+                               + (maxDisplayRow + 1) + "</span> of <span class='TotalDisplayNum'>" + model.RecordCount +
                                "</span> ";
                 }
                 else
                 {
                     lblCount = "Showing records <span class='MinDisplayNum'>1</span> thru <span class='MaxDisplayNum'>"
-                               + Model.RecordCount + "</span> of <span class='TotalDisplayNum'> " + Model.RecordCount +
+                               + model.RecordCount + "</span> of <span class='TotalDisplayNum'> " + model.RecordCount +
                                "</span> ";
                 }
 
-                Result += "<div id='" + Model.TableId + "_Wrappper'class='SmartGrid_Wrapper'> ";
+                result += "<div id='" + model.TableId + "_Wrappper'class='SmartGrid_Wrapper'> ";
 
-                if (Model.RecordCount == Model.RecordLimit)
+                if (model.RecordCount == model.RecordLimit)
                 {
-                    Result += "<span class='error'> Your request retrieved many results. Only " + Model.RecordLimit +
+                    result += "<span class='error'> Your request retrieved many results. Only " + model.RecordLimit +
                               " results were returned. Please narrow your search criteria to retrieve better results.</span>";
                 }
 
-                Result += "<div id='" + Model.TableId + "_GridProperties' class='SmartGridProperties' >";
-                Result += "<div id='" + Model.TableId + "_RecordMessage' class='RecordMessage'><span>" + lblCount +
+                result += "<div id='" + model.TableId + "_GridProperties' class='SmartGridProperties' >";
+                result += "<div id='" + model.TableId + "_RecordMessage' class='RecordMessage'><span>" + lblCount +
                           "</span></div> ";
 
-                if (!string.IsNullOrWhiteSpace(Model.TableCaption))
+                if (!string.IsNullOrWhiteSpace(model.TableCaption))
                 {
-                    Result += "<span class='TableCaption'>" + Model.TableCaption + "</span> ";
+                    result += "<span class='TableCaption'>" + model.TableCaption + "</span> ";
                 }
 
                 //Display Paging Algorithm 
-                PageRow = "<span class='GridPager'><table><tbody><tr><td><span class='PagerCaption'>Page</span></td> ";
-                MaxPageRange = (int) (Math.Ceiling((decimal) Model.CurrentPage / 10) * 10);
+                pageRow = "<span class='GridPager'><table><tbody><tr><td><span class='PagerCaption'>Page</span></td> ";
+                maxPageRange = (int) (Math.Ceiling((decimal) model.CurrentPage / 10) * 10);
 
                 //When Page One
-                if (MaxPageRange <= 10 && Model.TotalPages <= 10)
+                if (maxPageRange <= 10 && model.TotalPages <= 10)
                 {
-                    MaxPageRange = Model.TotalPages;
+                    maxPageRange = model.TotalPages;
                 }
 
-                if (MaxPageRange >= Model.TotalPages && MaxPageRange > 11)
+                if (maxPageRange >= model.TotalPages && maxPageRange > 11)
                 {
-                    MaxPageRange = Model.TotalPages;
-                    PreviousOnly = true;
+                    maxPageRange = model.TotalPages;
+                    previousOnly = true;
                 }
 
-                if (MaxPageRange > 11)
+                if (maxPageRange > 11)
                 {
-                    MinPageRange = MaxPageRange - 10;
+                    minPageRange = maxPageRange - 10;
                 }
-                else if (MaxPageRange != Model.TotalPages)
+                else if (maxPageRange != model.TotalPages)
                 {
-                    MaxPageRange++;
-                    NextOnly = true;
-                }
-
-                if (!NextOnly && !PreviousOnly && MaxPageRange > 11)
-                {
-                    BothNextAndPrevious = true;
-                    MaxPageRange++;
+                    maxPageRange++;
+                    nextOnly = true;
                 }
 
-                while (MinPageRange <= MaxPageRange)
+                if (!nextOnly && !previousOnly && maxPageRange > 11)
                 {
-                    if (PageCounter == 1 && (PreviousOnly || BothNextAndPrevious) ||
-                        MinPageRange == MaxPageRange && (NextOnly || BothNextAndPrevious))
+                    bothNextAndPrevious = true;
+                    maxPageRange++;
+                }
+
+                while (minPageRange <= maxPageRange)
+                {
+                    if (pageCounter == 1 && (previousOnly || bothNextAndPrevious) ||
+                        minPageRange == maxPageRange && (nextOnly || bothNextAndPrevious))
                     {
-                        PageRow += "<td class='PagerDot'>" + helper.ActionLink("...",
-                                       PageAcion, PageControllerName, new {PageNumber = MinPageRange.ToString()},
+                        pageRow += "<td class='PagerDot'>" + helper.ActionLink("...",
+                                       pageAcion, pageControllerName, new {PageNumber = minPageRange.ToString()},
                                        null) + "</td> ";
                     }
                     else
                     {
                         //Bold CurrentPage
-                        if (MinPageRange == Model.CurrentPage)
+                        if (minPageRange == model.CurrentPage)
                         {
-                            PageRow += "<td class='PagerCurrentPage'>" + MinPageRange + "</td> ";
+                            pageRow += "<td class='PagerCurrentPage'>" + minPageRange + "</td> ";
                         }
                         else
                         {
-                            PageRow += "<td class='PagerPageNum'>" + helper.ActionLink(MinPageRange.ToString(),
-                                           PageAcion, PageControllerName,
-                                           new {PageNumber = MinPageRange.ToString()}, null) + "</td> ";
+                            pageRow += "<td class='PagerPageNum'>" + helper.ActionLink(minPageRange.ToString(),
+                                           pageAcion, pageControllerName,
+                                           new {PageNumber = minPageRange.ToString()}, null) + "</td> ";
                         }
                     }
 
-                    MinPageRange++;
-                    PageCounter++;
+                    minPageRange++;
+                    pageCounter++;
                 }
 
-                if (Model.pagerPosition == PagerPosition.Top || Model.pagerPosition == PagerPosition.Both)
+                if (model.PagerPosition == PagerPosition.Top || model.PagerPosition == PagerPosition.Both)
                 {
-                    Result += PageRow + "</tr></tbody></table></span></div> ";
+                    result += pageRow + "</tr></tbody></table></span></div> ";
                 }
 
-                Result += "<table id='" + Model.TableId +
+                result += "<table id='" + model.TableId +
                           "' class='SmartGrid' role='grid'><tbody><tr data-sortable='true'> ";
-                foreach (DataColumn col in Model.Results.DS.Tables[Model.TableIndex].Columns)
+                foreach (DataColumn col in model.Results.Ds.Tables[model.TableIndex].Columns)
                 {
                     //If programmer has defined aliases and alias exist for this column use alias programmer specified
-                    string SpecialColumnValue = "";
-                    if (Model.SpecialColumnAliases != null &&
-                        Model.SpecialColumnAliases.TryGetValue(col.Caption, out SpecialColumnValue))
+                    string specialColumnValue = "";
+                    if (model.SpecialColumnAliases != null &&
+                        model.SpecialColumnAliases.TryGetValue(col.Caption, out specialColumnValue))
                     {
-                        Result += "<th class='" + col.Caption + "'>" + SpecialColumnValue + "</th> ";
+                        result += "<th class='" + col.Caption + "'>" + specialColumnValue + "</th> ";
                     }
                     else
                     {
-                        Result += "<th class='" + col.Caption + "'>" + col.Caption.ToProperCase() + "</th> ";
+                        result += "<th class='" + col.Caption + "'>" + col.Caption.ToProperCase() + "</th> ";
                     }
                 }
 
-                Result += "</tr> ";
+                result += "</tr> ";
 
-                while (MinDisplayRow <= MaxDisplayRow)
+                while (minDisplayRow <= maxDisplayRow)
                 {
-                    Result += "<tr> ";
-                    foreach (object cell in Model.Results.DS.Tables[Model.TableIndex].Rows[MinDisplayRow].ItemArray)
+                    result += "<tr> ";
+                    foreach (object cell in model.Results.Ds.Tables[model.TableIndex].Rows[minDisplayRow].ItemArray)
                     {
-                        Result += "<td class='" +
-                                  Model.Results.DS.Tables[Model.TableIndex].Columns[ColCounter].Caption + "'>" +
+                        result += "<td class='" +
+                                  model.Results.Ds.Tables[model.TableIndex].Columns[colCounter].Caption + "'>" +
                                   cell + "</td> ";
-                        ColCounter++;
+                        colCounter++;
                     }
 
-                    Result += "</tr ";
-                    ColCounter = 0;
-                    MinDisplayRow++;
+                    result += "</tr ";
+                    colCounter = 0;
+                    minDisplayRow++;
                 }
 
 
-                Result += "</tbody></table>";
+                result += "</tbody></table>";
 
-                if (Model.pagerPosition == PagerPosition.Bottom || Model.pagerPosition == PagerPosition.Both)
+                if (model.PagerPosition == PagerPosition.Bottom || model.PagerPosition == PagerPosition.Both)
                 {
-                    Result += PageRow + "</tr></tbody></table></span>";
+                    result += pageRow + "</tr></tbody></table></span>";
                 }
 
-                Result += "</div>";
-                return helper.Raw(Result);
+                result += "</div>";
+                return helper.Raw(result);
             }
 
-            return helper.Raw("<span class='error'>" + Model.Results.Error + "</span>");
+            return helper.Raw("<span class='error'>" + model.Results.Error + "</span>");
         }
 
         /// <summary>
@@ -209,56 +209,56 @@ namespace Framework.UI.Web.MvcHtmlHelpers
         ///     information
         /// </summary>
         public static IHtmlString CreateDataTable<TModel>(this HtmlHelper<TModel> helper,
-            DataTableGridView Model)
+            DataTableGridView model)
         {
             StringBuilder sb = new StringBuilder();
 
             //first off check and see if we have to create the jQuery and DataTable script and link tags
 
             //jQuery
-            if (!Model.DisableJqueryScript)
+            if (!model.DisableJqueryScript)
             {
-                sb.Append("<script src='" + Model.JqueryScriptUrl + "'></script>");
+                sb.Append("<script src='" + model.JqueryScriptUrl + "'></script>");
             }
 
             //jQuery DataTables JS
-            if (!Model.DisableDataTablesScript)
+            if (!model.DisableDataTablesScript)
             {
-                sb.Append("<script src='" + Model.JqueryDataTableScriptUrl + "'></script>");
+                sb.Append("<script src='" + model.JqueryDataTableScriptUrl + "'></script>");
             }
 
             //jQuery DataTables CSS
-            if (!Model.DisableDataTablesStyles)
+            if (!model.DisableDataTablesStyles)
             {
-                sb.Append("<link rel='styleheet' type='text/css' href='" + Model.JqueryDataTableCssUrl + "' />");
+                sb.Append("<link rel='styleheet' type='text/css' href='" + model.JqueryDataTableCssUrl + "' />");
             }
 
             //now build up the JQuery script that will turn the table into a DataTable
             sb.Append("<script>");
             sb.Append("$(function(){");
-            sb.Append("$('#").Append(Model.TableId).Append("').DataTable(").Append(Model.JqueryDataTableOptions)
+            sb.Append("$('#").Append(model.TableId).Append("').DataTable(").Append(model.JqueryDataTableOptions)
                 .Append(");");
 
-            sb.Append("$('#").Append(Model.TableId).Append("_filter').css('margin-bottom', '10px');");
+            sb.Append("$('#").Append(model.TableId).Append("_filter').css('margin-bottom', '10px');");
 
             sb.Append("});");
             sb.Append("</script>");
             //now, we can create the actual table
-            sb.Append("<table id='" + Model.TableId + "'>");
+            sb.Append("<table id='" + model.TableId + "'>");
 
 
             //create the columns and abide by SpecialAliases
             sb.Append("<thead>");
-            foreach (DataColumn col in Model.Results.DS.Tables[Model.TableIndex].Columns)
+            foreach (DataColumn col in model.Results.Ds.Tables[model.TableIndex].Columns)
             {
                 //If programmer has defined aliases and alias exist for this column use alias programmer specified
-                string SpecialColumnValue = "";
-                if (Model.SpecialColumnAliases != null &&
-                    Model.SpecialColumnAliases.TryGetValue(col.Caption, out SpecialColumnValue))
+                string specialColumnValue = "";
+                if (model.SpecialColumnAliases != null &&
+                    model.SpecialColumnAliases.TryGetValue(col.Caption, out specialColumnValue))
                 {
-                    sb.Append("<th class='" + col.Caption + "'>" + SpecialColumnValue + "</th> ");
+                    sb.Append("<th class='" + col.Caption + "'>" + specialColumnValue + "</th> ");
                 }
-                else if (!Model.ProperCase)
+                else if (!model.ProperCase)
                 {
                     sb.Append("<th class='" + col.Caption + "'>" + col.Caption + "</th> ");
                 }
@@ -273,18 +273,18 @@ namespace Framework.UI.Web.MvcHtmlHelpers
 
             //now create the body
             sb.Append("<tbody>");
-            int ColCounter = 0;
-            for (int i = 0; i < Model.Results.DS.Tables[Model.TableIndex].Rows.Count; i++)
+            int colCounter = 0;
+            for (int i = 0; i < model.Results.Ds.Tables[model.TableIndex].Rows.Count; i++)
             {
                 sb.Append("<tr>");
-                foreach (object cell in Model.Results.DS.Tables[Model.TableIndex].Rows[i].ItemArray)
+                foreach (object cell in model.Results.Ds.Tables[model.TableIndex].Rows[i].ItemArray)
                 {
-                    sb.Append("<td class='" + Model.Results.DS.Tables[Model.TableIndex].Columns[ColCounter].Caption +
+                    sb.Append("<td class='" + model.Results.Ds.Tables[model.TableIndex].Columns[colCounter].Caption +
                               "'>" + cell + "</td> ");
-                    ColCounter++;
+                    colCounter++;
                 }
 
-                ColCounter = 0;
+                colCounter = 0;
                 sb.Append("</tr>");
             }
 

@@ -17,12 +17,12 @@ namespace Framework.Commons.Logging
         /// <summary>
         ///     Object that does the logging
         /// </summary>
-        public static readonly ILog log = LogManager.GetLogger("LogFileAppender");
+        public static readonly ILog Log = LogManager.GetLogger("LogFileAppender");
 
         /// <summary>
         ///     Is the logging initialized
         /// </summary>
-        private static bool _isLoggingInitialized;
+        private static bool _IsLoggingInitialized;
 
         /// <summary>
         ///     Initialize Logging
@@ -30,10 +30,10 @@ namespace Framework.Commons.Logging
         /// <returns>True when configured</returns>
         public static bool InitializeLogging()
         {
-            if (!_isLoggingInitialized)
+            if (!_IsLoggingInitialized)
             {
                 XmlConfigurator.Configure();
-                _isLoggingInitialized = true;
+                _IsLoggingInitialized = true;
             }
 
             return true;
@@ -46,7 +46,7 @@ namespace Framework.Commons.Logging
         public static void LogError(string error)
         {
             InitializeLogging();
-            log.Error(error);
+            Log.Error(error);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Framework.Commons.Logging
         public static void LogInfo(string info)
         {
             InitializeLogging();
-            log.Info(info);
+            Log.Info(info);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Framework.Commons.Logging
         public static void LogDebug(string debug)
         {
             InitializeLogging();
-            log.Debug(debug);
+            Log.Debug(debug);
         }
 
 
@@ -77,7 +77,7 @@ namespace Framework.Commons.Logging
         public static void LogError(Exception ex)
         {
             InitializeLogging();
-            log.Error("", ex);
+            Log.Error("", ex);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Framework.Commons.Logging
         public static void LogError(string error, string procedureName)
         {
             InitializeLogging();
-            log.Error("Error while executing " + procedureName + ": " + error);
+            Log.Error("Error while executing " + procedureName + ": " + error);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Framework.Commons.Logging
         public static void LogError(string message, Exception ex)
         {
             InitializeLogging();
-            log.Error(message, ex);
+            Log.Error(message, ex);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Framework.Commons.Logging
             }
             else
             {
-                log.Error("Error while executing " + procedureName + ": " + message, ex);
+                Log.Error("Error while executing " + procedureName + ": " + message, ex);
             }
         }
 
@@ -125,7 +125,7 @@ namespace Framework.Commons.Logging
         ///     Log exception, procedure, and procedure parameters
         /// </summary>
         /// <param name="procedureName">Procedure name to log</param>
-        /// <param name="sqlDataAccessParameter">SqlDataAcessParameter or SqlDataAccessParameter[]</param>
+        /// <param name="sqlDataAccessParameter">SqlDataAccessParameter or SqlDataAccessParameter[]</param>
         /// <param name="ex">Exception to log</param>
         public static void LogError(string procedureName, dynamic sqlDataAccessParameter, Exception ex)
         {
@@ -157,7 +157,7 @@ namespace Framework.Commons.Logging
                 sb.Append(Environment.NewLine);
             }
 
-            log.Error(sb.ToString(), ex);
+            Log.Error(sb.ToString(), ex);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Framework.Commons.Logging
         public static void LogFatal(Exception ex)
         {
             InitializeLogging();
-            log.Fatal("", ex);
+            Log.Fatal("", ex);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Framework.Commons.Logging
         public static void LogFatal(string message, Exception ex)
         {
             InitializeLogging();
-            log.Fatal(message, ex);
+            Log.Fatal(message, ex);
         }
 
 

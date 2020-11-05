@@ -18,8 +18,8 @@ namespace Framework.DataAccess.ObjectMapping
                 {
                     propMap.Add(customAttrs[0].FieldName.ToUpper(), new PropertyInfoPlus
                     {
-                        propertyInfo = pi,
-                        dataBinding = customAttrs[0]
+                        PropertyInfo = pi,
+                        DataBinding = customAttrs[0]
                     });
                 }
             }
