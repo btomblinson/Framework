@@ -20,7 +20,7 @@ namespace Framework.Commons.Utilities
         /// <param name="useImpersonation">Whether or not this requires impersonation for permissions</param>
         /// <param name="username">The impersonated user's username</param>
         /// <param name="password">The impersonated user's password</param>
-        /// <param name="domain">The user's domain, defaults to empty string/param>
+        /// <param name="domain">The user's domain, defaults to empty string</param>
         public static void DeleteFile(string filepath, bool useImpersonation, string username = "",
             string password = "", string domain = "")
         {
