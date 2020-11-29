@@ -1,39 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
+using Npgsql;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Framework.DataAccess.SqlDataClasses
 {
-
-
     /// <summary>
-    ///     Class that allows selecting, inserting, updating, deleting records from SQL Server database
-    ///     via stored procedures and allow selecting and inserting records from SQL server database via
+    ///     Class that allows selecting, inserting, updating, deleting records from different SQL databases
+    ///     via stored procedures and allow selecting and inserting records from SQL databases via
     ///     inline SQL.  Database transactions can be initiated.
     /// </summary>
     public class SqlDataConnect
     {
         private int _CommandTimeOut = 30;
 
-        private SqlDataAdapter _Adprdata;
+        private DbDataAdapter _DataAdapter;
 
         private bool _BolTran;
 
-        private SqlCommand _CmdSql = new SqlCommand();
+        private DbCommand _CmdSql;
 
-        private SqlConnection _ConDb;
+        private DbConnection _ConDb;
 
         private string _LogMsg = "";
 
-        private SqlTransaction _OTran;
+        private DbTransaction _OTran;
+
+        private SqlDatabaseType _DatabaseType;
 
         /// <summary>
         /// You must call <see cref="ChangeConnectionString"/> to set the connection
         /// </summary>
-        public SqlDataConnect()
+        public SqlDataConnect(SqlDatabaseType type)
         {
-            _ConDb = new SqlConnection();
+            _DatabaseType = type;
+            switch (_DatabaseType)
+            {
+                case SqlDatabaseType.SqlServer:
+                    _ConDb = new SqlConnection();
+                    _CmdSql = new SqlCommand();
+                    break;
+                case SqlDatabaseType.MySql:
+                    _ConDb = new MySqlConnection();
+                    _CmdSql = new MySqlCommand();
+                    break;
+                case SqlDatabaseType.Oracle:
+                    _ConDb = new OracleConnection();
+                    _CmdSql = new OracleCommand();
+                    break;
+                case SqlDatabaseType.Postgres:
+                    _ConDb = new NpgsqlConnection();
+                    _CmdSql = new NpgsqlCommand();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             _BolTran = false;
         }
 
@@ -697,10 +723,10 @@ namespace Framework.DataAccess.SqlDataClasses
                     return false;
                 }
 
-                _Adprdata = new SqlDataAdapter(_CmdSql);
+                _DataAdapter = new SqlDataAdapter(_CmdSql);
                 dsData = new DataSet();
-                _Adprdata.Fill(dsData);
-                _Adprdata.Dispose();
+                _DataAdapter.Fill(dsData);
+                _DataAdapter.Dispose();
                 _CmdSql.Parameters.Clear();
                 return true;
             }
@@ -749,10 +775,10 @@ namespace Framework.DataAccess.SqlDataClasses
                     return false;
                 }
 
-                _Adprdata = new SqlDataAdapter(_CmdSql);
+                _DataAdapter = new SqlDataAdapter(_CmdSql);
                 dsData = new DataSet();
-                _Adprdata.Fill(dsData);
-                _Adprdata.Dispose();
+                _DataAdapter.Fill(dsData);
+                _DataAdapter.Dispose();
                 return true;
             }
             catch (Exception ex)
