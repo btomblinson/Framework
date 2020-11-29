@@ -28,32 +28,29 @@ namespace Framework.DataAccess.SqlDataClasses
         /// <summary>
         ///     Instantiates SqlDataConnect class
         /// </summary>
-        public SqlDataAccess()
+        public SqlDataAccess(SqlDatabaseType type)
         {
-            SqlDataConnect = new SqlDataConnect();
+            SqlDataConnect = new SqlDataConnect(type);
         }
 
         /// <summary>
         ///     Instantiates and sets SqlDataConnect class
         /// </summary>
-        /// <param name="SqlDataConnect"></param>
-        public SqlDataAccess(SqlDataConnect SqlDataConnect)
+        /// <param name="sqlDataConnect"></param>
+        public SqlDataAccess(SqlDataConnect sqlDataConnect)
         {
-            SqlDataConnect = new SqlDataConnect();
-            SqlDataConnect = SqlDataConnect;
+            SqlDataConnect = sqlDataConnect;
         }
 
         /// <summary>
         ///     Instantiates and sets SqlDataConnect class
         /// </summary>
-        /// <param name="SqlDataConnect"></param>
-        public SqlDataAccess(SqlDataConnect SqlDataConnect, string token)
+        /// <param name="sqlDataConnect"></param>
+        public SqlDataAccess(SqlDataConnect sqlDataConnect, string token)
         {
-            SqlDataConnect = new SqlDataConnect();
-            SqlDataConnect = SqlDataConnect;
+            SqlDataConnect = sqlDataConnect;
             Token = token;
         }
-
 
         /// <summary>
         ///     Gets data from stored procedure without need of parameters
@@ -263,7 +260,6 @@ namespace Framework.DataAccess.SqlDataClasses
                     }
                 }
 
-
                 infoDataSet.Ds = null;
                 infoDataSet.Error = "";
 
@@ -292,7 +288,6 @@ namespace Framework.DataAccess.SqlDataClasses
 
             return infoDataSet;
         }
-
 
         /// <summary>
         ///     Insert, Update, or Delete data via stored procedure
@@ -503,7 +498,6 @@ namespace Framework.DataAccess.SqlDataClasses
 
             return objReturn;
         }
-
 
         /// <summary>
         ///     Insert data via stored procedure
