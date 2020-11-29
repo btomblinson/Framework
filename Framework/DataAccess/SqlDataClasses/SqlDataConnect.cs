@@ -81,7 +81,7 @@ namespace Framework.DataAccess.SqlDataClasses
             {
                 if (dtoParam.ObjectValue == DBNull.Value)
                 {
-                    _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                    ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                     _CmdSql.Parameters[dtoParam.Name].Value = DBNull.Value;
                     _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                 }
@@ -90,7 +90,7 @@ namespace Framework.DataAccess.SqlDataClasses
                     switch (dtoParam.DataType.ToString())
                     {
                         case "VarChar":
-                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
@@ -109,7 +109,7 @@ namespace Framework.DataAccess.SqlDataClasses
                             break;
 
                         case "Decimal":
-                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToDecimal(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
@@ -128,7 +128,7 @@ namespace Framework.DataAccess.SqlDataClasses
                             break;
 
                         case "TinyInt":
-                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
@@ -147,7 +147,7 @@ namespace Framework.DataAccess.SqlDataClasses
                             break;
 
                         case "SmallInt":
-                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt16(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
@@ -166,7 +166,7 @@ namespace Framework.DataAccess.SqlDataClasses
                             break;
 
                         case "Int":
-                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
+                            ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToInt32(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
@@ -185,7 +185,7 @@ namespace Framework.DataAccess.SqlDataClasses
                             break;
 
                         case "DateTime":
-                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
+                            ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToDateTime(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
@@ -204,7 +204,7 @@ namespace Framework.DataAccess.SqlDataClasses
                             break;
 
                         case "Bit":
-                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
@@ -223,7 +223,7 @@ namespace Framework.DataAccess.SqlDataClasses
                             break;
 
                         case "VarBinary":
-                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
+                            ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType, dtoParam.Size);
                             //cmdSql.Parameters[dtoParam.Name].Value = Convert.ToByte(dtoParam.Value);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
@@ -241,7 +241,7 @@ namespace Framework.DataAccess.SqlDataClasses
                             _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
                         case "Structured":
-                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
+                            ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
                                 _CmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
@@ -256,12 +256,12 @@ namespace Framework.DataAccess.SqlDataClasses
                             }
 
                             // Set TypeName, this is used for table parameters
-                            _CmdSql.Parameters[dtoParam.Name].TypeName = dtoParam.TypeName;
+                            ((SqlCommand) _CmdSql).Parameters[dtoParam.Name].TypeName = dtoParam.TypeName;
 
                             _CmdSql.Parameters[dtoParam.Name].Direction = ParameterDirection.Input;
                             break;
                         default:
-                            _CmdSql.Parameters.Add(dtoParam.Name, dtoParam.DataType);
+                            ((SqlCommand) _CmdSql).Parameters.Add(dtoParam.Name, dtoParam.DataType);
                             //cmdSql.Parameters[dtoParam.Name].Value = dtoParam.Value;
                             if (!string.IsNullOrWhiteSpace(dtoParam.Value))
                             {
@@ -303,7 +303,7 @@ namespace Framework.DataAccess.SqlDataClasses
                 }
 
                 //add the return value parameter
-                _CmdSql.Parameters.Add("@RETURN_VALUE", SqlDbType.Int);
+                ((SqlCommand) _CmdSql).Parameters.Add("@RETURN_VALUE", SqlDbType.Int);
                 _CmdSql.Parameters["@RETURN_VALUE"].Direction = ParameterDirection.ReturnValue;
 
                 //check for connection strings here
@@ -723,7 +723,8 @@ namespace Framework.DataAccess.SqlDataClasses
                     return false;
                 }
 
-                _DataAdapter = new SqlDataAdapter(_CmdSql);
+                InitializeDataAdapter();
+
                 dsData = new DataSet();
                 _DataAdapter.Fill(dsData);
                 _DataAdapter.Dispose();
@@ -747,6 +748,27 @@ namespace Framework.DataAccess.SqlDataClasses
                 {
                     _CmdSql.Dispose();
                 }
+            }
+        }
+
+        private void InitializeDataAdapter()
+        {
+            switch (_DatabaseType)
+            {
+                case SqlDatabaseType.SqlServer:
+                    _DataAdapter = new SqlDataAdapter((SqlCommand) _CmdSql);
+                    break;
+                case SqlDatabaseType.MySql:
+                    _DataAdapter = new MySqlDataAdapter((MySqlCommand) _CmdSql);
+                    break;
+                case SqlDatabaseType.Oracle:
+                    _DataAdapter = new OracleDataAdapter((OracleCommand) _CmdSql);
+                    break;
+                case SqlDatabaseType.Postgres:
+                    _DataAdapter = new NpgsqlDataAdapter((NpgsqlCommand) _CmdSql);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -775,7 +797,8 @@ namespace Framework.DataAccess.SqlDataClasses
                     return false;
                 }
 
-                _DataAdapter = new SqlDataAdapter(_CmdSql);
+                InitializeDataAdapter();
+
                 dsData = new DataSet();
                 _DataAdapter.Fill(dsData);
                 _DataAdapter.Dispose();
