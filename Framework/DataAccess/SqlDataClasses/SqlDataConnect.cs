@@ -1,40 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Framework.DataAccess.SqlServerDataClasses
+namespace Framework.DataAccess.SqlDataClasses
 {
-    //create the public enumerators here
-    public enum ESelect
-    {
-        GetColumns,
 
-        GetNextCaseId,
-
-        GetAzmanRoles,
-
-        GetAzmanRoleHeirarchy2,
-
-        GetNoOfParentRoles
-    }
-
-    public enum EUpdate
-    {
-        RoleHeirarchy,
-
-        RoleToMemberDates,
-
-        RoleHeirarchy2
-    }
 
     /// <summary>
     ///     Class that allows selecting, inserting, updating, deleting records from SQL Server database
     ///     via stored procedures and allow selecting and inserting records from SQL server database via
     ///     inline SQL.  Database transactions can be initiated.
     /// </summary>
-    public class SqlServerDataConnect
+    public class SqlDataConnect
     {
         private int _CommandTimeOut = 30;
 
@@ -53,7 +31,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <summary>
         /// You must call <see cref="ChangeConnectionString"/> to set the connection
         /// </summary>
-        public SqlServerDataConnect()
+        public SqlDataConnect()
         {
             _ConDb = new SqlConnection();
             _BolTran = false;
@@ -71,9 +49,9 @@ namespace Framework.DataAccess.SqlServerDataClasses
         ///     Add all of the parameters to command
         /// </summary>
         /// <param name="colAllParameters">List of SqlDataAccessParameter to command</param>
-        private void AddParameterValues(List<SqlServerDataAccessParameter> colAllParameters)
+        private void AddParameterValues(List<SqlDataAccessParameter> colAllParameters)
         {
-            foreach (SqlServerDataAccessParameter dtoParam in colAllParameters)
+            foreach (SqlDataAccessParameter dtoParam in colAllParameters)
             {
                 if (dtoParam.ObjectValue == DBNull.Value)
                 {
@@ -288,7 +266,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="sError">String value that contains an error message if error occurs</param>
         /// <param name="dtoContainer">SqlDataAccessContainer with all parameters that will be added to the stored procedure</param>
         /// <returns>A <c>long</c> with the data from <c>@RETURN_VALUE</c> parameter in stored procedure</returns>
-        public long UpdateData(string sProcedureName, ref string sError, SqlServerDataAccessContainer dtoContainer)
+        public long UpdateData(string sProcedureName, ref string sError, SqlDataAccessContainer dtoContainer)
         {
             try
             {
@@ -696,7 +674,7 @@ namespace Framework.DataAccess.SqlServerDataClasses
         /// <param name="dtoContainer">SqlDataAccessContainer with all parameters that will be added to the stored procedure</param>
         /// <returns>true if stored procedure ran successfully, false if any errors occurred</returns>
         public bool GetData(ref DataSet dsData, string sProcedureName, ref string sError,
-            SqlServerDataAccessContainer dtoContainer)
+            SqlDataAccessContainer dtoContainer)
         {
             try
             {
