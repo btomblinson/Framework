@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Framework.Tests.DataAccessTests
 {
+    [Ignore("Testing")]
     [TestFixture]
     public class SqlServerTests
     {
