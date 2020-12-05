@@ -11,8 +11,8 @@
     <copyright>Copyright 2019</copyright>
   </metadata>
   <files>
-    <file src="Framework\bin\Release\Framework.dll" target="lib\net48" />
-    <file src="Framework\bin\Release\Framework.xml" target="lib\net48" />
+    <file src="Framework\bin\Release\Framework.dll" target="lib\net472" />
+    <file src="Framework\bin\Release\Framework.xml" target="lib\net472" />
   </files>
 
 </package>
