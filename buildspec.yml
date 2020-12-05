@@ -38,8 +38,9 @@ phases:
       # - command
   build:
     commands:
-      - '& "NuGet.exe" restore $env:SOLUTION -PackagesDirectory $env:PACKAGE_DIRECTORY'
+      - '& "NuGet.exe" restore $env:SOLUTION -PackagesDirectory $env:PACKAGE_DIRECTORY -t:rebuild'
       - '& "MSBuild.exe" $env:SOLUTION /property:Configuration=Release'
+      - '& "MSTest.exe" /testcontainer:\Framework.Tests\bin\Release\Framework.Tests.dll'
       - '& "NuGet.exe" pack Framework.nuspec'
 artifacts:
   files:
