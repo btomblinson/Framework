@@ -188,7 +188,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="buildspec.yaml" />
     <None Include="Framework.Designer.nuspec" />
     <None Include="Framework.nuspec" />
     <None Include="packages.config" />
