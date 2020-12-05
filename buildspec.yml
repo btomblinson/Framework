@@ -39,7 +39,7 @@ phases:
   build:
     commands:
       - '& "NuGet.exe" restore $env:SOLUTION -PackagesDirectory $env:PACKAGE_DIRECTORY -t:rebuild'
-      - '& "MSBuild.exe" $env:SOLUTION /property:Configuration=Release'
+      - '& "MSBuild.exe" $env:SOLUTION /t:Build /p:Configuration=Debug -maxcpucount:4'
       - '& "MSTest.exe" /testcontainer:\Framework.Tests\bin\Release\Framework.Tests.dll'
       - '& "NuGet.exe" pack Framework.nuspec'
 artifacts:
