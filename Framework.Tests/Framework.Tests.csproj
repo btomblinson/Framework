@@ -58,7 +58,6 @@
     <Compile Include="DataAccessTests\ExampleObjectMapClass.cs" />
     <Compile Include="DataAccessTests\ObjectMappingTests.cs" />
     <Compile Include="DataAccessTests\SqlServerTests.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
