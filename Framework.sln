@@ -10,6 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{8C010BF9-7279-4177-85FC-656AB506EEC5}"
 	ProjectSection(SolutionItems) = preProject
 		buildspec.yml = buildspec.yml
+		Framework\Framework.nuspec = Framework\Framework.nuspec
+		Framework.nuspec = Framework.nuspec
 	EndProjectSection
 EndProject
 Global
