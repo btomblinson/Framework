@@ -40,7 +40,7 @@ phases:
     commands:
       - '& "NuGet.exe" restore $env:SOLUTION'
       - '& "MSBuild.exe" $env:SOLUTION /t:Build /p:Configuration=Debug -maxcpucount:4'
-      - '& "MSTest.exe" /testcontainer:\Framework.Tests\bin\Release\Framework.Tests.dll'
+      - '& ".\packages\NUnit.ConsoleRunner.3.11.1\tools\nunit3-console.exe" .\Framework.Tests\bin\Release\Framework.Tests.dll'
       - '& "NuGet.exe" pack Framework.nuspec'
 artifacts:
   files:
